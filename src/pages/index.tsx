@@ -34,8 +34,6 @@ const Home: NextPage<Props> = (props) => {
 export default Home;
 
 export async function getStaticProps() {
-  // const res = await fetch('http://localhost:3000/api/ideas');
-  // const ideas = await res.json();
   const ideas = await prisma.idea.findMany();
 
   return {
