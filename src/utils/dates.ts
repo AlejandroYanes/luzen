@@ -1,7 +1,6 @@
 
 
 export function formatDate(date: Date | string, locale = 'default'): string {
-  console.log(date);
   const dateFormatter = new Intl.DateTimeFormat(locale, {
     day: 'numeric',
     month: 'short',
