@@ -1,6 +1,6 @@
-import { createStyles, Header, Autocomplete, Group, Burger } from '@mantine/core';
+import { createStyles, Header, TextInput, Group, Button } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons';
+import { IconSearch, IconBucket } from '@tabler/icons';
 
 const useStyles = createStyles((theme) => ({
 	header: {
@@ -51,16 +51,18 @@ const AppHeader = () => {
 		<Header height={56} className={classes.header} mb={120}>
 			<div className={classes.inner}>
 				<Group>
-					<Burger opened={opened} onClick={toggle} size="sm" />
+					{/*<Burger opened={opened} onClick={toggle} size="sm" />*/}
+					<IconBucket size={32} />
 				</Group>
 
 				<Group>
-					<Autocomplete
+					<TextInput
 						className={classes.search}
 						placeholder="Search"
 						icon={<IconSearch size={16} stroke={1.5} />}
-						data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
 					/>
+					<Button variant="default">Log in</Button>
+					<Button>Sign up</Button>
 				</Group>
 			</div>
 		</Header>

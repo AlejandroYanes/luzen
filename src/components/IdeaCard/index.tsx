@@ -1,5 +1,6 @@
 import type { Idea } from '@prisma/client';
 import { Card, Group, Title, Text, Button, Stack } from '@mantine/core';
+import { IconBulb } from '@tabler/icons';
 import { formatDate } from 'utils/dates';
 
 interface Props {
@@ -12,6 +13,7 @@ const IdeaCard = (props: Props) => {
 			title,
 			description,
 			postedAt,
+			votes,
 		},
 	} = props;
 
@@ -22,11 +24,15 @@ const IdeaCard = (props: Props) => {
 					<Title order={3}>{title}</Title>
 					<Text color="dimmed">{formatDate(postedAt, 'en')}</Text>
 				</Stack>
-				<Text size="sm" color="dimmed">
+				<Text size="sm">
 					{description}
 				</Text>
-				<Group position="right" style={{ marginTop: 'auto' }}>
-					<Button color="primary" mt="sm">Vote Up</Button>
+				<Group position="apart" style={{ marginTop: 'auto' }} pt="sm">
+					<Group></Group>
+					<Group>
+						<Button variant="default">Visit</Button>
+						<Button color="primary" leftIcon={<IconBulb />}>Light Up ({votes})</Button>
+					</Group>
 				</Group>
 			</Stack>
 		</Card>
