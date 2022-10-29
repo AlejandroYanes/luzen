@@ -3,19 +3,17 @@ import Head from 'next/head';
 import type { Idea } from '@prisma/client';
 import BaseLayout from 'components/BaseLayout';
 import IdeaCard from 'components/IdeaCard';
-// import Link from "next/link";
-// import { signIn, signOut, useSession } from "next-auth/react";
-import { SimpleGrid, Stack } from '@mantine/core';
-// import { trpc } from "../utils/trpc";
+import { Stack } from '@mantine/core';
+import { prisma } from 'server/db/client';
 
 interface Props {
-  ideas: Idea[];
+  ideas: string;
 }
 
 const Home: NextPage<Props> = (props) => {
   const { ideas } = props;
-
-  const cards = ideas.map((idea) => <IdeaCard key={idea.id} idea={idea} />)
+  const parsedIdeas: Idea[] = JSON.parse(ideas);
+  const cards = parsedIdeas.map((idea) => <IdeaCard key={idea.id} idea={idea} />)
 
   return (
     <>
@@ -36,12 +34,13 @@ const Home: NextPage<Props> = (props) => {
 export default Home;
 
 export async function getStaticProps() {
-  const res = await fetch('http://localhost:3000/api/ideas');
-  const ideas = await res.json();
+  // const res = await fetch('http://localhost:3000/api/ideas');
+  // const ideas = await res.json();
+  const ideas = await prisma.idea.findMany();
 
   return {
     props: {
-      ideas,
+      ideas: JSON.stringify(ideas),
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in

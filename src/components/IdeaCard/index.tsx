@@ -14,7 +14,6 @@ const IdeaCard = (props: Props) => {
 			postedAt,
 		},
 	} = props;
-	console.log(postedAt);
 
 	return (
 		<Card p="lg" radius="md">
