@@ -25,7 +25,7 @@ const Home: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack style={{ width: '600px', margin: '0 auto' }}>
+        <Stack style={{ maxWidth: '600px', margin: '0 auto' }}>
           {cards}
         </Stack>
       </BaseLayout>
