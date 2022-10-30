@@ -11,7 +11,7 @@ const IdeaCard = (props: Props) => {
 	const {
 		idea: {
 			title,
-			description,
+			summary,
 			postedAt,
 			votes,
 		},
@@ -25,7 +25,7 @@ const IdeaCard = (props: Props) => {
 					<Text color="dimmed">{formatDate(postedAt, 'en')}</Text>
 				</Stack>
 				<Text size="sm">
-					{description}
+					{summary}
 				</Text>
 				<Group position="apart" style={{ marginTop: 'auto' }} pt="sm">
 					<Group></Group>

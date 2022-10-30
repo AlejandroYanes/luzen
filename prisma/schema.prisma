@@ -14,8 +14,9 @@ datasource db {
 
 model Idea {
     id              String          @id @db.VarChar(255) @default(uuid())
-    title           String          @db.VarChar(255)
-    description     String          @db.VarChar(5000)
+    title           String          @db.VarChar(50)
+    summary         String          @db.VarChar(1000)
+    description     String          @db.Text
     postedAt        DateTime        @default(now())
     votes           Int             @default(0)
 }
