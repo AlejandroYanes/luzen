@@ -1,7 +1,16 @@
 import Link from 'next/link';
-import { Button, createStyles, Group, Header, Avatar, Menu, Code } from '@mantine/core';
+import {
+  Button,
+  createStyles,
+  Group,
+  Header,
+  Avatar,
+  Menu,
+  Code,
+  Text,
+  Tooltip,
+} from '@mantine/core';
 import { openSpotlight } from '@mantine/spotlight';
-import { useHotkeys } from '@mantine/hooks';
 import { IconLogout, IconSearch, IconSettings, IconBucket } from '@tabler/icons';
 import { useSession, signOut } from 'next-auth/react';
 import RenderIf from 'components/RenderIf';
@@ -53,9 +62,6 @@ const useStyles = createStyles((theme) => ({
 const AppHeader = () => {
   const { classes } = useStyles();
   const { status, data } = useSession();
-  useHotkeys([
-    ['mod+K', () => openSpotlight()],
-  ]);
 
   return (
     <Header height={56} className={classes.header} mb={120} px={24}>
@@ -67,6 +73,17 @@ const AppHeader = () => {
         </Group>
 
         <Group>
+          <RenderIf condition={status !== 'authenticated'}>
+            <Tooltip
+              label="Sign In and start sharing right now."
+              color="blue"
+              position="bottom"
+              offset={20}
+              withArrow
+            >
+              <Text>What to post your ideas?</Text>
+            </Tooltip>
+          </RenderIf>
           <Button
             variant="default"
             leftIcon={<IconSearch size={16} stroke={1.5} />}
@@ -78,24 +95,29 @@ const AppHeader = () => {
           <RenderIf
             condition={status === 'authenticated'}
             fallback={
-              <Link href="/signin">
-                <Button>Log in</Button>
-              </Link>
+              <Group>
+                <Link href="/signin">
+                  <Button>Log in</Button>
+                </Link>
+              </Group>
             }
           >
-            <Menu position="bottom-end" offset={20} width={160}>
-              <Menu.Target>
-                <Avatar src={data?.user?.image} alt={data?.user?.name as string}>
-                  {data?.user?.name ? resolveInitials(data?.user?.name as string) : null}
-                </Avatar>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-                <Menu.Item color="red" icon={<IconLogout size={14} />} onClick={() => signOut()}>
-                  Log out
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+            <Group>
+              <Button>Post new Idea</Button>
+              <Menu position="bottom-end" offset={20} width={160}>
+                <Menu.Target>
+                  <Avatar src={data?.user?.image} alt={data?.user?.name as string}>
+                    {data?.user?.name ? resolveInitials(data?.user?.name as string) : null}
+                  </Avatar>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
+                  <Menu.Item color="red" icon={<IconLogout size={14} />} onClick={() => signOut()}>
+                    Log out
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </Group>
           </RenderIf>
         </Group>
       </div>

@@ -27,6 +27,9 @@ const SearchSpotlight = ({ children }: Props) => {
 
   return (
     <SpotlightProvider
+      shortcut="mod + K"
+      transition="slide-down"
+      transitionDuration={300}
       actions={mappedActions}
       filter={mockFilter}
       onQueryChange={handleSearch}
