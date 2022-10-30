@@ -16,7 +16,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
 	const { idea } = props;
 
 	if (!idea) {
-		return <Error statusCode={500} />;
+		return <Error statusCode={404} />;
 	}
 
 	const parsedIdea: Idea = JSON.parse(idea);
