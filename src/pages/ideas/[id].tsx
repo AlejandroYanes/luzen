@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Error from 'next/error'
 import type { Idea } from '@prisma/client';
 import { Group, Stack, Text, Title, ActionIcon } from '@mantine/core';
 import { prisma } from 'server/db/client';
@@ -13,6 +14,11 @@ interface Props {
 
 const IdeaDetails: NextPage<Props> = (props) => {
 	const { idea } = props;
+
+	if (!idea) {
+		return <Error statusCode={500} />;
+	}
+
 	const parsedIdea: Idea = JSON.parse(idea);
 	const { title, summary, description } = parsedIdea;
 
