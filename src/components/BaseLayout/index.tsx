@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import AppHeader from '../AppHeader';
+import AppHeader from 'components/AppHeader';
+import SearchSpotlight from 'components/SearchSpotlight';
 import { StyledWrapper, StyledContent } from './styled';
 
 interface Props {
@@ -10,12 +11,14 @@ const BaseLayout = (props: Props) => {
   const { children } = props;
 
   return (
-    <StyledWrapper>
-      <AppHeader />
-      <StyledContent>
-        {children}
-      </StyledContent>
-    </StyledWrapper>
+    <SearchSpotlight>
+      <StyledWrapper>
+        <AppHeader />
+        <StyledContent>
+          {children}
+        </StyledContent>
+      </StyledWrapper>
+    </SearchSpotlight>
   );
 };
 

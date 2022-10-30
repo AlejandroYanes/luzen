@@ -34,7 +34,7 @@ const Home: NextPage<Props> = (props) => {
 export default Home;
 
 export async function getStaticProps() {
-  const ideas = await prisma.idea.findMany();
+  const ideas = await prisma.idea.findMany({ orderBy: { votes: 'desc' } });
 
   return {
     props: {

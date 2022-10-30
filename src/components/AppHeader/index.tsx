@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { Button, createStyles, Group, Header, TextInput, Avatar, Menu } from '@mantine/core';
+import { Button, createStyles, Group, Header, Avatar, Menu, Code } from '@mantine/core';
+import { openSpotlight } from '@mantine/spotlight';
+import { useHotkeys } from '@mantine/hooks';
 import { IconLogout, IconSearch, IconSettings, IconBucket } from '@tabler/icons';
 import { useSession, signOut } from 'next-auth/react';
 import RenderIf from 'components/RenderIf';
@@ -51,6 +53,9 @@ const useStyles = createStyles((theme) => ({
 const AppHeader = () => {
   const { classes } = useStyles();
   const { status, data } = useSession();
+  useHotkeys([
+    ['mod+K', () => openSpotlight()],
+  ]);
 
   return (
     <Header height={56} className={classes.header} mb={120} px={24}>
@@ -62,11 +67,14 @@ const AppHeader = () => {
         </Group>
 
         <Group>
-          <TextInput
-            className={classes.search}
-            placeholder="Search"
-            icon={<IconSearch size={16} stroke={1.5} />}
-          />
+          <Button
+            variant="default"
+            leftIcon={<IconSearch size={16} stroke={1.5} />}
+            rightIcon={<Code>⌘ + K</Code>}
+            onClick={() => openSpotlight()}
+          >
+            Search
+          </Button>
           <RenderIf
             condition={status === 'authenticated'}
             fallback={
