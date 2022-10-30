@@ -38,7 +38,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      ideas: JSON.stringify(ideas),
+      ideas: JSON.stringify(ideas || []),
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in

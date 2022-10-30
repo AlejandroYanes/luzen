@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { Idea } from '@prisma/client';
 import { Card, Group, Title, Text, Button, Stack } from '@mantine/core';
 import { IconBulb } from '@tabler/icons';
@@ -10,6 +11,7 @@ interface Props {
 const IdeaCard = (props: Props) => {
 	const {
 		idea: {
+			id,
 			title,
 			summary,
 			postedAt,
@@ -30,7 +32,9 @@ const IdeaCard = (props: Props) => {
 				<Group position="apart" style={{ marginTop: 'auto' }} pt="sm">
 					<Group></Group>
 					<Group>
-						<Button variant="default">Visit</Button>
+						<Link href={`/ideas/${id}`}>
+							<Button variant="default">Visit</Button>
+						</Link>
 						<Button color="primary" leftIcon={<IconBulb />}>Light Up ({votes})</Button>
 					</Group>
 				</Group>

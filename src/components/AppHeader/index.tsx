@@ -1,6 +1,5 @@
-import { createStyles, Header, TextInput, Group, Button } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconSearch, IconBucket } from '@tabler/icons';
+import { Button, createStyles, Group, Header, TextInput } from '@mantine/core';
+import { IconBucket, IconSearch } from '@tabler/icons';
 
 const useStyles = createStyles((theme) => ({
 	header: {
@@ -44,7 +43,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const AppHeader = () => {
-	const [opened, { toggle }] = useDisclosure(false);
 	const { classes } = useStyles();
 
 	return (
