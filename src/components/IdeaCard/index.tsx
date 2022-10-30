@@ -9,38 +9,38 @@ interface Props {
 }
 
 const IdeaCard = (props: Props) => {
-	const {
-		idea: {
-			id,
-			title,
-			summary,
-			postedAt,
-			votes,
-		},
-	} = props;
+  const {
+    idea: {
+      id,
+      title,
+      summary,
+      postedAt,
+      votes,
+    },
+  } = props;
 
-	return (
-		<Card p="lg" radius="md">
-			<Stack style={{ height: '100%' }}>
-				<Stack spacing={0}>
-					<Title order={3}>{title}</Title>
-					<Text size="sm" color="dimmed">{formatDate(postedAt, 'en')}</Text>
-				</Stack>
-				<Text>
-					{summary}
-				</Text>
-				<Group position="apart" style={{ marginTop: 'auto' }} pt="sm">
-					<Group></Group>
-					<Group>
-						<Link href={`/ideas/${id}`}>
-							<Button variant="default">Visit</Button>
-						</Link>
-						<Button color="primary" leftIcon={<IconBulb />}>Light Up ({votes})</Button>
-					</Group>
-				</Group>
-			</Stack>
-		</Card>
-	);
+  return (
+    <Card p="lg" radius="md">
+      <Stack style={{ height: '100%' }}>
+        <Stack spacing={0}>
+          <Title order={3}>{title}</Title>
+          <Text size="sm" color="dimmed">{formatDate(postedAt, 'en')}</Text>
+        </Stack>
+        <Text>
+          {summary}
+        </Text>
+        <Group position="apart" style={{ marginTop: 'auto' }} pt="sm">
+          <Group></Group>
+          <Group>
+            <Link href={`/ideas/${id}`}>
+              <Button variant="default">Visit</Button>
+            </Link>
+            <Button color="primary" leftIcon={<IconBulb />}>Light Up ({votes})</Button>
+          </Group>
+        </Group>
+      </Stack>
+    </Card>
+  );
 };
 
 export default IdeaCard;

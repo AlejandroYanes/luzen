@@ -7,16 +7,16 @@ interface Props {
 }
 
 const BaseLayout = (props: Props) => {
-	const { children } = props;
+  const { children } = props;
 
-	return (
-		<StyledWrapper>
-			<AppHeader />
-			<StyledContent>
-				{children}
-			</StyledContent>
-		</StyledWrapper>
-	);
+  return (
+    <StyledWrapper>
+      <AppHeader />
+      <StyledContent>
+        {children}
+      </StyledContent>
+    </StyledWrapper>
+  );
 };
 
 export default BaseLayout;
