@@ -1,5 +1,5 @@
 import { Button, createStyles, Group, Header, TextInput } from '@mantine/core';
-import { IconBucket, IconSearch } from '@tabler/icons';
+import { IconSearch } from '@tabler/icons';
 
 const useStyles = createStyles((theme) => ({
 	header: {
@@ -49,8 +49,6 @@ const AppHeader = () => {
 		<Header height={56} className={classes.header} mb={120}>
 			<div className={classes.inner}>
 				<Group>
-					{/*<Burger opened={opened} onClick={toggle} size="sm" />*/}
-					<IconBucket size={32} />
 				</Group>
 
 				<Group>
@@ -59,8 +57,7 @@ const AppHeader = () => {
 						placeholder="Search"
 						icon={<IconSearch size={16} stroke={1.5} />}
 					/>
-					<Button variant="default">Log in</Button>
-					<Button>Sign up</Button>
+					<Button>Log in</Button>
 				</Group>
 			</div>
 		</Header>

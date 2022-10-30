@@ -24,9 +24,9 @@ const IdeaCard = (props: Props) => {
 			<Stack style={{ height: '100%' }}>
 				<Stack spacing={0}>
 					<Title order={3}>{title}</Title>
-					<Text color="dimmed">{formatDate(postedAt, 'en')}</Text>
+					<Text size="sm" color="dimmed">{formatDate(postedAt, 'en')}</Text>
 				</Stack>
-				<Text size="sm">
+				<Text>
 					{summary}
 				</Text>
 				<Group position="apart" style={{ marginTop: 'auto' }} pt="sm">
