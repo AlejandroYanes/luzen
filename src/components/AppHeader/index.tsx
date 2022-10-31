@@ -103,7 +103,9 @@ const AppHeader = () => {
             }
           >
             <Group>
-              <Button>Post new Idea</Button>
+              <Link href="/post">
+                <Button>Post new Idea</Button>
+              </Link>
               <Menu position="bottom-end" offset={20} width={160}>
                 <Menu.Target>
                   <Avatar src={data?.user?.image} alt={data?.user?.name as string}>

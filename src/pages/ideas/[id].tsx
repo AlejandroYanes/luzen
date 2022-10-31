@@ -52,13 +52,11 @@ const IdeaDetails: NextPage<Props> = (props) => {
       </Head>
       <BaseLayout>
         <Stack spacing="xl" style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <Group>
-            <Link href="/">
-              <ActionIcon>
-                <IconArrowLeft />
-              </ActionIcon>
-            </Link>
-          </Group>
+          <Link href="/">
+            <ActionIcon>
+              <IconArrowLeft />
+            </ActionIcon>
+          </Link>
           <Title order={1} mb="xl">{title}</Title>
           <Text>{description}</Text>
         </Stack>

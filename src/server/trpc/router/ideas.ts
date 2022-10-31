@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { router, publicProcedure } from '../trpc';
+import { router, publicProcedure, protectedProcedure } from '../trpc';
 
 export const ideasRouter = router({
   listTop: publicProcedure
@@ -13,5 +13,11 @@ export const ideasRouter = router({
         });
       }
       return ctx.prisma.idea.findMany({ take: 5, orderBy: { votes: 'desc' } });
+    }),
+  post: protectedProcedure
+    .input(z.object({ title: z.string(), summary: z.string(), description: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const idea = await ctx.prisma.idea.create({ data: input });
+      return idea.id;
     }),
 });
