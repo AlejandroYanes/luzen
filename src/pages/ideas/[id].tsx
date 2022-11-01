@@ -58,7 +58,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
             </ActionIcon>
           </Link>
           <Title order={1} mb="xl">{title}</Title>
-          <Text>{description}</Text>
+          <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
         </Stack>
       </BaseLayout>
     </>
