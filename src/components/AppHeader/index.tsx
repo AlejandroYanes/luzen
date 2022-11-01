@@ -97,7 +97,7 @@ const AppHeader = () => {
             fallback={
               <Group>
                 <Link href="/signin">
-                  <Button>Log in</Button>
+                  <Button>Sign in</Button>
                 </Link>
               </Group>
             }
