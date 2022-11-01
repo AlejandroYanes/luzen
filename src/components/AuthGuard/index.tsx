@@ -37,7 +37,6 @@ const AuthGuard = (props: Props) => {
       </Alert>
     );
   }
-
   return children;
 };
 

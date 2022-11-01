@@ -9,8 +9,7 @@ import {
   Textarea,
   TextInput,
   Title,
-  Alert,
-  Loader,
+  Alert, SimpleGrid,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconArrowLeft, IconAlertCircle } from '@tabler/icons';
@@ -18,6 +17,7 @@ import { trpc } from 'utils/trpc';
 import BaseLayout from 'components/BaseLayout';
 import RenderIf from 'components/RenderIf';
 import AuthGuard from 'components/AuthGuard';
+import Loading from './Loading';
 
 interface IdeaFormValues {
   title: string;
@@ -56,7 +56,7 @@ const Post: NextPage = () => {
   return (
     <BaseLayout>
       <Stack spacing="xl" style={{ width: '600px', margin: '0 auto' }}>
-        <AuthGuard loadingUI={<Loader />}>
+        <AuthGuard loadingUI={<Loading />}>
           <Link href="/">
             <ActionIcon>
               <IconArrowLeft />
