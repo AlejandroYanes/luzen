@@ -26,7 +26,6 @@ const AuthGuard = (props: Props) => {
       <Alert
         icon={<IconAlertCircle size={16} />}
         title="Hmm..."
-        // color="dark"
         variant="outline"
       >
         {`Seems we're not sure who you are, do you mind signing in?`}
