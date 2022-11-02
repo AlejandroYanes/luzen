@@ -114,7 +114,11 @@ const AppHeader = () => {
                 </Menu.Target>
                 <Menu.Dropdown>
                   <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-                  <Menu.Item color="red" icon={<IconLogout size={14} />} onClick={() => signOut()}>
+                  <Menu.Item
+                    color="red"
+                    icon={<IconLogout size={14} />}
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                  >
                     Log out
                   </Menu.Item>
                 </Menu.Dropdown>

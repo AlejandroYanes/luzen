@@ -9,7 +9,7 @@ import {
   Textarea,
   TextInput,
   Title,
-  Alert, SimpleGrid,
+  Alert,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconArrowLeft, IconAlertCircle } from '@tabler/icons';
@@ -79,10 +79,10 @@ const Post: NextPage = () => {
               <Textarea
                 withAsterisk
                 label="Summary"
-                description={`${1000 - form.values.summary.length} characters left`}
+                description={`${690 - form.values.summary.length} characters left`}
                 minRows={8}
-                maxRows={20}
-                maxLength={1000}
+                maxRows={8}
+                maxLength={690}
                 {...form.getInputProps('summary')}
               />
               <Textarea
