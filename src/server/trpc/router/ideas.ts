@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { router, publicProcedure, protectedProcedure } from '../trpc';
+import { TRPCError } from '@trpc/server';
 
 export const ideasRouter = router({
   listTop: publicProcedure
@@ -19,5 +20,21 @@ export const ideasRouter = router({
     .mutation(async ({ ctx, input }) => {
       const idea = await ctx.prisma.idea.create({ data: input });
       return idea.id;
+    }),
+  lightUp: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input: ideaId }) => {
+      const idea = await ctx.prisma.idea.findUnique({
+        where: {
+          id: ideaId,
+        },
+      });
+
+      if (!idea) throw new TRPCError({ code: 'NOT_FOUND' });
+
+      await ctx.prisma.idea.update({
+        where: { id: ideaId },
+        data: { votes: idea.votes + 1 }
+      });
     }),
 });

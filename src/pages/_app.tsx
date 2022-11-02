@@ -2,6 +2,7 @@ import { type AppType } from 'next/app';
 import { type Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 import { useColorScheme } from '@mantine/hooks';
 import { trpc } from 'utils/trpc';
 import '../styles/globals.css';
@@ -33,7 +34,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
           }),
         }}
       >
-        <Component {...pageProps} />
+        <NotificationsProvider position="top-right">
+          <Component {...pageProps} />
+        </NotificationsProvider>
       </MantineProvider>
     </SessionProvider>
   );
