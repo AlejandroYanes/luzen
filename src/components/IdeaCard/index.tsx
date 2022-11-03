@@ -25,9 +25,15 @@ const IdeaCard = (props: Props) => {
   const { status } = useSession();
   const [votes, setVotes] = useState(originalVotes);
 
-  const { mutate } = trpc.ideas.lightUp.useMutation({
+  const { data: userVotedFor = false, refetch } = trpc.ideas.checkIfUserVoted.useQuery(id, {
+    enabled: status === 'authenticated',
+  });
+
+  const { mutate } = trpc.ideas.toggleVote.useMutation({
     onSuccess: () => {
-      setVotes(votes + 1);
+      refetch();
+      const modifier = userVotedFor ? -1 : 1;
+      setVotes(votes + modifier);
     },
   });
 
@@ -60,7 +66,7 @@ const IdeaCard = (props: Props) => {
               <Button variant="default">Visit</Button>
             </Link>
             <Button
-              color="primary"
+              color={userVotedFor ? 'orange' : 'blue'}
               leftIcon={<IconBulb />}
               onClick={handleLightUp}
             >
