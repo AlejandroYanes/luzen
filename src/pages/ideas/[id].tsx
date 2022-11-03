@@ -1,11 +1,12 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import type { Idea } from '@prisma/client';
-import { Group, Stack, Text, Title, ActionIcon } from '@mantine/core';
+import { ActionIcon, Divider, Group, Stack, Text, Title } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 import Link from 'next/link';
 import { prisma } from 'server/db/client';
 import BaseLayout from 'components/BaseLayout';
+import Comments from './Comments';
 
 interface Props {
 	idea: string;
@@ -51,7 +52,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack spacing="xl" style={{ maxWidth: '600px', margin: '0 auto' }}>
+        <Stack spacing="xl" style={{ maxWidth: '700px', margin: '0 auto' }}>
           <Link href="/">
             <ActionIcon>
               <IconArrowLeft />
@@ -59,6 +60,8 @@ const IdeaDetails: NextPage<Props> = (props) => {
           </Link>
           <Title order={1} mb="xl">{title}</Title>
           <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
+          <Divider />
+          <Comments />
         </Stack>
       </BaseLayout>
     </>
