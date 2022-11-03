@@ -27,7 +27,7 @@ interface Props {
   };
 }
 
-export function Comment({ postedAt, body, author }: Props) {
+export default function Comment({ postedAt, body, author }: Props) {
   const { classes } = useStyles();
   return (
     <Paper withBorder radius="md" className={classes.comment}>

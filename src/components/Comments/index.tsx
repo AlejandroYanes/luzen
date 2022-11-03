@@ -1,5 +1,5 @@
 import { Button, Textarea, Title } from '@mantine/core';
-import { Comment } from './Comment';
+import Comment from './Comment';
 import { mockComment } from './mock-comment';
 
 const Comments = () => {

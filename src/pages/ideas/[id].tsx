@@ -6,7 +6,7 @@ import { IconArrowLeft } from '@tabler/icons';
 import Link from 'next/link';
 import { prisma } from 'server/db/client';
 import BaseLayout from 'components/BaseLayout';
-import Comments from './Comments';
+import Comments from 'components/Comments';
 
 interface Props {
 	idea: string;
