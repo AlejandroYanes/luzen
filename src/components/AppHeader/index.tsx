@@ -64,7 +64,7 @@ const AppHeader = () => {
   const { status, data } = useSession();
 
   return (
-    <Header height={56} className={classes.header} mb={120} px={24}>
+    <Header height={56} className={classes.header} mb={48} px={24}>
       <div className={classes.inner}>
         <Group>
           <Link href="/">

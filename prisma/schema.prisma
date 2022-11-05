@@ -19,7 +19,20 @@ model Idea {
     description     String          @db.Text
     postedAt        DateTime        @default(now())
     votes           Int             @default(0)
+    author          User?            @relation(fields: [authorId], references: [id])
+    authorId        String?
+    comments        Comment[]
     usersWhoVoted   VotedIdeas[]
+}
+
+model Comment {
+    id              String          @id @db.VarChar(255) @default(uuid())
+    content         String          @db.VarChar(505)
+    postedAt        DateTime        @default(now())
+    author          User            @relation(fields: [authorId], references: [id])
+    authorId        String
+    idea            Idea            @relation(fields: [ideaId], references: [id])
+    ideaId          String
 }
 
 model VotedIdeas {
@@ -58,14 +71,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  ideasVotedFor VotedIdeas[]
+  id                String    @id @default(cuid())
+  name              String?
+  email             String?   @unique
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  ideas             Idea[]
+  ideasVotedFor     VotedIdeas[]
+  comment           Comment[]
 }
 
 model VerificationToken {
