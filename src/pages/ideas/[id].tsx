@@ -1,12 +1,16 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import type { Idea } from '@prisma/client';
-import { ActionIcon, Divider, Group, Stack, Text, Title } from '@mantine/core';
-import { IconArrowLeft } from '@tabler/icons';
 import Link from 'next/link';
+import type { PrismaClient } from '@prisma/client';
+import { ActionIcon, Avatar, Divider, Group, Stack, Text, Title } from '@mantine/core';
+import { IconArrowLeft } from '@tabler/icons';
 import { prisma } from 'server/db/client';
+import type { inferPrismaModelFromQuery } from 'utils/prisma';
+import { resolveInitials } from 'utils/strings';
+import { formatDate } from 'utils/dates';
 import BaseLayout from 'components/BaseLayout';
 import Comments from 'components/Comments';
+import VoteButton from 'components/VoteButton';
 
 interface Props {
 	idea: string;
@@ -14,9 +18,9 @@ interface Props {
 
 const IdeaDetails: NextPage<Props> = (props) => {
   const { idea = '{}' } = props;
-  const parsedIdea: Idea = JSON.parse(idea);
+  const parsedIdea: IdeaById = JSON.parse(idea);
 
-  if (!parsedIdea.id) {
+  if (!parsedIdea?.id) {
     return (
       <>
         <Head>
@@ -42,7 +46,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
   }
 
 
-  const { title, summary, description } = parsedIdea;
+  const { id, title, summary, description, postedAt, votes, author } = parsedIdea;
 
   return (
     <>
@@ -52,17 +56,44 @@ const IdeaDetails: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack spacing="xl" style={{ maxWidth: '700px', margin: '0 auto' }}>
-          <Link href="/">
-            <ActionIcon>
-              <IconArrowLeft />
-            </ActionIcon>
-          </Link>
-          <Title order={1} mb="xl">{title}</Title>
-          <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
-          <Divider />
-          <Comments />
-        </Stack>
+        {/*<Stack spacing="xl" style={{ maxWidth: '700px', margin: '0 auto' }}>*/}
+        {/*  <Link href="/">*/}
+        {/*    <ActionIcon>*/}
+        {/*      <IconArrowLeft />*/}
+        {/*    </ActionIcon>*/}
+        {/*  </Link>*/}
+        {/*  <Title order={1} mb="xl">{title}</Title>*/}
+        {/*  <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>*/}
+        {/*  <Divider />*/}
+        {/*  <Comments />*/}
+        {/*</Stack>*/}
+        <Group align="flex-start" sx={{ padding: '0 0 0 64px' }}>
+          <Stack sx={{ width: '700px', margin: '0 auto' }}>
+            <Link href="/">
+              <ActionIcon>
+                <IconArrowLeft />
+              </ActionIcon>
+            </Link>
+            <Title order={1}>{title}</Title>
+            <Group mb="xl" align="center" position="apart">
+              <Group>
+                <Avatar src={author?.image} alt={author?.name as string}>
+                  {author?.name ? resolveInitials(author?.name as string) : 'A/N'}
+                </Avatar>
+                <Stack spacing={0}>
+                  <Text>{author?.name ?? 'Anonymous'}</Text>
+                  <Text size="sm" color="dimmed">{formatDate(postedAt, 'en')}</Text>
+                </Stack>
+              </Group>
+              <VoteButton ideaId={id} votes={votes} />
+            </Group>
+            <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
+          </Stack>
+          <Divider orientation="vertical" sx={{ minHeight: '85vh' }} />
+          <Stack sx={{ width: '25%' }}>
+            <Comments ideaId={id} />
+          </Stack>
+        </Group>
       </BaseLayout>
     </>
   );
@@ -81,7 +112,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: { params: { id: string } }) {
   const { params: { id } } = context;
-  const idea = await prisma.idea.findUnique({ where: { id } });
+  const idea = await queryIdeaById(prisma, id);
 
   return {
     props: {
@@ -89,7 +120,29 @@ export async function getStaticProps(context: { params: { id: string } }) {
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
-    // - At most once every 10 seconds
+    // - At most once a day
     revalidate: 60 * 60 * 24, // In seconds
   }
+}
+
+type IdeaById = inferPrismaModelFromQuery<typeof queryIdeaById>;
+
+function queryIdeaById(prismaClient: PrismaClient, id: string) {
+  return prisma.idea.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      title: true,
+      summary: true,
+      description: true,
+      postedAt: true,
+      votes: true,
+      author: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
 }

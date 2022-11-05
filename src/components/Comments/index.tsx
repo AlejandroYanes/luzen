@@ -1,24 +1,32 @@
-import { Button, Textarea, Title } from '@mantine/core';
+import { Text } from '@mantine/core';
+import { trpc } from 'utils/trpc';
 import Comment from './Comment';
-import { mockComment } from './mock-comment';
+import Form from './Form';
 
-const Comments = () => {
+interface Props {
+  ideaId: string;
+}
+
+const Comments = (props: Props) => {
+  const { ideaId } = props;
+  const { data: comments, refetch } = trpc.ideas.listComments.useQuery(ideaId);
+  console.log(comments);
+
+  if (!comments || comments.length === 0) {
+    return (
+      <>
+        <Text>Be the first to comment.</Text>
+        <Form ideaId={ideaId} refetch={refetch} />
+      </>
+    );
+  }
+
+  const commentElements = comments.map((comment) => <Comment key={comment.id} {...comment} />)
+
   return (
     <>
-      <Title order={3}>Comments</Title>
-      <Comment {...mockComment} />
-      <Comment {...mockComment} />
-      <Comment {...mockComment} />
-      <Textarea
-        label="Drop some words"
-        placeholder="Start typing here"
-        description="500 characters left"
-        minRows={8}
-        maxRows={20}
-        maxLength={500}
-        autosize
-      />
-      <Button>Post</Button>
+      {commentElements}
+      <Form ideaId={ideaId} refetch={refetch} />
     </>
   );
 };

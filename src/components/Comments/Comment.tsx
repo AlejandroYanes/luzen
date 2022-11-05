@@ -1,4 +1,6 @@
 import { createStyles, Text, Avatar, Group, TypographyStylesProvider, Paper } from '@mantine/core';
+import { resolveInitials } from '../../utils/strings';
+import { formatDate } from '../../utils/dates';
 
 const useStyles = createStyles((theme) => ({
   comment: {
@@ -19,30 +21,29 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface Props {
-  postedAt: string;
-  body: string;
-  author: {
-    name: string;
-    image: string;
+  postedAt: Date;
+  content: string;
+  author?: {
+    name: string | null;
+    image?: string | null;
   };
 }
 
-export default function Comment({ postedAt, body, author }: Props) {
+export default function Comment(props: Props) {
+  const { postedAt, content, author } = props;
   const { classes } = useStyles();
   return (
     <Paper withBorder radius="md" className={classes.comment}>
-      <Group>
-        <Avatar src={author.image} alt={author.name} radius="xl" />
+      <Group mb="xs">
+        <Avatar src={author?.image} alt={author?.name as string}>
+          {author?.name ? resolveInitials(author?.name as string) : 'A/N'}
+        </Avatar>
         <div>
-          <Text size="sm">{author.name}</Text>
-          <Text size="xs" color="dimmed">
-            {postedAt}
-          </Text>
+          <Text size="sm">{author?.name ?? 'Anonymous'}</Text>
+          <Text size="xs" color="dimmed">{formatDate(postedAt, 'en')}</Text>
         </div>
       </Group>
-      <TypographyStylesProvider className={classes.body}>
-        <div className={classes.content} dangerouslySetInnerHTML={{ __html: body }} />
-      </TypographyStylesProvider>
+      <Text>{content}</Text>
     </Paper>
   );
 }
