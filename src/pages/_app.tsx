@@ -5,7 +5,6 @@ import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { useColorScheme } from '@mantine/hooks';
 import { trpc } from 'utils/trpc';
-import '../styles/globals.css';
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -31,6 +30,10 @@ const MyApp: AppType<{ session: Session | null }> = ({
               backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
               color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
             },
+            a: {
+              color: 'inherit',
+              textDecoration: 'none',
+            }
           }),
         }}
       >

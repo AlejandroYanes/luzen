@@ -64,8 +64,9 @@ const IdeaDetails: NextPage<Props> = (props) => {
         {/*  </Link>*/}
         {/*  <Title order={1} mb="xl">{title}</Title>*/}
         {/*  <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>*/}
-        {/*  <Divider />*/}
-        {/*  <Comments />*/}
+        {/*  <Divider my="xl" />*/}
+        {/*  <Title order={3}>Comments</Title>*/}
+        {/*  <Comments ideaId={id} />*/}
         {/*</Stack>*/}
         <Group align="flex-start" sx={{ padding: '0 0 0 64px' }}>
           <Stack sx={{ width: '700px', margin: '0 auto' }}>

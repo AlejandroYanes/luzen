@@ -1,4 +1,3 @@
-import { Text } from '@mantine/core';
 import { trpc } from 'utils/trpc';
 import Comment from './Comment';
 import Form from './Form';
@@ -10,14 +9,10 @@ interface Props {
 const Comments = (props: Props) => {
   const { ideaId } = props;
   const { data: comments, refetch } = trpc.ideas.listComments.useQuery(ideaId);
-  console.log(comments);
 
   if (!comments || comments.length === 0) {
     return (
-      <>
-        <Text>Be the first to comment.</Text>
-        <Form ideaId={ideaId} refetch={refetch} />
-      </>
+      <Form ideaId={ideaId} refetch={refetch} />
     );
   }
 

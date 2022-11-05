@@ -1,11 +1,12 @@
 import Link from 'next/link';
-import type { Idea } from '@prisma/client';
-import { Button, Card, Group, Stack, Text, Title } from '@mantine/core';
+import { Avatar, Button, Card, Group, Stack, Text, Title } from '@mantine/core';
 import { formatDate } from 'utils/dates';
 import VoteButton from 'components/VoteButton';
+import { resolveInitials } from 'utils/strings';
+import type { ListedIdea } from '../../pages';
 
 interface Props {
-	idea: Idea;
+	idea: ListedIdea;
 }
 
 const IdeaCard = (props: Props) => {
@@ -16,30 +17,35 @@ const IdeaCard = (props: Props) => {
       summary,
       postedAt,
       votes,
+      author,
     },
   } = props;
 
 
   return (
     <Card p="lg" radius="md">
-      <Stack style={{ height: '100%' }}>
+      <Title order={3}>{title}</Title>
+      <Group mb="lg">
+        <Avatar src={author?.image} alt={author?.name as string}>
+          {author?.name ? resolveInitials(author?.name as string) : 'A/N'}
+        </Avatar>
         <Stack spacing={0}>
-          <Title order={3}>{title}</Title>
+          <Text>{author?.name ?? 'Anonymous'}</Text>
           <Text size="sm" color="dimmed">{formatDate(postedAt, 'en')}</Text>
         </Stack>
-        <Text>
-          {summary}
-        </Text>
-        <Group position="apart" style={{ marginTop: 'auto' }} pt="sm">
-          <Group></Group>
-          <Group>
-            <Link href={`/ideas/${id}`}>
-              <Button variant="default">Visit</Button>
-            </Link>
-            <VoteButton ideaId={id} votes={votes} />
-          </Group>
+      </Group>
+      <Text>
+        {summary}
+      </Text>
+      <Group position="apart" style={{ marginTop: 'auto' }} pt="sm">
+        <Group></Group>
+        <Group>
+          <Link href={`/ideas/${id}`}>
+            <Button variant="default">Visit</Button>
+          </Link>
+          <VoteButton ideaId={id} votes={votes} />
         </Group>
-      </Stack>
+      </Group>
     </Card>
   );
 };

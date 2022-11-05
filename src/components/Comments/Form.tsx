@@ -1,4 +1,6 @@
-import { Button, Stack, Textarea } from '@mantine/core';
+import { useSession } from 'next-auth/react';
+import { Button, Stack, Text, Textarea } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 import { useForm } from '@mantine/form';
 import { trpc } from 'utils/trpc';
 
@@ -21,6 +23,7 @@ const formRules = {
 
 const Form = (props: Props) => {
   const { ideaId, refetch } = props;
+  const { status } = useSession();
   const { mutate, isLoading } = trpc.ideas.postComment.useMutation({
     onSuccess: () => {
       form.reset();
@@ -36,6 +39,22 @@ const Form = (props: Props) => {
   const handlePost = form.onSubmit((values: CommentFormValues) => {
     mutate({ ...values, idea: ideaId });
   });
+
+  if (status === 'unauthenticated') {
+    const handleClick = () => {
+      showNotification({
+        title: 'Hey',
+        message: 'Thanks for the interest, please Sign In.',
+        autoClose: 2500,
+      });
+    };
+    return (
+      <>
+        <Text align="center">Be the first to comment.</Text>
+        <Button fullWidth mt="xl" onClick={handleClick}>Add a comment</Button>
+      </>
+    );
+  }
 
   return (
     <form onSubmit={handlePost}>

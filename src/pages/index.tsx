@@ -1,10 +1,10 @@
 import { type NextPage } from 'next';
 import Head from 'next/head';
-import type { Idea } from '@prisma/client';
 import { Stack } from '@mantine/core';
 import BaseLayout from 'components/BaseLayout';
 import IdeaCard from 'components/IdeaCard';
 import { prisma } from 'server/db/client';
+import type { inferPrismaModelFromQuery } from 'utils/prisma';
 
 interface Props {
   ideas: string;
@@ -12,8 +12,8 @@ interface Props {
 
 const Home: NextPage<Props> = (props) => {
   const { ideas } = props;
-  const parsedIdeas: Idea[] = JSON.parse(ideas);
-  const cards = parsedIdeas.map((idea) => <IdeaCard key={idea.id} idea={idea} />)
+  const parsedIdeas: ListedIdea[] = JSON.parse(ideas);
+  const cards = parsedIdeas.map((idea) => <IdeaCard key={idea.id} idea={idea} />);
 
   return (
     <>
@@ -34,17 +34,7 @@ const Home: NextPage<Props> = (props) => {
 export default Home;
 
 export async function getStaticProps() {
-  const ideas = await prisma.idea.findMany({
-    take: 5,
-    orderBy: { votes: 'desc' },
-    select: {
-      id: true,
-      title: true,
-      summary: true,
-      votes: true,
-      postedAt: true,
-    },
-  });
+  const ideas = await listTopIdeas();
 
   return {
     props: {
@@ -55,4 +45,26 @@ export async function getStaticProps() {
     // - At most once every day
     revalidate: 60 * 60 * 24, // In seconds
   }
+}
+
+export type ListedIdea = inferPrismaModelFromQuery<typeof listTopIdeas>[0];
+
+function listTopIdeas() {
+  return prisma.idea.findMany({
+    take: 5,
+    orderBy: { votes: 'desc' },
+    select: {
+      id: true,
+      title: true,
+      summary: true,
+      votes: true,
+      postedAt: true,
+      author: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
 }
