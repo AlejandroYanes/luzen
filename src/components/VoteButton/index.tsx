@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Button } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
 import { IconBulb } from '@tabler/icons';
+import { openSignInModal } from 'components/SignInModal';
 import { trpc } from 'utils/trpc';
 
 interface Props {
@@ -29,11 +29,7 @@ const VoteButton = (props: Props) => {
 
   const handleLightUp = () => {
     if (status === 'unauthenticated') {
-      showNotification({
-        title: 'Hey',
-        message: 'Thanks for the interest, please Sign In.',
-        autoClose: 2500,
-      });
+      openSignInModal();
       return;
     }
     mutate(ideaId);

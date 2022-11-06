@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { Button, Stack, Text, Textarea } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
 import { useForm } from '@mantine/form';
+import { openSignInModal } from 'components/SignInModal';
 import { trpc } from 'utils/trpc';
 
 interface Props {
@@ -41,18 +41,8 @@ const Form = (props: Props) => {
   });
 
   if (status === 'unauthenticated') {
-    const handleClick = () => {
-      showNotification({
-        title: 'Hey',
-        message: 'Thanks for the interest, please Sign In.',
-        autoClose: 2500,
-      });
-    };
     return (
-      <>
-        <Text align="center">Be the first to comment.</Text>
-        <Button fullWidth mt="xl" onClick={handleClick}>Add a comment</Button>
-      </>
+      <Button mr="auto" onClick={() => openSignInModal()}>Sign in to comment</Button>
     );
   }
 

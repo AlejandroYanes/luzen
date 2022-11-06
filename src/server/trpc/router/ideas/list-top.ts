@@ -8,7 +8,7 @@ const listTop = publicProcedure
       return ctx.prisma.idea.findMany({
         take: 5,
         orderBy: { votes: 'desc' },
-        where: { title: { contains: input } },
+        where: { title: { contains: input }, isDraft: false },
         select: {
           id: true,
           title: true,
@@ -27,6 +27,7 @@ const listTop = publicProcedure
     return ctx.prisma.idea.findMany({
       take: 5,
       orderBy: { votes: 'desc' },
+      where: { isDraft: false },
       select: {
         id: true,
         title: true,

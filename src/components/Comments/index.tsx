@@ -1,6 +1,7 @@
 import { trpc } from 'utils/trpc';
 import Comment from './Comment';
 import Form from './Form';
+import { Text } from '@mantine/core';
 
 interface Props {
   ideaId: string;
@@ -12,7 +13,10 @@ const Comments = (props: Props) => {
 
   if (!comments || comments.length === 0) {
     return (
-      <Form ideaId={ideaId} refetch={refetch} />
+      <>
+        <Text>Be the first to comment.</Text>
+        <Form ideaId={ideaId} refetch={refetch} />
+      </>
     );
   }
 

@@ -2,7 +2,7 @@
 import { useSession } from 'next-auth/react';
 import { IconAlertCircle } from '@tabler/icons';
 import { Alert, Button, Group } from '@mantine/core';
-import Link from 'next/link';
+import { openSignInModal } from 'components/SignInModal';
 
 /*
 * TS2786: 'AuthGuard' cannot be used as a JSX component.
@@ -12,11 +12,11 @@ import Link from 'next/link';
 */
 interface Props {
   children: any;
-  loadingUI: any;
+  loadingUI?: any;
 }
 
 const AuthGuard = (props: Props) => {
-  const { loadingUI, children } = props;
+  const { loadingUI = null, children } = props;
   const { status } = useSession();
 
   if (status === 'loading') return loadingUI;
@@ -30,9 +30,7 @@ const AuthGuard = (props: Props) => {
       >
         {`Seems we're not sure who you are, do you mind signing in?`}
         <Group position="right" mt="md">
-          <Link href="/signin">
-            <Button>Sign in</Button>
-          </Link>
+          <Button onClick={() => openSignInModal()}>Sign in</Button>
         </Group>
       </Alert>
     );

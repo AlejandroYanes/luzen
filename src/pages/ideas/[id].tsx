@@ -50,7 +50,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
                 <IconArrowLeft />
               </ActionIcon>
             </Group>
-            <Title order={1} mb={48}>Oops, we could not find this idea</Title>
+            <Title order={1} mb={48} align="center">Oops, we could not find this idea</Title>
             <span style={{ fontSize: '72px', textAlign: 'center' }}>😔</span>
           </Stack>
         </BaseLayout>

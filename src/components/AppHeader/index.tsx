@@ -1,21 +1,11 @@
 import Link from 'next/link';
-import {
-  Button,
-  createStyles,
-  Group,
-  Header,
-  Avatar,
-  Menu,
-  Code,
-  Text,
-  Tooltip,
-} from '@mantine/core';
+import { Button, Code, createStyles, Group, Header, Text, Tooltip, } from '@mantine/core';
 import { openSpotlight } from '@mantine/spotlight';
-import { IconLogout, IconSearch, IconSettings, IconBucket } from '@tabler/icons';
-import { useSession, signOut } from 'next-auth/react';
+import { IconBucket, IconSearch } from '@tabler/icons';
+import { useSession } from 'next-auth/react';
 import RenderIf from 'components/RenderIf';
-import { resolveInitials } from 'utils/strings';
-import AvatarMenu from '../AvatarMenu';
+import AvatarMenu from 'components/AvatarMenu';
+import { openSignInModal } from 'components/SignInModal';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -97,9 +87,7 @@ const AppHeader = () => {
             condition={status === 'authenticated'}
             fallback={
               <Group>
-                <Link href="/signin">
-                  <Button>Sign in</Button>
-                </Link>
+                <Button onClick={() => openSignInModal()}>Sign in</Button>
               </Group>
             }
           >

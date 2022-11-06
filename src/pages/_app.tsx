@@ -3,7 +3,9 @@ import { type Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
+import { ModalsProvider } from '@mantine/modals';
 import { useColorScheme } from '@mantine/hooks';
+import SignInModal from 'components/SignInModal';
 import { trpc } from 'utils/trpc';
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -38,7 +40,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
         }}
       >
         <NotificationsProvider position="top-right">
-          <Component {...pageProps} />
+          <ModalsProvider modals={{ signin: SignInModal }}>
+            <Component {...pageProps} />
+          </ModalsProvider>
         </NotificationsProvider>
       </MantineProvider>
     </SessionProvider>

@@ -13,6 +13,7 @@ import {
 } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 import BaseLayout from 'components/BaseLayout';
+import AuthGuard from 'components/AuthGuard';
 import { trpc } from 'utils/trpc';
 
 const IdeaDetails: NextPage = () => {
@@ -48,7 +49,7 @@ const IdeaDetails: NextPage = () => {
                 <IconArrowLeft />
               </ActionIcon>
             </Group>
-            <Title order={1} mb={48}>Oops, we could not find this draft</Title>
+            <Title order={1} mb={48} align="center">Oops, we could not find this draft</Title>
             <span style={{ fontSize: '72px', textAlign: 'center' }}>😔</span>
           </Stack>
         </BaseLayout>
@@ -68,15 +69,17 @@ const IdeaDetails: NextPage = () => {
       </Head>
       <BaseLayout>
         <Stack spacing="xl" style={{ maxWidth: '700px', margin: '0 auto' }}>
-          <ActionIcon onClick={() => router.back()}>
-            <IconArrowLeft />
-          </ActionIcon>
-          <Title order={1} >{title}</Title>
-          <Group position="apart" align="center" mb="xl">
-            <Badge variant="outline">Draft</Badge>
-            <Button color="orange">Edit</Button>
-          </Group>
-          <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
+          <AuthGuard>
+            <ActionIcon onClick={() => router.back()}>
+              <IconArrowLeft />
+            </ActionIcon>
+            <Title order={1} >{title}</Title>
+            <Group position="apart" align="center" mb="xl">
+              <Badge variant="outline">Draft</Badge>
+              <Button color="orange">Edit</Button>
+            </Group>
+            <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
+          </AuthGuard>
         </Stack>
       </BaseLayout>
     </>
