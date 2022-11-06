@@ -5,17 +5,17 @@ import VoteButton from 'components/VoteButton';
 import { resolveInitials } from 'utils/strings';
 
 interface Props {
-	idea: {
-      id: string;
-      title: string;
-      summary: string;
-      postedAt: Date;
-      votes: number;
-      author: {
-        name: string | null;
-        image: string | null;
-      } | null;
-    };
+  idea: {
+    id: string;
+    title: string;
+    summary: string;
+    postedAt: Date;
+    votes: number;
+    author: {
+      name: string | null;
+      image: string | null;
+    } | null;
+  };
 }
 
 const IdeaCard = (props: Props) => {

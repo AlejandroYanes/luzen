@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Stack, Tabs } from '@mantine/core';
 import BaseLayout from 'components/BaseLayout';
 import IdeaCard from 'components/IdeaCard';
+import DraftIdeaCard from 'components/DraftIdeaCard';
 import { trpc } from 'utils/trpc';
 
 const MyIdeasPage = () => {
@@ -10,7 +11,11 @@ const MyIdeasPage = () => {
   const listingDrafts = query.status === 'drafts';
   const { data = [] } = trpc.ideas.listMyIdeasByStatus.useQuery(listingDrafts);
 
-  const ideaElements = data.map((idea) => <IdeaCard key={idea.id} idea={idea} />);
+  const ideaElements = data.map((idea) => (
+    listingDrafts
+      ? <DraftIdeaCard key={idea.id} idea={idea} />
+      : <IdeaCard key={idea.id} idea={idea} />
+  ));
 
   return (
     <>

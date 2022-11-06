@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import type { PrismaClient } from '@prisma/client';
-import { ActionIcon, Avatar, Divider, Group, Stack, Text, Title } from '@mantine/core';
+import { ActionIcon, Avatar, Divider, Group, Stack, Text, Title, Skeleton } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 import { prisma } from 'server/db/client';
 import type { inferPrismaModelFromQuery } from 'utils/prisma';
@@ -20,6 +20,20 @@ const IdeaDetails: NextPage<Props> = (props) => {
   const router = useRouter();
   const { idea = '{}' } = props;
   const parsedIdea: IdeaById = JSON.parse(idea);
+
+  if (router.isFallback) {
+    return (
+      <>
+        <BaseLayout>
+          <Stack sx={{ width: '700px', margin: '0 auto' }}>
+            <Skeleton width={480} height={44} mt={44} />
+            <Skeleton width={280} height={46} mb={16} mt={16} />
+            <Skeleton width={700} height={680} />
+          </Stack>
+        </BaseLayout>
+      </>
+    );
+  }
 
   if (!parsedIdea?.id) {
     return (
@@ -101,6 +115,8 @@ export default IdeaDetails;
 
 export async function getStaticPaths() {
   const ideas = await prisma.idea.findMany({
+    take: 5,
+    orderBy: { votes: 'desc' },
     where: {
       isDraft: false,
     },
@@ -130,8 +146,11 @@ export async function getStaticProps(context: { params: { id: string } }) {
 type IdeaById = inferPrismaModelFromQuery<typeof queryIdeaById>;
 
 function queryIdeaById(prismaClient: PrismaClient, id: string) {
-  return prisma.idea.findUnique({
-    where: { id },
+  return prisma.idea.findFirst({
+    where: {
+      id,
+      isDraft: false,
+    },
     select: {
       id: true,
       title: true,

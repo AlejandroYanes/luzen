@@ -41,7 +41,7 @@ const Post: NextPage = () => {
   const [postFailed, setPostFailed] = useState(false);
   const router = useRouter();
   const { mutate, isLoading } = trpc.ideas.post.useMutation({
-    onSuccess: (ideaId) => router.push(`/ideas/${ideaId}`),
+    onSuccess: (ideaId) => router.push(`/ideas/drafts/${ideaId}`),
     onError: () => setPostFailed(true),
   });
   const form = useForm<IdeaFormValues>({

@@ -3,7 +3,7 @@ import { protectedProcedure } from 'server/trpc/trpc';
 
 const listMyIdeasByStatus = protectedProcedure
   .input(z.boolean())
-  .query(async ({ ctx, input: status }) => {
+  .query(({ ctx, input: status }) => {
     return ctx.prisma.idea.findMany({
       orderBy: { votes: 'desc' },
       where: {
