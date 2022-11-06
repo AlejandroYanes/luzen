@@ -19,7 +19,8 @@ model Idea {
     description     String          @db.Text
     postedAt        DateTime        @default(now())
     votes           Int             @default(0)
-    author          User?            @relation(fields: [authorId], references: [id])
+    isDraft         Boolean         @default(true)
+    author          User?           @relation(fields: [authorId], references: [id])
     authorId        String?
     comments        Comment[]
     usersWhoVoted   VotedIdeas[]

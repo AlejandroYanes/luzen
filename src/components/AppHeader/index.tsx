@@ -15,6 +15,7 @@ import { IconLogout, IconSearch, IconSettings, IconBucket } from '@tabler/icons'
 import { useSession, signOut } from 'next-auth/react';
 import RenderIf from 'components/RenderIf';
 import { resolveInitials } from 'utils/strings';
+import AvatarMenu from '../AvatarMenu';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -106,23 +107,7 @@ const AppHeader = () => {
               <Link href="/post">
                 <Button>Post new Idea</Button>
               </Link>
-              <Menu position="bottom-end" offset={20} width={160}>
-                <Menu.Target>
-                  <Avatar src={data?.user?.image} alt={data?.user?.name as string}>
-                    {data?.user?.name ? resolveInitials(data?.user?.name as string) : null}
-                  </Avatar>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-                  <Menu.Item
-                    color="red"
-                    icon={<IconLogout size={14} />}
-                    onClick={() => signOut({ callbackUrl: '/' })}
-                  >
-                    Log out
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
+              <AvatarMenu user={data?.user} />
             </Group>
           </RenderIf>
         </Group>

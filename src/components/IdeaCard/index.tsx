@@ -3,10 +3,19 @@ import { Avatar, Button, Card, Group, Stack, Text, Title } from '@mantine/core';
 import { formatDate } from 'utils/dates';
 import VoteButton from 'components/VoteButton';
 import { resolveInitials } from 'utils/strings';
-import type { ListedIdea } from '../../pages';
 
 interface Props {
-	idea: ListedIdea;
+	idea: {
+      id: string;
+      title: string;
+      summary: string;
+      postedAt: Date;
+      votes: number;
+      author: {
+        name: string | null;
+        image: string | null;
+      } | null;
+    };
 }
 
 const IdeaCard = (props: Props) => {

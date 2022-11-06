@@ -15,12 +15,11 @@ const listTop = publicProcedure
           summary: true,
           votes: true,
           postedAt: true,
-          usersWhoVoted: {
-            where: {
-              userId: {
-                equals: ctx.session?.user?.id,
-              },
-            }
+          author: {
+            select: {
+              name: true,
+              image: true,
+            },
           },
         },
       });
@@ -34,12 +33,11 @@ const listTop = publicProcedure
         summary: true,
         votes: true,
         postedAt: true,
-        usersWhoVoted: {
-          where: {
-            userId: {
-              equals: ctx.session?.user?.id,
-            },
-          }
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
         },
       },
     });

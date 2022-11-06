@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 import type { PrismaClient } from '@prisma/client';
 import { ActionIcon, Avatar, Divider, Group, Stack, Text, Title } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
@@ -17,6 +17,7 @@ interface Props {
 }
 
 const IdeaDetails: NextPage<Props> = (props) => {
+  const router = useRouter();
   const { idea = '{}' } = props;
   const parsedIdea: IdeaById = JSON.parse(idea);
 
@@ -31,11 +32,9 @@ const IdeaDetails: NextPage<Props> = (props) => {
         <BaseLayout>
           <Stack spacing="xl" style={{ maxWidth: '600px', margin: '0 auto' }}>
             <Group>
-              <Link href="/">
-                <ActionIcon>
-                  <IconArrowLeft />
-                </ActionIcon>
-              </Link>
+              <ActionIcon onClick={() => router.back()}>
+                <IconArrowLeft />
+              </ActionIcon>
             </Group>
             <Title order={1} mb={48}>Oops, we could not find this idea</Title>
             <span style={{ fontSize: '72px', textAlign: 'center' }}>😔</span>
@@ -70,11 +69,9 @@ const IdeaDetails: NextPage<Props> = (props) => {
         {/*</Stack>*/}
         <Group align="flex-start" sx={{ padding: '0 0 0 64px' }}>
           <Stack sx={{ width: '700px', margin: '0 auto' }}>
-            <Link href="/">
-              <ActionIcon>
-                <IconArrowLeft />
-              </ActionIcon>
-            </Link>
+            <ActionIcon onClick={() => router.back()}>
+              <IconArrowLeft />
+            </ActionIcon>
             <Title order={1}>{title}</Title>
             <Group mb="xl" align="center" position="apart">
               <Group>
@@ -103,7 +100,11 @@ const IdeaDetails: NextPage<Props> = (props) => {
 export default IdeaDetails;
 
 export async function getStaticPaths() {
-  const ideas = await prisma.idea.findMany();
+  const ideas = await prisma.idea.findMany({
+    where: {
+      isDraft: false,
+    },
+  });
   const paths = ideas.map((idea) => ({ params: { id: idea.id } }));
   return {
     paths,

@@ -23,7 +23,7 @@ const Home: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack spacing="xl" style={{ maxWidth: '600px', margin: '48px auto 0' }}>
+        <Stack spacing="xl" style={{ maxWidth: '700px', margin: '48px auto 0' }}>
           {cards}
         </Stack>
       </BaseLayout>
@@ -53,6 +53,9 @@ function listTopIdeas() {
   return prisma.idea.findMany({
     take: 5,
     orderBy: { votes: 'desc' },
+    where: {
+      isDraft: false,
+    },
     select: {
       id: true,
       title: true,
