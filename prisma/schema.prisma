@@ -82,6 +82,7 @@ model User {
   ideas             Idea[]
   ideasVotedFor     VotedIdeas[]
   comment           Comment[]
+  role              Role     @default(USER)
 }
 
 model VerificationToken {
@@ -89,4 +90,10 @@ model VerificationToken {
   token      String   @unique
   expires    DateTime
   @@unique([identifier, token])
+}
+
+enum Role {
+    USER
+    DEVELOPER
+    ADMIN
 }

@@ -1,14 +1,22 @@
 import { signOut } from 'next-auth/react';
-import { Avatar, Menu } from '@mantine/core';
-import { NextLink } from '@mantine/next';
-import { IconLogout, IconSettings, IconList } from '@tabler/icons';
-import { resolveInitials } from 'utils/strings';
 import { useRouter } from 'next/router';
+import type { Role } from '@prisma/client';
+import { Avatar, Menu } from '@mantine/core';
+import {
+  IconLogout,
+  IconSettings,
+  IconUsers,
+  IconBuildingLighthouse,
+  IconBulb,
+} from '@tabler/icons';
+import { resolveInitials } from 'utils/strings';
+import RenderIf from '../RenderIf';
 
 interface Props {
   user?: {
     name?: string | null;
     image?: string | null;
+    role: Role;
   };
 }
 
@@ -23,9 +31,23 @@ const AvatarMenu = (props: Props) => {
         </Avatar>
       </Menu.Target>
       <Menu.Dropdown>
+        <RenderIf condition={user?.role === 'ADMIN'}>
+          <Menu.Item
+            onClick={() => router.push('/management/users')}
+            icon={<IconUsers size={14} />}
+          >
+            Manage Users
+          </Menu.Item>
+          <Menu.Item
+            onClick={() => router.push('/management/ideas')}
+            icon={<IconBuildingLighthouse size={14} />}
+          >
+            Manage Ideas
+          </Menu.Item>
+        </RenderIf>
         <Menu.Item
           onClick={() => router.push('/me/ideas/published')}
-          icon={<IconList size={14} />}
+          icon={<IconBulb size={14} />}
         >
           My ideas
         </Menu.Item>
