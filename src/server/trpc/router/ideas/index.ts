@@ -7,6 +7,7 @@ import listComments from './list-comments';
 import postComment from './post-comment';
 import listMyIdeasByStatus from './list-my-ideas-by-status';
 import fetchDraft from './fetch-draft';
+import listAll from './list-all';
 
 
 export const ideasRouter = router({
@@ -18,4 +19,5 @@ export const ideasRouter = router({
   postComment,
   listMyIdeasByStatus,
   fetchDraft,
+  listAll,
 });

@@ -4,7 +4,7 @@ import { resolveInitials } from 'utils/strings';
 import type { Role} from 'constants/roles';
 import { ROLES } from 'constants/roles';
 
-interface UsersTableProps {
+interface Props {
   data: {
     id: string;
     image: string | null;
@@ -16,10 +16,10 @@ interface UsersTableProps {
   updateRole: (userId: string, newRole: Role) => void;
 }
 
-const UsersTable = (props: UsersTableProps) => {
+const UsersTable = (props: Props) => {
   const { data, currentUser, updateRole } = props;
   const rows = data.map((user) => (
-    <tr key={user.name}>
+    <tr key={user.id}>
       <td>
         <Group spacing="sm">
           <Avatar size={40} src={user.image}>
@@ -46,7 +46,7 @@ const UsersTable = (props: UsersTableProps) => {
         />
       </td>
       <td>
-        <Button color="red" disabled={user.id === currentUser}>Block</Button>
+        <Button variant="outline" color="red" disabled={user.id === currentUser}>Block</Button>
       </td>
     </tr>
   ));

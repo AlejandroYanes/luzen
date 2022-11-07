@@ -1,50 +1,39 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useSession } from 'next-auth/react';
-import { Group, Pagination, Stack, TextInput, Title, } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
+import { Group, Pagination, Stack, TextInput, Title } from '@mantine/core';
 import BaseLayout from 'components/BaseLayout';
-import UsersTable from 'components/UsersTable';
+import IdeasTable from 'components/ideasTable';
 import { trpc } from 'utils/trpc';
-import type { Role } from 'constants/roles';
-import { ITEMS_PER_PAGE_LIMIT } from '../../../constants/pagination';
+import { ITEMS_PER_PAGE_LIMIT } from 'constants/pagination';
 
-const UsersPage: NextPage = () => {
-  const { data: session } = useSession();
+const IdeasListPage: NextPage = () => {
   const [query, setQuery] = useDebouncedState('', 200);
   const [page, setPage] = useState(1);
   const {
     data: { results, count } = { results: [], count: 0 },
-    refetch,
-  } = trpc.users.listUsers.useQuery({ query, page }, { keepPreviousData: true });
-  const { mutate } = trpc.users.updateRole.useMutation({
-    onSuccess: () => refetch(),
-  });
-
-  const changeUserRole = (userId: string, newRole: Role) => {
-    mutate({ userId, newRole });
-  };
+  } = trpc.ideas.listAll.useQuery({ page, query }, { keepPreviousData: true });
 
   return (
     <>
       <Head>
-        <title>Bucket List | Managing users</title>
+        <title>Bucket List | Managing ideas</title>
         <meta name="description" content="all our users" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '700px' }}>
-          <Title>Users</Title>
+          <Title>Ideas</Title>
           <TextInput
             my="lg"
             mr="auto"
             defaultValue=""
-            placeholder="Search users"
+            placeholder="Search ideas"
             sx={{ width: '280px' }}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <UsersTable data={results} currentUser={session?.user?.id} updateRole={changeUserRole} />
+          <IdeasTable data={results} />
           <Group position="right" py="lg">
             <Pagination
               page={page}
@@ -59,4 +48,4 @@ const UsersPage: NextPage = () => {
   );
 };
 
-export default UsersPage;
+export default IdeasListPage;
