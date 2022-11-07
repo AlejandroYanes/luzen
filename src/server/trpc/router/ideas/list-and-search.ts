@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { publicProcedure } from 'server/trpc/trpc';
 
-const listTop = publicProcedure
+const listAndSearch = publicProcedure
   .input(z.string().nullish())
   .query(async ({ ctx, input }) => {
     if (input) {
@@ -44,4 +44,4 @@ const listTop = publicProcedure
     });
   });
 
-export default listTop;
+export default listAndSearch;

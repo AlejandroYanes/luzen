@@ -1,5 +1,5 @@
 import { router } from 'server/trpc/trpc';
-import listTop from './list-top';
+import listAndSearch from './list-and-search';
 import post from './post';
 import toggleVote from './toggle-vote';
 import checkIfUserVoted from './check-if-user-voted';
@@ -10,7 +10,7 @@ import fetchDraft from './fetch-draft';
 
 
 export const ideasRouter = router({
-  listTop,
+  listAndSearch,
   post,
   toggleVote,
   checkIfUserVoted,

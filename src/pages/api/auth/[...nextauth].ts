@@ -11,7 +11,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
       if (session.user) {
-        console.log('next-auth session callback:', user);
         session.user.id = user.id;
         session.user.role = (user as any).role; // todo: find if I can extend the user model
       }

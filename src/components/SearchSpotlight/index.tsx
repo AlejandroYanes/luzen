@@ -15,7 +15,7 @@ const mockFilter = (_query: string, currentActions: SpotlightAction[]) => curren
 const SearchSpotlight = ({ children }: Props) => {
   const router = useRouter();
   const [query, setQuery] = useState('');
-  const { data: ideas = [] } = trpc.ideas.listTop.useQuery(query);
+  const { data: ideas = [] } = trpc.ideas.listAndSearch.useQuery(query);
 
   const mappedActions: SpotlightAction[] = ideas.map((idea) => ({
     title: idea.title,

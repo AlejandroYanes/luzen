@@ -1,14 +1,23 @@
-import { Avatar, Badge, Table, Group, Text, Select } from '@mantine/core';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Avatar, Group, Select, Table, Text, Button } from '@mantine/core';
 import { resolveInitials } from 'utils/strings';
+import type { Role} from 'constants/roles';
+import { ROLES } from 'constants/roles';
 
 interface UsersTableProps {
-  isLoading: boolean;
-  data: { image: string | null; name: string | null; email: string | null; role: string }[];
+  data: {
+    id: string;
+    image: string | null;
+    name: string | null;
+    email: string | null;
+    role: string;
+  }[];
+  currentUser: string | undefined;
+  updateRole: (userId: string, newRole: Role) => void;
 }
 
-const rolesData = ['USER', 'ADMIN'];
-
-const UsersTable = ({ data }: UsersTableProps) => {
+const UsersTable = (props: UsersTableProps) => {
+  const { data, currentUser, updateRole } = props;
   const rows = data.map((user) => (
     <tr key={user.name}>
       <td>
@@ -28,17 +37,16 @@ const UsersTable = ({ data }: UsersTableProps) => {
       </td>
 
       <td>
-        <Select data={rolesData} defaultValue={user.role} variant="unstyled" />
+        <Select
+          disabled={user.id === currentUser}
+          data={ROLES}
+          value={user.role}
+          onChange={(value) => updateRole(user.id, value! as Role)}
+          variant="unstyled"
+        />
       </td>
-
       <td>
-        {Math.random() > 0.5 ? (
-          <Badge fullWidth>Active</Badge>
-        ) : (
-          <Badge color="gray" fullWidth>
-            Disabled
-          </Badge>
-        )}
+        <Button color="red" disabled={user.id === currentUser}>Block</Button>
       </td>
     </tr>
   ));
@@ -49,7 +57,7 @@ const UsersTable = ({ data }: UsersTableProps) => {
         <tr>
           <th>User</th>
           <th>Role</th>
-          <th>Status</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>
