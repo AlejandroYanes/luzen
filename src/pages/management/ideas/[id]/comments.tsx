@@ -29,11 +29,11 @@ const CommentsListPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack mx="auto" sx={{ width: '700px' }}>
+        <Stack mx="auto" sx={{ width: '900px' }}>
           <ActionIcon onClick={() => back()}>
             <IconArrowLeft />
           </ActionIcon>
-          <Title>Comments for: {results.length > 0 ? results[0]?.idea.title : ''}</Title>
+          <Title>Comments for: {results.length > 0 ? results[0]?.idea.title : '...'}</Title>
           <TextInput
             my="lg"
             mr="auto"

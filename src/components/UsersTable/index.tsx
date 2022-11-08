@@ -22,7 +22,7 @@ const UsersTable = (props: Props) => {
     <tr key={user.id}>
       <td>
         <Group spacing="sm">
-          <Avatar size={40} src={user.image}>
+          <Avatar src={user.image}>
             {user.name ? resolveInitials(user.name) : 'A/N'}
           </Avatar>
           <div>
@@ -46,7 +46,14 @@ const UsersTable = (props: Props) => {
         />
       </td>
       <td>
-        <Button variant="outline" color="red" disabled={user.id === currentUser}>Block</Button>
+        <Button
+          style={{ float: 'right' }}
+          variant="outline"
+          color="red"
+          disabled={user.id === currentUser}
+        >
+          Block
+        </Button>
       </td>
     </tr>
   ));
@@ -56,8 +63,8 @@ const UsersTable = (props: Props) => {
       <thead>
         <tr>
           <th>User</th>
-          <th>Role</th>
-          <th></th>
+          <th style={{ width: '180px' }}>Role</th>
+          <th style={{ width: '130px' }}></th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>

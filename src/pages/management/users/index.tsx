@@ -34,7 +34,7 @@ const UsersPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack mx="auto" sx={{ width: '700px' }}>
+        <Stack mx="auto" sx={{ width: '900px' }}>
           <Title>Users</Title>
           <TextInput
             my="lg"

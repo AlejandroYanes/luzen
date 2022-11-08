@@ -1,5 +1,6 @@
-import { Button, Group, Table, Text } from '@mantine/core';
+import { Avatar, Button, Group, Table, Text } from '@mantine/core';
 import { formatDate } from 'utils/dates';
+import { resolveInitials } from '../../utils/strings';
 
 interface Props {
   data: {
@@ -18,20 +19,32 @@ const CommentsTable = (props: Props) => {
   const rows = data.map((comment) => (
     <tr key={comment.id}>
       <td style={{ verticalAlign: 'top' }}>
-        <div>
-          <Text weight={500}>
-            {comment.author?.name || 'Anonymous'}
-          </Text>
-          <Text size="xs" color="dimmed">
-            {formatDate(comment.postedAt, 'en')}
-          </Text>
-        </div>
+        <Group>
+          <Avatar src={comment.author?.image}>
+            {comment.author?.name ? resolveInitials(comment.author.name) : 'A/N'}
+          </Avatar>
+          <div>
+            <Text weight={500}>
+              {comment.author?.name || 'Anonymous'}
+            </Text>
+            <Text size="xs" color="dimmed">
+              {formatDate(comment.postedAt, 'en')}
+            </Text>
+          </div>
+        </Group>
       </td>
       <td>
         {comment.content}
       </td>
       <td style={{ verticalAlign: 'top' }}>
-        <Button variant="outline" color="red" mt={2}>Block</Button>
+        <Button
+          style={{ float: 'right' }}
+          variant="outline"
+          color="red"
+          mt={2}
+        >
+          Block
+        </Button>
       </td>
     </tr>
   ));
@@ -40,9 +53,9 @@ const CommentsTable = (props: Props) => {
     <Table verticalSpacing="sm">
       <thead>
         <tr>
-          <th style={{ width: '200px' }}>Author</th>
+          <th style={{ width: '240px' }}>Author</th>
           <th>Content</th>
-          <th style={{ width: '80px' }}></th>
+          <th style={{ width: '100px' }}></th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>
