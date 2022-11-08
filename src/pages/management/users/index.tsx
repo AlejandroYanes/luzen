@@ -7,8 +7,8 @@ import { useDebouncedState } from '@mantine/hooks';
 import BaseLayout from 'components/BaseLayout';
 import UsersTable from 'components/UsersTable';
 import { trpc } from 'utils/trpc';
+import { calculateTotal } from 'utils/pagiantion';
 import type { Role } from 'constants/roles';
-import { ITEMS_PER_PAGE_LIMIT } from '../../../constants/pagination';
 
 const UsersPage: NextPage = () => {
   const { data: session } = useSession();
@@ -49,8 +49,7 @@ const UsersPage: NextPage = () => {
             <Pagination
               page={page}
               onChange={setPage}
-              total={count / ITEMS_PER_PAGE_LIMIT}
-              disabled={count < ITEMS_PER_PAGE_LIMIT}
+              total={calculateTotal(count)}
             />
           </Group>
         </Stack>

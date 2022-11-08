@@ -1,6 +1,5 @@
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import type { Role } from '@prisma/client';
 import { Avatar, Menu } from '@mantine/core';
 import {
   IconLogout,
@@ -9,8 +8,9 @@ import {
   IconBuildingLighthouse,
   IconBulb,
 } from '@tabler/icons';
+import RenderIf from 'components/RenderIf';
 import { resolveInitials } from 'utils/strings';
-import RenderIf from '../RenderIf';
+import type { Role } from 'constants/roles';
 
 interface Props {
   user?: {
@@ -32,6 +32,7 @@ const AvatarMenu = (props: Props) => {
       </Menu.Target>
       <Menu.Dropdown>
         <RenderIf condition={user?.role === 'ADMIN'}>
+          <Menu.Label>Management</Menu.Label>
           <Menu.Item
             onClick={() => router.push('/management/users')}
             icon={<IconUsers size={14} />}
@@ -44,6 +45,7 @@ const AvatarMenu = (props: Props) => {
           >
             Manage Ideas
           </Menu.Item>
+          <Menu.Divider />
         </RenderIf>
         <Menu.Item
           onClick={() => router.push('/me/ideas/published')}

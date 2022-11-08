@@ -6,14 +6,22 @@ import { Group, Pagination, Stack, TextInput, Title } from '@mantine/core';
 import BaseLayout from 'components/BaseLayout';
 import IdeasTable from 'components/ideasTable';
 import { trpc } from 'utils/trpc';
-import { ITEMS_PER_PAGE_LIMIT } from 'constants/pagination';
+import { calculateTotal } from 'utils/pagiantion';
 
 const IdeasListPage: NextPage = () => {
   const [query, setQuery] = useDebouncedState('', 200);
   const [page, setPage] = useState(1);
   const {
     data: { results, count } = { results: [], count: 0 },
+    refetch,
   } = trpc.ideas.listAll.useQuery({ page, query }, { keepPreviousData: true });
+  const { mutate } = trpc.ideas.toggleStatus.useMutation({
+    onSuccess: () => refetch(),
+  });
+
+  const handleToggleStatus = async (ideaId: string) => {
+    mutate(ideaId);
+  };
 
   return (
     <>
@@ -33,13 +41,12 @@ const IdeasListPage: NextPage = () => {
             sx={{ width: '280px' }}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <IdeasTable data={results} />
+          <IdeasTable data={results} toggleStatus={handleToggleStatus} />
           <Group position="right" py="lg">
             <Pagination
               page={page}
               onChange={setPage}
-              total={count / ITEMS_PER_PAGE_LIMIT}
-              disabled={count < ITEMS_PER_PAGE_LIMIT}
+              total={calculateTotal(count)}
             />
           </Group>
         </Stack>

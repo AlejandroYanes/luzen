@@ -1,5 +1,4 @@
 import { Button, Group, Table, Text } from '@mantine/core';
-import RenderIf from '../RenderIf';
 
 interface Props {
   data: {
@@ -14,10 +13,11 @@ interface Props {
       image: string | null;
     } | null;
   }[];
+  toggleStatus: (ideaId: string) => void;
 }
 
 const IdeasTable = (props: Props) => {
-  const { data } = props;
+  const { data, toggleStatus } = props;
   const rows = data.map((idea) => (
     <tr key={idea.id}>
       <td>
@@ -36,9 +36,12 @@ const IdeasTable = (props: Props) => {
       </td>
       <td>
         <Group position="right">
-          <RenderIf condition={idea.isDraft}>
-            <Button>Publish</Button>
-          </RenderIf>
+          <Button
+            onClick={() => toggleStatus(idea.id)}
+            variant={idea.isDraft ? 'filled' : 'outline'}
+          >
+            {idea.isDraft ? 'Publish' : 'Turn Draft'}
+          </Button>
           <Button variant="outline" color="red">Block</Button>
         </Group>
       </td>
@@ -50,8 +53,8 @@ const IdeasTable = (props: Props) => {
       <thead>
         <tr>
           <th>Title</th>
-          <th>Votes</th>
-          <th></th>
+          <th style={{ width: '120px' }}>Votes</th>
+          <th style={{ width: '280px' }}></th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>

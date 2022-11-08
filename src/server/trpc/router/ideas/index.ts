@@ -8,6 +8,7 @@ import postComment from './post-comment';
 import listMyIdeasByStatus from './list-my-ideas-by-status';
 import fetchDraft from './fetch-draft';
 import listAll from './list-all';
+import toggleStatus from './toggle-status';
 
 
 export const ideasRouter = router({
@@ -20,4 +21,5 @@ export const ideasRouter = router({
   listMyIdeasByStatus,
   fetchDraft,
   listAll,
+  toggleStatus,
 });
