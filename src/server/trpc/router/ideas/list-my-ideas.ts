@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import type { Prisma } from '@prisma/client';
-import { adminProcedure } from 'server/trpc/trpc';
+import { protectedProcedure } from 'server/trpc/trpc';
 import { ITEMS_PER_PAGE_LIMIT } from 'constants/pagination';
 
-const listPaginated = adminProcedure
+const listMyIdeas = protectedProcedure
   .input(z.object({
     page: z.number().min(1),
     query: z.string().nullish(),
@@ -11,7 +11,7 @@ const listPaginated = adminProcedure
   }))
   .query(async ({ ctx, input }) => {
     const { query, page, isDraft } = input;
-    let where: Prisma.IdeaWhereInput = {};
+    let where: Prisma.IdeaWhereInput = { authorId: ctx.session.user.id };
 
     if (query) {
       where = { ...where, title: { contains: query } };
@@ -46,8 +46,8 @@ const listPaginated = adminProcedure
         },
       },
     });
-    const count = await ctx.prisma.idea.count();
+    const count = await ctx.prisma.idea.count({ where });
     return { results, count };
   });
 
-export default listPaginated;
+export default listMyIdeas;

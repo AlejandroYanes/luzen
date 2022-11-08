@@ -1,8 +1,11 @@
-import { Avatar, Button, Group, Table, Text } from '@mantine/core';
+import { Avatar, Button, Group, Pagination, Table, Text, TextInput } from '@mantine/core';
 import { formatDate } from 'utils/dates';
-import { resolveInitials } from '../../utils/strings';
+import { resolveInitials } from 'utils/strings';
+import { calculateTotal } from 'utils/pagiantion';
 
 interface Props {
+  page: number;
+  count: number;
   data: {
     id: string;
     postedAt: Date;
@@ -12,10 +15,13 @@ interface Props {
       image: string | null;
     } | null;
   }[];
+  onQueryChange: (nextQuery: string) => void;
+  onPageChange: (nextPage: number) => void;
 }
 
 const CommentsTable = (props: Props) => {
-  const { data } = props;
+  const { page, count, data, onQueryChange, onPageChange } = props;
+
   const rows = data.map((comment) => (
     <tr key={comment.id}>
       <td style={{ verticalAlign: 'top' }}>
@@ -50,16 +56,33 @@ const CommentsTable = (props: Props) => {
   ));
 
   return (
-    <Table verticalSpacing="sm">
-      <thead>
-        <tr>
-          <th style={{ width: '240px' }}>Author</th>
-          <th>Content</th>
-          <th style={{ width: '100px' }}></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </Table>
+    <>
+      <TextInput
+        my="lg"
+        mr="auto"
+        defaultValue=""
+        placeholder="Search comments"
+        sx={{ width: '280px' }}
+        onChange={(e) => onQueryChange(e.target.value)}
+      />
+      <Table verticalSpacing="sm">
+        <thead>
+          <tr>
+            <th style={{ width: '240px' }}>Author</th>
+            <th>Content</th>
+            <th style={{ width: '100px' }}></th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+      <Group position="right" py="lg">
+        <Pagination
+          page={page}
+          onChange={onPageChange}
+          total={calculateTotal(count)}
+        />
+      </Group>
+    </>
   );
 }
 

@@ -1,8 +1,23 @@
 import Link from 'next/link';
-import { ActionIcon, Button, Group, Table, Text } from '@mantine/core';
+import {
+  ActionIcon,
+  Button,
+  Group,
+  Pagination,
+  Table,
+  Text,
+  TextInput,
+  Badge,
+  Switch,
+} from '@mantine/core';
 import { IconEye } from '@tabler/icons';
+import RenderIf from 'components/RenderIf';
+import { calculateTotal } from 'utils/pagiantion';
+import type { inferOppositeExcludingType } from 'utils/prop-types';
 
-interface Props {
+interface CommonProps {
+  page: number;
+  count: number;
   data: {
     id: string;
     title: string;
@@ -18,18 +33,36 @@ interface Props {
       comments: number;
     };
   }[];
-  toggleStatus: (ideaId: string) => void;
+  onQueryChange: (nextQuery: string) => void;
+  onPageChange: (nextPage: number) => void;
 }
 
+interface UserProps {
+  isForUsers: true;
+  onEdit: (ideaId: string) => void;
+}
+
+interface AdminProps {
+  isForAdmins: true;
+  onToggleStatus: (ideaId: string) => void;
+}
+
+type Props = CommonProps & inferOppositeExcludingType<UserProps, AdminProps>;
+
 const IdeasTable = (props: Props) => {
-  const { data, toggleStatus } = props;
+  const {
+    page,
+    count,
+    data,
+    isForAdmins,
+    onToggleStatus,
+    onPageChange,
+    onQueryChange,
+    onEdit,
+  } = props;
+
   const rows = data.map((idea) => (
     <tr key={idea.id}>
-      <td>
-        <Link href={`/management/ideas/${idea.id}/comments`}>
-          <ActionIcon><IconEye size={14} /></ActionIcon>
-        </Link>
-      </td>
       <td>
         <div>
           <Text weight={500}>
@@ -44,35 +77,91 @@ const IdeasTable = (props: Props) => {
         {idea.votes}
       </td>
       <td style={{ textAlign: 'center' }}>
-        {idea._count.comments}
+        <Link
+          href={(
+            isForAdmins
+              ? `/management/ideas/${idea.id}/comments`
+              : `/me/ideas/${idea.id}/comments`
+          )}
+        >
+          <Button size="sm" variant="subtle">
+            {idea._count.comments}
+          </Button>
+        </Link>
+      </td>
+      <td>
+        <RenderIf
+          condition={!!isForAdmins}
+          fallback={
+            <Badge
+              color={idea.isDraft ? 'orange' : 'blue'}
+              variant="light"
+            >
+              {idea.isDraft ? 'Draft' : 'Public'}
+            </Badge>
+          }
+        >
+          <Switch
+            sx={{ display: 'flex' }}
+            checked={!idea.isDraft}
+            onChange={() => onToggleStatus!(idea.id)}
+            onLabel="Public"
+            offLabel="Draft"
+            size="lg"
+          />
+        </RenderIf>
       </td>
       <td>
         <Group position="right">
-          <Button
-            onClick={() => toggleStatus(idea.id)}
-            variant={idea.isDraft ? 'filled' : 'outline'}
+          <RenderIf
+            condition={!!isForAdmins}
+            fallback={
+              <Button
+                onClick={() => onEdit!(idea.id)}
+                disabled={!idea.isDraft}
+                variant="outline"
+              >
+                Edit
+              </Button>
+            }
           >
-            {idea.isDraft ? 'Publish' : 'Turn Draft'}
-          </Button>
-          <Button variant="outline" color="red">Block</Button>
+            <Button variant="outline" color="red">Block</Button>
+          </RenderIf>
         </Group>
       </td>
     </tr>
   ));
 
   return (
-    <Table verticalSpacing="sm">
-      <thead>
-        <tr>
-          <th style={{ width: '32px' }}></th>
-          <th>Title</th>
-          <th style={{ width: '70px', textAlign: 'center' }}>Votes</th>
-          <th style={{ width: '100px', textAlign: 'center' }}>Comments</th>
-          <th style={{ width: '280px' }}></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </Table>
+    <>
+      <TextInput
+        my="lg"
+        mr="auto"
+        defaultValue=""
+        placeholder="Search comments"
+        sx={{ width: '280px' }}
+        onChange={(e) => onQueryChange(e.target.value)}
+      />
+      <Table verticalSpacing="sm">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th style={{ width: '70px', textAlign: 'center' }}>Votes</th>
+            <th style={{ width: '140px', textAlign: 'center' }}>Comments</th>
+            <th style={{ width: '140px' }}>Status</th>
+            <th style={{ width: '120px' }}></th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+      <Group position="right" py="lg">
+        <Pagination
+          page={page}
+          onChange={onPageChange}
+          total={calculateTotal(count)}
+        />
+      </Group>
+    </>
   );
 }
 

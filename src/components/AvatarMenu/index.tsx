@@ -48,7 +48,7 @@ const AvatarMenu = (props: Props) => {
           <Menu.Divider />
         </RenderIf>
         <Menu.Item
-          onClick={() => router.push('/me/ideas/published')}
+          onClick={() => router.push('/me/ideas')}
           icon={<IconBulb size={14} />}
         >
           My ideas

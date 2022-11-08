@@ -20,7 +20,6 @@
     "plugin:react/recommended"
   ],
   "rules": {
-    "@typescript-eslint/consistent-type-imports": "warn",
     "quotes": [
       "error",
       "single",
@@ -69,6 +68,8 @@
         ["parent", "sibling", "internal", "index"]
       ]
     }],
+    "@typescript-eslint/consistent-type-imports": "warn",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { "varsIgnorePattern": "^_" }],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",

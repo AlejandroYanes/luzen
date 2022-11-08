@@ -3,7 +3,7 @@ import listAndSearch from './list-and-search';
 import post from './post';
 import toggleVote from './toggle-vote';
 import checkIfUserVoted from './check-if-user-voted';
-import listMyIdeasByStatus from './list-my-ideas-by-status';
+import listMyIdeas from './list-my-ideas';
 import fetchDraft from './fetch-draft';
 import listPaginated from './list-paginated';
 import toggleStatus from './toggle-status';
@@ -14,7 +14,7 @@ export const ideasRouter = router({
   post,
   toggleVote,
   checkIfUserVoted,
-  listMyIdeasByStatus,
+  listMyIdeas,
   fetchDraft,
   listPaginated,
   toggleStatus,
