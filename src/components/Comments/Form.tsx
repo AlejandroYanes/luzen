@@ -24,7 +24,7 @@ const formRules = {
 const Form = (props: Props) => {
   const { ideaId, refetch } = props;
   const { status } = useSession();
-  const { mutate, isLoading } = trpc.ideas.postComment.useMutation({
+  const { mutate, isLoading } = trpc.comments.postComment.useMutation({
     onSuccess: () => {
       form.reset();
       refetch();

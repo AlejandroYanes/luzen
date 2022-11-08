@@ -3,11 +3,9 @@ import listAndSearch from './list-and-search';
 import post from './post';
 import toggleVote from './toggle-vote';
 import checkIfUserVoted from './check-if-user-voted';
-import listComments from './list-comments';
-import postComment from './post-comment';
 import listMyIdeasByStatus from './list-my-ideas-by-status';
 import fetchDraft from './fetch-draft';
-import listAll from './list-all';
+import listPaginated from './list-paginated';
 import toggleStatus from './toggle-status';
 
 
@@ -16,10 +14,8 @@ export const ideasRouter = router({
   post,
   toggleVote,
   checkIfUserVoted,
-  listComments,
-  postComment,
   listMyIdeasByStatus,
   fetchDraft,
-  listAll,
+  listPaginated,
   toggleStatus,
 });

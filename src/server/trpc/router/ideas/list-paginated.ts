@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { adminProcedure } from 'server/trpc/trpc';
 import { ITEMS_PER_PAGE_LIMIT } from 'constants/pagination';
 
-const listAll = adminProcedure
+const listPaginated = adminProcedure
   .input(z.object({
     page: z.number().min(1),
     query: z.string().nullish(),
@@ -26,6 +26,11 @@ const listAll = adminProcedure
             select: {
               name: true,
               image: true,
+            },
+          },
+          _count: {
+            select: {
+              comments: true,
             },
           },
         },
@@ -53,10 +58,15 @@ const listAll = adminProcedure
             image: true,
           },
         },
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
       },
     });
     const count = await ctx.prisma.idea.count();
     return { results, count };
   });
 
-export default listAll;
+export default listPaginated;

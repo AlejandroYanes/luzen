@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { publicProcedure } from 'server/trpc/trpc';
 
-const listComments = publicProcedure
+const list = publicProcedure
   .input(z.string())
   .query(({ ctx, input }) => {
     return ctx.prisma.comment.findMany({
@@ -22,4 +22,4 @@ const listComments = publicProcedure
     });
   });
 
-export default listComments;
+export default list;

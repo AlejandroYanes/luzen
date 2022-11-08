@@ -9,7 +9,7 @@ interface Props {
 
 const Comments = (props: Props) => {
   const { ideaId } = props;
-  const { data: comments, refetch } = trpc.ideas.listComments.useQuery(ideaId);
+  const { data: comments, refetch } = trpc.comments.list.useQuery(ideaId);
 
   if (!comments || comments.length === 0) {
     return (
