@@ -5,6 +5,7 @@ import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { ModalsProvider } from '@mantine/modals';
 import { useColorScheme } from '@mantine/hooks';
+
 import SignInModal from 'components/SignInModal';
 import { trpc } from 'utils/trpc';
 

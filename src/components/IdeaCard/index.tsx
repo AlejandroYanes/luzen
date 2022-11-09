@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Avatar, Button, Card, Group, Stack, Text, Title } from '@mantine/core';
-import { formatDate } from 'utils/dates';
+
 import VoteButton from 'components/VoteButton';
+import { formatDate } from 'utils/dates';
 import { resolveInitials } from 'utils/strings';
 
 interface Props {

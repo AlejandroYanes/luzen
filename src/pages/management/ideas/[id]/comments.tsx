@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useDebouncedState } from '@mantine/hooks';
 import { ActionIcon, Stack, Title } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
+
 import BaseLayout from 'components/BaseLayout';
 import CommentsTable from 'components/CommentsTable';
 import AuthGuard from 'components/AuthGuard';

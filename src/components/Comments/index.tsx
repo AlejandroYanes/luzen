@@ -1,7 +1,8 @@
+import { Text } from '@mantine/core';
+
 import { trpc } from 'utils/trpc';
 import Comment from './Comment';
 import Form from './Form';
-import { Text } from '@mantine/core';
 
 interface Props {
   ideaId: string;

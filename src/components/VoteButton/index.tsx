@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Button } from '@mantine/core';
 import { IconBulb } from '@tabler/icons';
+
 import { openSignInModal } from 'components/SignInModal';
 import { trpc } from 'utils/trpc';
 

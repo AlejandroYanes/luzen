@@ -1,6 +1,7 @@
 import type { ButtonProps } from '@mantine/core';
 import { Button } from '@mantine/core';
-import { GoogleIcon } from 'components/SocialButtons/GoogleIcon';
+
+import { GoogleIcon } from './GoogleIcon';
 
 export default function GoogleButton(props: ButtonProps & { onClick: () => void }) {
   return (

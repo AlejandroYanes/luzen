@@ -4,13 +4,14 @@ import { useRouter } from 'next/router';
 import type { PrismaClient } from '@prisma/client';
 import { ActionIcon, Avatar, Divider, Group, Stack, Text, Title, Skeleton } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
+
+import BaseLayout from 'components/BaseLayout';
+import Comments from 'components/Comments';
+import VoteButton from 'components/VoteButton';
 import { prisma } from 'server/db/client';
 import type { inferPrismaModelFromQuery } from 'utils/prisma';
 import { resolveInitials } from 'utils/strings';
 import { formatDate } from 'utils/dates';
-import BaseLayout from 'components/BaseLayout';
-import Comments from 'components/Comments';
-import VoteButton from 'components/VoteButton';
 
 interface Props {
 	idea: string;

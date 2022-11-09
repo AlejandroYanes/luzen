@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { Button, Code, createStyles, Group, Header, Text, Tooltip, } from '@mantine/core';
 import { openSpotlight } from '@mantine/spotlight';
 import { IconBucket, IconSearch } from '@tabler/icons';
-import { useSession } from 'next-auth/react';
+
 import RenderIf from 'components/RenderIf';
 import AvatarMenu from 'components/AvatarMenu';
 import { openSignInModal } from 'components/SignInModal';

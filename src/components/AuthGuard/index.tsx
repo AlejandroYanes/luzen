@@ -2,6 +2,7 @@
 import { useSession } from 'next-auth/react';
 import { IconAlertCircle } from '@tabler/icons';
 import { Alert, Button, Group } from '@mantine/core';
+
 import { openSignInModal } from 'components/SignInModal';
 
 /*

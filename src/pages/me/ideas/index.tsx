@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Stack, Title } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
+
 import BaseLayout from 'components/BaseLayout';
 import AuthGuard from 'components/AuthGuard';
 import IdeasTable from 'components/IdeasTable';

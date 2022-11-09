@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useSession } from 'next-auth/react';
 import { Stack, Title, } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
+
 import BaseLayout from 'components/BaseLayout';
 import UsersTable from 'components/UsersTable';
 import AuthGuard from 'components/AuthGuard';

@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useDebouncedState } from '@mantine/hooks';
 import { Stack, Title } from '@mantine/core';
+
 import BaseLayout from 'components/BaseLayout';
 import IdeasTable from 'components/IdeasTable';
 import AuthGuard from 'components/AuthGuard';

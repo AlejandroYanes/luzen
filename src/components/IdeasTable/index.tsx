@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Badge, Button, Group, Pagination, Switch, Table, Text, TextInput, } from '@mantine/core';
+
 import RenderIf from 'components/RenderIf';
 import { calculateTotal } from 'utils/pagiantion';
 import type { inferOppositeExcludingType } from 'utils/prop-types';
@@ -57,9 +58,11 @@ const IdeasTable = (props: Props) => {
           <Text weight={500}>
             {idea.title}
           </Text>
-          <Text size="xs" color="dimmed">
-            {idea.author?.name || 'Anonymous'}
-          </Text>
+          <RenderIf condition={!!isForAdmins}>
+            <Text size="xs" color="dimmed">
+              {idea.author?.name || 'Anonymous'}
+            </Text>
+          </RenderIf>
         </div>
       </td>
       <td style={{ textAlign: 'center' }}>

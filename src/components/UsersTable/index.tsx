@@ -1,8 +1,9 @@
 import { Avatar, Group, Select, Table, Text, Button, TextInput, Pagination } from '@mantine/core';
+
 import { resolveInitials } from 'utils/strings';
+import { calculateTotal } from 'utils/pagiantion';
 import type { Role} from 'constants/roles';
 import { ROLES } from 'constants/roles';
-import { calculateTotal } from 'utils/pagiantion';
 
 interface Props {
   page: number;

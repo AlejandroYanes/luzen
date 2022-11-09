@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+
 import AppHeader from 'components/AppHeader';
 import SearchSpotlight from 'components/SearchSpotlight';
 import { StyledWrapper, StyledContent } from './styled';

@@ -1,6 +1,7 @@
-import { createStyles, Text, Avatar, Group, TypographyStylesProvider, Paper } from '@mantine/core';
-import { resolveInitials } from '../../utils/strings';
-import { formatDate } from '../../utils/dates';
+import { createStyles, Text, Avatar, Group, Paper } from '@mantine/core';
+
+import { resolveInitials } from 'utils/strings';
+import { formatDate } from 'utils/dates';
 
 const useStyles = createStyles((theme) => ({
   comment: {

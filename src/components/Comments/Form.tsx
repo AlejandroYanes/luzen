@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react';
-import { Button, Stack, Text, Textarea } from '@mantine/core';
+import { Button, Stack, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
+
 import { openSignInModal } from 'components/SignInModal';
 import { trpc } from 'utils/trpc';
 

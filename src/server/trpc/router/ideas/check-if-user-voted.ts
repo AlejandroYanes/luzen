@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
+
 import { protectedProcedure } from 'server/trpc/trpc';
 
 const checkIfUserVoted = protectedProcedure

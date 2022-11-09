@@ -8,15 +8,15 @@ import {
   IconBuildingLighthouse,
   IconBulb,
 } from '@tabler/icons';
+
 import RenderIf from 'components/RenderIf';
 import { resolveInitials } from 'utils/strings';
-import type { Role } from 'constants/roles';
 
 interface Props {
   user?: {
     name?: string | null;
     image?: string | null;
-    role: Role;
+    role: string;
   };
 }
 

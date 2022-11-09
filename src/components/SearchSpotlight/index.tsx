@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { debounce } from 'radash';
+import { useRouter } from 'next/router';
 import { SpotlightProvider } from '@mantine/spotlight';
 import type { SpotlightAction } from '@mantine/spotlight';
-import { useRouter } from 'next/router';
+
 import { trpc } from 'utils/trpc';
 
 interface Props {
