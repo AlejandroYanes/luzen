@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { protectedProcedure } from '../../trpc';
+import { protectedProcedure } from 'server/trpc/trpc';
 
 const fetchDraft = protectedProcedure
   .input(z.string())

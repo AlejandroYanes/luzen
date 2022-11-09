@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Avatar, Group, Select, Table, Text, Button } from '@mantine/core';
+import { Avatar, Group, Select, Table, Text, Button, TextInput, Pagination } from '@mantine/core';
 import { resolveInitials } from 'utils/strings';
 import type { Role} from 'constants/roles';
 import { ROLES } from 'constants/roles';
+import { calculateTotal } from 'utils/pagiantion';
 
 interface Props {
+  page: number;
+  count: number;
   data: {
     id: string;
     image: string | null;
@@ -14,10 +16,13 @@ interface Props {
   }[];
   currentUser: string | undefined;
   updateRole: (userId: string, newRole: Role) => void;
+  onQueryChange: (nextQuery: string) => void;
+  onPageChange: (nextPage: number) => void;
 }
 
 const UsersTable = (props: Props) => {
-  const { data, currentUser, updateRole } = props;
+  const { page, count, data, currentUser, updateRole, onPageChange, onQueryChange } = props;
+
   const rows = data.map((user) => (
     <tr key={user.id}>
       <td>
@@ -59,16 +64,33 @@ const UsersTable = (props: Props) => {
   ));
 
   return (
-    <Table verticalSpacing="sm">
-      <thead>
-        <tr>
-          <th>User</th>
-          <th style={{ width: '180px' }}>Role</th>
-          <th style={{ width: '130px' }}></th>
-        </tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </Table>
+    <>
+      <TextInput
+        my="lg"
+        mr="auto"
+        defaultValue=""
+        placeholder="Search users"
+        sx={{ width: '280px' }}
+        onChange={(e) => onQueryChange(e.target.value)}
+      />
+      <Table verticalSpacing="sm">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th style={{ width: '180px' }}>Role</th>
+            <th style={{ width: '130px' }}></th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </Table>
+      <Group position="right" py="lg">
+        <Pagination
+          page={page}
+          onChange={onPageChange}
+          total={calculateTotal(count)}
+        />
+      </Group>
+    </>
   );
 }
 

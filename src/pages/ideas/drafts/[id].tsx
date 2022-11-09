@@ -44,13 +44,15 @@ const IdeaDetails: NextPage = () => {
         </Head>
         <BaseLayout>
           <Stack spacing="xl" style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <Group>
-              <ActionIcon onClick={() => router.back()}>
-                <IconArrowLeft />
-              </ActionIcon>
-            </Group>
-            <Title order={1} mb={48} align="center">Oops, we could not find this draft</Title>
-            <span style={{ fontSize: '72px', textAlign: 'center' }}>😔</span>
+            <AuthGuard>
+              <Group>
+                <ActionIcon onClick={() => router.back()}>
+                  <IconArrowLeft />
+                </ActionIcon>
+              </Group>
+              <Title order={1} mb={48} align="center">Oops, we could not find this draft</Title>
+              <span style={{ fontSize: '72px', textAlign: 'center' }}>😔</span>
+            </AuthGuard>
           </Stack>
         </BaseLayout>
       </>

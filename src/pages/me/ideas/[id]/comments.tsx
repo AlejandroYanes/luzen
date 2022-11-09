@@ -7,6 +7,7 @@ import { ActionIcon, Stack, Title } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 import BaseLayout from 'components/BaseLayout';
 import CommentsTable from 'components/CommentsTable';
+import AuthGuard from 'components/AuthGuard';
 import { trpc } from 'utils/trpc';
 
 const CommentsListPage: NextPage = () => {
@@ -15,7 +16,7 @@ const CommentsListPage: NextPage = () => {
   const [page, setPage] = useState(1);
   const {
     data: { results, count } = { results: [], count: 0 },
-  } = trpc.comments.listPaginated.useQuery(
+  } = trpc.comments.listCommentsForMyIdeas.useQuery(
     { ideaId: urlQuery.id as string, page, query },
     { keepPreviousData: true, enabled: !!urlQuery.id },
   );
@@ -23,23 +24,25 @@ const CommentsListPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bucket List | Managing comments</title>
+        <title>Bucket List | Comments for my idea</title>
         <meta name="description" content="all the comments for" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '900px' }}>
-          <ActionIcon onClick={() => back()}>
-            <IconArrowLeft />
-          </ActionIcon>
-          <Title>Comments for: {results.length > 0 ? results[0]?.idea.title : '...'}</Title>
-          <CommentsTable
-            page={page}
-            count={count}
-            data={results}
-            onPageChange={setPage}
-            onQueryChange={setQuery}
-          />
+          <AuthGuard>
+            <ActionIcon onClick={() => back()}>
+              <IconArrowLeft />
+            </ActionIcon>
+            <Title>Comments for: {results.length > 0 ? results[0]?.idea.title : '...'}</Title>
+            <CommentsTable
+              page={page}
+              count={count}
+              data={results}
+              onPageChange={setPage}
+              onQueryChange={setQuery}
+            />
+          </AuthGuard>
         </Stack>
       </BaseLayout>
     </>

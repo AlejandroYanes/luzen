@@ -2,12 +2,12 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
-import { Group, Pagination, Stack, TextInput, Title, } from '@mantine/core';
+import { Stack, Title, } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
 import BaseLayout from 'components/BaseLayout';
 import UsersTable from 'components/UsersTable';
+import AuthGuard from 'components/AuthGuard';
 import { trpc } from 'utils/trpc';
-import { calculateTotal } from 'utils/pagiantion';
 import type { Role } from 'constants/roles';
 
 const UsersPage: NextPage = () => {
@@ -35,23 +35,18 @@ const UsersPage: NextPage = () => {
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '900px' }}>
-          <Title>Users</Title>
-          <TextInput
-            my="lg"
-            mr="auto"
-            defaultValue=""
-            placeholder="Search users"
-            sx={{ width: '280px' }}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <UsersTable data={results} currentUser={session?.user?.id} updateRole={changeUserRole} />
-          <Group position="right" py="lg">
-            <Pagination
+          <AuthGuard>
+            <Title>Users</Title>
+            <UsersTable
               page={page}
-              onChange={setPage}
-              total={calculateTotal(count)}
+              count={count}
+              data={results}
+              currentUser={session?.user?.id}
+              updateRole={changeUserRole}
+              onPageChange={setPage}
+              onQueryChange={setQuery}
             />
-          </Group>
+          </AuthGuard>
         </Stack>
       </BaseLayout>
     </>

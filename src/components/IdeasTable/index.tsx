@@ -1,16 +1,5 @@
 import Link from 'next/link';
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Pagination,
-  Table,
-  Text,
-  TextInput,
-  Badge,
-  Switch,
-} from '@mantine/core';
-import { IconEye } from '@tabler/icons';
+import { Badge, Button, Group, Pagination, Switch, Table, Text, TextInput, } from '@mantine/core';
 import RenderIf from 'components/RenderIf';
 import { calculateTotal } from 'utils/pagiantion';
 import type { inferOppositeExcludingType } from 'utils/prop-types';
@@ -77,17 +66,19 @@ const IdeasTable = (props: Props) => {
         {idea.votes}
       </td>
       <td style={{ textAlign: 'center' }}>
-        <Link
-          href={(
-            isForAdmins
-              ? `/management/ideas/${idea.id}/comments`
-              : `/me/ideas/${idea.id}/comments`
-          )}
-        >
-          <Button size="sm" variant="subtle">
-            {idea._count.comments}
-          </Button>
-        </Link>
+        <RenderIf condition={idea._count.comments > 0} fallback={idea._count.comments}>
+          <Link
+            href={(
+              isForAdmins
+                ? `/management/ideas/${idea.id}/comments`
+                : `/me/ideas/${idea.id}/comments`
+            )}
+          >
+            <Button size="sm" variant="subtle">
+              {idea._count.comments}
+            </Button>
+          </Link>
+        </RenderIf>
       </td>
       <td>
         <RenderIf

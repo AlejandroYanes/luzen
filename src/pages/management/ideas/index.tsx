@@ -5,6 +5,7 @@ import { useDebouncedState } from '@mantine/hooks';
 import { Stack, Title } from '@mantine/core';
 import BaseLayout from 'components/BaseLayout';
 import IdeasTable from 'components/IdeasTable';
+import AuthGuard from 'components/AuthGuard';
 import { trpc } from 'utils/trpc';
 
 const IdeasListPage: NextPage = () => {
@@ -31,16 +32,18 @@ const IdeasListPage: NextPage = () => {
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '900px' }}>
-          <Title>Ideas</Title>
-          <IdeasTable
-            isForAdmins
-            page={page}
-            count={count}
-            data={results}
-            onPageChange={setPage}
-            onQueryChange={setQuery}
-            onToggleStatus={handleToggleStatus}
-          />
+          <AuthGuard>
+            <Title>Ideas</Title>
+            <IdeasTable
+              isForAdmins
+              page={page}
+              count={count}
+              data={results}
+              onPageChange={setPage}
+              onQueryChange={setQuery}
+              onToggleStatus={handleToggleStatus}
+            />
+          </AuthGuard>
         </Stack>
       </BaseLayout>
     </>

@@ -7,6 +7,7 @@ import { ActionIcon, Stack, Title } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 import BaseLayout from 'components/BaseLayout';
 import CommentsTable from 'components/CommentsTable';
+import AuthGuard from 'components/AuthGuard';
 import { trpc } from 'utils/trpc';
 
 const CommentsListPage: NextPage = () => {
@@ -29,17 +30,19 @@ const CommentsListPage: NextPage = () => {
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '900px' }}>
-          <ActionIcon onClick={() => back()}>
-            <IconArrowLeft />
-          </ActionIcon>
-          <Title>Comments for: {results.length > 0 ? results[0]?.idea.title : '...'}</Title>
-          <CommentsTable
-            page={page}
-            count={count}
-            data={results}
-            onPageChange={setPage}
-            onQueryChange={setQuery}
-          />
+          <AuthGuard>
+            <ActionIcon onClick={() => back()}>
+              <IconArrowLeft />
+            </ActionIcon>
+            <Title>Comments for: {results.length > 0 ? results[0]?.idea.title : '...'}</Title>
+            <CommentsTable
+              page={page}
+              count={count}
+              data={results}
+              onPageChange={setPage}
+              onQueryChange={setQuery}
+            />
+          </AuthGuard>
         </Stack>
       </BaseLayout>
     </>
