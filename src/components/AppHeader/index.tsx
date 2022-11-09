@@ -7,6 +7,7 @@ import { IconBucket, IconSearch } from '@tabler/icons';
 import RenderIf from 'components/RenderIf';
 import AvatarMenu from 'components/AvatarMenu';
 import { openSignInModal } from 'components/SignInModal';
+import NotificationCenter from 'components/NotificationCenter';
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -96,6 +97,7 @@ const AppHeader = () => {
               <Link href="/post">
                 <Button>Post new Idea</Button>
               </Link>
+              <NotificationCenter />
               <AvatarMenu user={data?.user} />
             </Group>
           </RenderIf>

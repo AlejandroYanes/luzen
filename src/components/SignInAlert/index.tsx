@@ -1,12 +1,12 @@
 import { IconAlertCircle } from '@tabler/icons';
-import { Alert, Button, Group, Stack, Text } from '@mantine/core';
+import { Alert, Button, Group, Stack } from '@mantine/core';
+import Head from 'next/head';
 
 import { openSignInModal } from '../SignInModal';
-import Head from 'next/head';
 import BaseLayout from '../BaseLayout';
 
 interface Props {
-  asPage: boolean;
+  asPage?: boolean;
 }
 
 export default function SignInAlert(props: Props) {
