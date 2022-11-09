@@ -4,6 +4,7 @@ import { Avatar, createStyles, Group, Stack, Text, Title, Button, Divider } from
 import { IconAt } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
+import SignInAlert from 'components/SignInAlert';
 import { resolveInitials } from 'utils/strings';
 
 const useStyles = createStyles((theme) => ({
@@ -21,17 +22,8 @@ const SettingsPage = () => {
   const { classes } = useStyles();
 
   if (!data?.user) {
-    return (
-      <>
-        <Head>
-          <title>Bucket List | Oops...</title>
-          <meta name="description" content="My ideas" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Text>Sign in</Text>
-      </>
-    );
-  } // todo: extract the sign from the AuthGuard and use it here;
+    return <SignInAlert asPage />;
+  }
 
   const { user } = data;
 
@@ -61,7 +53,6 @@ const SettingsPage = () => {
               </Group>
             </div>
           </Group>
-          {/*<Divider mt="xl" />*/}
           <Title order={2} mt="xl">Notifications</Title>
           <Title order={2}>...</Title>
           <Divider mt="xl" />

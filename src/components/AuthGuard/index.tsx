@@ -1,9 +1,7 @@
 /* eslint-disable max-len */
 import { useSession } from 'next-auth/react';
-import { IconAlertCircle } from '@tabler/icons';
-import { Alert, Button, Group } from '@mantine/core';
 
-import { openSignInModal } from 'components/SignInModal';
+import SignInAlert from '../SignInAlert';
 
 /*
 * TS2786: 'AuthGuard' cannot be used as a JSX component.
@@ -23,18 +21,7 @@ const AuthGuard = (props: Props) => {
   if (status === 'loading') return loadingUI;
 
   if (status === 'unauthenticated') {
-    return (
-      <Alert
-        icon={<IconAlertCircle size={16} />}
-        title="Hmm..."
-        variant="outline"
-      >
-        {`Seems we're not sure who you are, do you mind signing in?`}
-        <Group position="right" mt="md">
-          <Button onClick={() => openSignInModal()}>Sign in</Button>
-        </Group>
-      </Alert>
-    );
+    return <SignInAlert />;
   }
   return children;
 };
