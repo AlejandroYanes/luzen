@@ -53,7 +53,12 @@ const AvatarMenu = (props: Props) => {
         >
           My ideas
         </Menu.Item>
-        <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
+        <Menu.Item
+          onClick={() => router.push('/me/settings')}
+          icon={<IconSettings size={14} />}
+        >
+          Settings
+        </Menu.Item>
         <Menu.Item
           color="red"
           icon={<IconLogout size={14} />}
