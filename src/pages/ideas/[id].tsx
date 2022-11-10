@@ -14,7 +14,7 @@ import { resolveInitials } from 'utils/strings';
 import { formatDate } from 'utils/dates';
 
 interface Props {
-	idea: string;
+  idea: string;
 }
 
 const IdeaDetails: NextPage<Props> = (props) => {
@@ -58,7 +58,6 @@ const IdeaDetails: NextPage<Props> = (props) => {
       </>
     );
   }
-
 
   const { id, title, summary, description, postedAt, votes, author } = parsedIdea;
 

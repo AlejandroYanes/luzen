@@ -31,7 +31,6 @@ const IdeaCard = (props: Props) => {
     },
   } = props;
 
-
   return (
     <Card p="lg" radius="md">
       <Title order={3}>{title}</Title>

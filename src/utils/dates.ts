@@ -1,5 +1,3 @@
-
-
 export function formatDate(date: Date | string, locale = 'default'): string {
   const dateFormatter = new Intl.DateTimeFormat(locale, {
     day: 'numeric',

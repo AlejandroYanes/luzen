@@ -8,7 +8,6 @@ import fetchDraft from './fetch-draft';
 import listPaginated from './list-paginated';
 import toggleStatus from './toggle-status';
 
-
 export const ideasRouter = router({
   listAndSearch,
   post,
