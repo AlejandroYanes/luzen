@@ -39,7 +39,7 @@ const toggleStatus = adminProcedure
       notifyUserOfPublishedIdea({
         author: {
           id: author.id,
-          name: author.name ?? '',
+          name: author.name || '',
           email: author.email!,
         },
         idea: {

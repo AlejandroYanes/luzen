@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { protectedProcedure } from 'server/trpc/trpc';
+import { notifyUserOfNewVote } from 'server/novu';
 
 const toggleVote = protectedProcedure
   .input(z.string())
@@ -14,6 +15,14 @@ const toggleVote = protectedProcedure
       select: {
         id: true,
         votes: true,
+        title: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
         usersWhoVoted: {
           select: {
             userId: true,
@@ -58,6 +67,22 @@ const toggleVote = protectedProcedure
         },
       }
     });
+
+    if (idea.author) {
+      const { author } = idea;
+      notifyUserOfNewVote({
+        author: {
+          id: author.id,
+          name: author.name || '',
+          email: author.email!,
+        },
+        idea: {
+          id: idea.id,
+          title: idea.title,
+          voteCount: idea.votes,
+        },
+      });
+    }
   });
 
 export default toggleVote;
