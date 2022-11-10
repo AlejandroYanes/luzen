@@ -1,6 +1,7 @@
 import { type NextPage } from 'next';
 import Head from 'next/head';
 import { Stack } from '@mantine/core';
+
 import BaseLayout from 'components/BaseLayout';
 import IdeaCard from 'components/IdeaCard';
 import { prisma } from 'server/db/client';

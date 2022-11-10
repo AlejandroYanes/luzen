@@ -3,7 +3,7 @@ import { Avatar, Group, Select, Table, Text, Button, TextInput, Pagination } fro
 import { resolveInitials } from 'utils/strings';
 import { calculateTotal } from 'utils/pagiantion';
 import type { Role} from 'constants/roles';
-import { ROLES } from 'constants/roles';
+import { ROLES_LIST } from 'constants/roles';
 
 interface Props {
   page: number;
@@ -45,7 +45,7 @@ const UsersTable = (props: Props) => {
       <td>
         <Select
           disabled={user.id === currentUser}
-          data={ROLES}
+          data={ROLES_LIST}
           value={user.role}
           onChange={(value) => updateRole(user.id, value! as Role)}
           variant="unstyled"

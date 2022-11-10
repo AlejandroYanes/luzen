@@ -2,8 +2,7 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { adminProcedure } from 'server/trpc/trpc';
-import novu, { NOVU_TRIGGERS } from 'server/novu';
-import { env } from 'env/server.mjs';
+import { notifyUserOfPublishedIdea } from 'server/novu';
 
 const toggleStatus = adminProcedure
   .input(z.string())
@@ -36,17 +35,17 @@ const toggleStatus = adminProcedure
     });
 
     if (idea.isDraft && idea.author?.email) {
-      novu.trigger(NOVU_TRIGGERS.IDEA_MADE_PUBLIC, {
-        to: {
-          subscriberId: idea.author.id,
-          email: idea.author.email,
+      const { id, title, author } = idea;
+      notifyUserOfPublishedIdea({
+        author: {
+          id: author.id,
+          name: author.name ?? '',
+          email: author.email!,
         },
-        payload: {
-          name: idea.author.name ?? '',
-          ideaId: idea.id,
-          ideaName: idea.title,
-          link: `${env.NEXTAUTH_URL}/ideas/id`,
-        }
+        idea: {
+          id: id,
+          title,
+        },
       });
     }
   });
