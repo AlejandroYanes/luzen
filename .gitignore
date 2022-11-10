@@ -41,3 +41,6 @@ yarn-error.log*
 
 # WebStorm conf files
 .idea/
+
+# scripts folder
+/scripts

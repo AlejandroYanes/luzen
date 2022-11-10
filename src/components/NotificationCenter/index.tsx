@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
   NovuProvider,
   PopoverNotificationCenter,
@@ -6,8 +5,9 @@ import {
 } from '@novu/notification-center';
 import { useColorScheme } from '@mantine/hooks';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
-import { env as clientEnv } from 'env/client.mjs';
+const NOVU_APP_ID = 'uZLoM_7nUfGh';
 
 const theme = {
   common: {
@@ -18,6 +18,7 @@ const theme = {
 const NotificationCenter = () => {
   const colorScheme = useColorScheme();
   const router = useRouter();
+  const { data } = useSession();
 
   function onNotificationClick(notification: any) {
     router.push(notification.cta.data.url);
@@ -25,8 +26,8 @@ const NotificationCenter = () => {
 
   return (
     <NovuProvider
-      subscriberId={clientEnv.NEXT_PUBLIC_NOVU_SUBSCRIBER}
-      applicationIdentifier={'uZLoM_7nUfGh'}
+      subscriberId={data?.user?.id}
+      applicationIdentifier={NOVU_APP_ID}
     >
       <PopoverNotificationCenter
         theme={theme}

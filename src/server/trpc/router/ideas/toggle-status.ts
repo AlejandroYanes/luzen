@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { adminProcedure } from 'server/trpc/trpc';
-import novu from 'utils/novu';
+import novu, { NOVU_TRIGGERS } from 'server/novu';
 import { env } from 'env/server.mjs';
 
 const toggleStatus = adminProcedure
@@ -18,6 +18,7 @@ const toggleStatus = adminProcedure
         isDraft: true,
         author: {
           select: {
+            id: true,
             name: true,
             email: true,
           },
@@ -35,16 +36,16 @@ const toggleStatus = adminProcedure
     });
 
     if (idea.isDraft && idea.author?.email) {
-      novu.trigger('idea-made-public', {
+      novu.trigger(NOVU_TRIGGERS.IDEA_MADE_PUBLIC, {
         to: {
-          subscriberId: env.NOVU_SUBSCRIBER,
+          subscriberId: idea.author.id,
           email: idea.author.email,
         },
         payload: {
           name: idea.author.name ?? '',
           ideaId: idea.id,
           ideaName: idea.title,
-          link: 'https://test-domain.com/ideas/id',
+          link: `${env.NEXTAUTH_URL}/ideas/id`,
         }
       });
     }
