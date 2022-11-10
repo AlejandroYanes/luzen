@@ -60,7 +60,6 @@ const IdeaDetails: NextPage = () => {
     );
   }
 
-
   const { title, summary, description } = idea;
 
   return (
