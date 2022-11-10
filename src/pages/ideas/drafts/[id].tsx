@@ -25,7 +25,7 @@ const IdeaDetails: NextPage = () => {
     return (
       <>
         <BaseLayout>
-          <Stack sx={{ width: '700px', margin: '0 auto' }}>
+          <Stack mx="auto" sx={{ width: '700px' }}>
             <Skeleton width={480} height={44} mt={44} />
             <Skeleton width={280} height={46} mb={16} mt={16} />
             <Skeleton width={700} height={680} />
@@ -44,7 +44,7 @@ const IdeaDetails: NextPage = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <BaseLayout>
-          <Stack spacing="xl" style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <Stack spacing="xl" mx="auto" style={{ width: '700px' }}>
             <AuthGuard>
               <Group>
                 <ActionIcon onClick={() => router.back()}>
@@ -70,7 +70,7 @@ const IdeaDetails: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack spacing="xl" style={{ maxWidth: '700px', margin: '0 auto' }}>
+        <Stack spacing="xl" mx="auto" style={{ width: '700px' }}>
           <AuthGuard>
             <ActionIcon onClick={() => router.back()}>
               <IconArrowLeft />

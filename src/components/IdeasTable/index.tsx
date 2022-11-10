@@ -1,5 +1,16 @@
 import Link from 'next/link';
-import { Badge, Button, Group, Pagination, Switch, Table, Text, TextInput, } from '@mantine/core';
+import {
+  ActionIcon,
+  Badge,
+  Button,
+  Group,
+  Pagination,
+  Switch,
+  Table,
+  Text,
+  TextInput,
+} from '@mantine/core';
+import { IconEye } from '@tabler/icons';
 
 import RenderIf from 'components/RenderIf';
 import { calculateTotal } from 'utils/pagiantion';
@@ -53,6 +64,13 @@ const IdeasTable = (props: Props) => {
 
   const rows = data.map((idea) => (
     <tr key={idea.id}>
+      <td>
+        <Link href={idea.isDraft ? `/ideas/drafts/${idea.id}` : `/ideas/${idea.id}`}>
+          <ActionIcon>
+            <IconEye size={14} />
+          </ActionIcon>
+        </Link>
+      </td>
       <td>
         <div>
           <Text weight={500}>
@@ -139,6 +157,7 @@ const IdeasTable = (props: Props) => {
       <Table verticalSpacing="sm">
         <thead>
           <tr>
+            <th style={{ width: '32px' }} />
             <th>Title</th>
             <th style={{ width: '70px', textAlign: 'center' }}>Votes</th>
             <th style={{ width: '140px', textAlign: 'center' }}>Comments</th>

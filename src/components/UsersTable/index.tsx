@@ -1,8 +1,8 @@
-import { Avatar, Group, Select, Table, Text, Button, TextInput, Pagination } from '@mantine/core';
+import { Button, Group, Pagination, Select, Table, Text, TextInput } from '@mantine/core';
 
-import { resolveInitials } from 'utils/strings';
+import UserAvatar from 'components/UserAvatar';
 import { calculateTotal } from 'utils/pagiantion';
-import type { Role} from 'constants/roles';
+import type { Role } from 'constants/roles';
 import { ROLES_LIST } from 'constants/roles';
 
 interface Props {
@@ -28,9 +28,7 @@ const UsersTable = (props: Props) => {
     <tr key={user.id}>
       <td>
         <Group spacing="sm">
-          <Avatar src={user.image}>
-            {user.name ? resolveInitials(user.name) : 'A/N'}
-          </Avatar>
+          <UserAvatar user={user} />
           <div>
             <Text size="sm" weight={500}>
               {user.name ?? 'Anonymous'}

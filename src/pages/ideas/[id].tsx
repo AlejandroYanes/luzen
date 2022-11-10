@@ -2,15 +2,15 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import type { PrismaClient } from '@prisma/client';
-import { ActionIcon, Avatar, Divider, Group, Stack, Text, Title, Skeleton } from '@mantine/core';
+import { ActionIcon, Divider, Group, Skeleton, Stack, Text, Title } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
 import Comments from 'components/Comments';
 import VoteButton from 'components/VoteButton';
+import UserAvatar from 'components/UserAvatar';
 import { prisma } from 'server/db/client';
 import type { inferPrismaModelFromQuery } from 'utils/prisma';
-import { resolveInitials } from 'utils/strings';
 import { formatDate } from 'utils/dates';
 
 interface Props {
@@ -69,18 +69,6 @@ const IdeaDetails: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        {/*<Stack spacing="xl" style={{ maxWidth: '700px', margin: '0 auto' }}>*/}
-        {/*  <Link href="/">*/}
-        {/*    <ActionIcon>*/}
-        {/*      <IconArrowLeft />*/}
-        {/*    </ActionIcon>*/}
-        {/*  </Link>*/}
-        {/*  <Title order={1} mb="xl">{title}</Title>*/}
-        {/*  <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>*/}
-        {/*  <Divider my="xl" />*/}
-        {/*  <Title order={3}>Comments</Title>*/}
-        {/*  <Comments ideaId={id} />*/}
-        {/*</Stack>*/}
         <Group align="flex-start" sx={{ padding: '0 0 0 64px' }}>
           <Stack sx={{ width: '700px', margin: '0 auto' }}>
             <ActionIcon onClick={() => router.back()}>
@@ -89,9 +77,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
             <Title order={1}>{title}</Title>
             <Group mb="xl" align="center" position="apart">
               <Group>
-                <Avatar src={author?.image} alt={author?.name as string}>
-                  {author?.name ? resolveInitials(author?.name as string) : 'A/N'}
-                </Avatar>
+                <UserAvatar user={author} />
                 <Stack spacing={0}>
                   <Text>{author?.name ?? 'Anonymous'}</Text>
                   <Text size="sm" color="dimmed">{formatDate(postedAt, 'en')}</Text>

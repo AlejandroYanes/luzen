@@ -1,7 +1,7 @@
-import { Avatar, Button, Group, Pagination, Table, Text, TextInput } from '@mantine/core';
+import { Button, Group, Pagination, Table, Text, TextInput } from '@mantine/core';
 
+import UserAvatar from 'components/UserAvatar';
 import { formatDate } from 'utils/dates';
-import { resolveInitials } from 'utils/strings';
 import { calculateTotal } from 'utils/pagiantion';
 
 interface Props {
@@ -27,9 +27,7 @@ const CommentsTable = (props: Props) => {
     <tr key={comment.id}>
       <td style={{ verticalAlign: 'top' }}>
         <Group>
-          <Avatar src={comment.author?.image}>
-            {comment.author?.name ? resolveInitials(comment.author.name) : 'A/N'}
-          </Avatar>
+          <UserAvatar user={comment.author} />
           <div>
             <Text weight={500}>
               {comment.author?.name || 'Anonymous'}
