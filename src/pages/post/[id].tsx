@@ -94,6 +94,11 @@ const Post: NextPage = () => {
         </Head>
         <BaseLayout>
           <Stack spacing="xl" style={{ width: '600px', margin: '0 auto' }}>
+            <Link href="/">
+              <ActionIcon>
+                <IconArrowLeft />
+              </ActionIcon>
+            </Link>
             <Title order={1} mb={48} align="center">Oops, we could not find this idea</Title>
             <span style={{ fontSize: '72px', textAlign: 'center' }}>😔</span>
           </Stack>
