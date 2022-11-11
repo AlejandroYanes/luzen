@@ -40,7 +40,6 @@ interface CommonProps {
 
 interface UserProps {
   isForUsers: true;
-  onEdit: (ideaId: string) => void;
 }
 
 interface AdminProps {
@@ -59,7 +58,6 @@ const IdeasTable = (props: Props) => {
     onToggleStatus,
     onPageChange,
     onQueryChange,
-    onEdit,
   } = props;
 
   const rows = data.map((idea) => (
@@ -128,13 +126,14 @@ const IdeasTable = (props: Props) => {
           <RenderIf
             condition={!!isForAdmins}
             fallback={
-              <Button
-                onClick={() => onEdit!(idea.id)}
-                disabled={!idea.isDraft}
-                variant="outline"
-              >
-                Edit
-              </Button>
+              <Link href={`/post/${idea.id}`}>
+                <Button
+                  disabled={!idea.isDraft}
+                  variant="outline"
+                >
+                  Edit
+                </Button>
+              </Link>
             }
           >
             <Button variant="outline" color="red">Block</Button>

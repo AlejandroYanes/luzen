@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { ActionIcon, Badge, Button, Group, Skeleton, Stack, Text, Title } from '@mantine/core';
@@ -70,7 +71,9 @@ const IdeaDetails: NextPage = () => {
           <Title order={1} >{title}</Title>
           <Group position="apart" align="center" mb="xl">
             <Badge variant="outline">Draft</Badge>
-            <Button color="orange">Edit</Button>
+            <Link href={`/post/${idea.id}`}>
+              <Button color="orange">Edit</Button>
+            </Link>
           </Group>
           <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
         </Stack>

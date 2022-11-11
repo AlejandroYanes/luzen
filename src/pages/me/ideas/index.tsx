@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { Stack, Title } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
 
@@ -10,7 +9,6 @@ import IdeasTable from 'components/IdeasTable';
 import { trpc } from 'utils/trpc';
 
 const MyIdeasPage = () => {
-  const router = useRouter();
   const [query, setQuery] = useDebouncedState('', 200);
   const [page, setPage] = useState(1);
   const {
@@ -35,7 +33,6 @@ const MyIdeasPage = () => {
               data={results}
               onPageChange={setPage}
               onQueryChange={setQuery}
-              onEdit={(ideaId) => router.push(`/me/ideas/${ideaId}/edit`)}
             />
           </AuthGuard>
         </Stack>
