@@ -1,27 +1,20 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import {
-  ActionIcon,
-  Badge,
-  Button,
-  Group,
-  Skeleton,
-  Stack,
-  Text,
-  Title
-} from '@mantine/core';
+import { useSession } from 'next-auth/react';
+import { ActionIcon, Badge, Button, Group, Skeleton, Stack, Text, Title } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
-import AuthGuard from 'components/AuthGuard';
+import SignInAlert from 'components/SignInAlert';
 import { trpc } from 'utils/trpc';
 
 const IdeaDetails: NextPage = () => {
   const router = useRouter();
+  const { status } = useSession();
   const { data: idea, isLoading } = trpc.ideas.fetchDraft.useQuery(router.query.id as string);
 
-  if (isLoading) {
+  if (isLoading || status === 'loading') {
     return (
       <>
         <BaseLayout>
@@ -35,6 +28,8 @@ const IdeaDetails: NextPage = () => {
     );
   }
 
+  if (status === 'unauthenticated') return <SignInAlert asPage />
+
   if (!idea) {
     return (
       <>
@@ -45,15 +40,13 @@ const IdeaDetails: NextPage = () => {
         </Head>
         <BaseLayout>
           <Stack spacing="xl" mx="auto" style={{ width: '700px' }}>
-            <AuthGuard>
-              <Group>
-                <ActionIcon onClick={() => router.back()}>
-                  <IconArrowLeft />
-                </ActionIcon>
-              </Group>
-              <Title order={1} mb={48} align="center">Oops, we could not find this draft</Title>
-              <span style={{ fontSize: '72px', textAlign: 'center' }}>😔</span>
-            </AuthGuard>
+            <Group>
+              <ActionIcon onClick={() => router.back()}>
+                <IconArrowLeft />
+              </ActionIcon>
+            </Group>
+            <Title order={1} mb={48} align="center">Oops, we could not find this draft</Title>
+            <span style={{ fontSize: '72px', textAlign: 'center' }}>😔</span>
           </Stack>
         </BaseLayout>
       </>
@@ -71,17 +64,15 @@ const IdeaDetails: NextPage = () => {
       </Head>
       <BaseLayout>
         <Stack spacing="xl" mx="auto" style={{ width: '700px' }}>
-          <AuthGuard>
-            <ActionIcon onClick={() => router.back()}>
-              <IconArrowLeft />
-            </ActionIcon>
-            <Title order={1} >{title}</Title>
-            <Group position="apart" align="center" mb="xl">
-              <Badge variant="outline">Draft</Badge>
-              <Button color="orange">Edit</Button>
-            </Group>
-            <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
-          </AuthGuard>
+          <ActionIcon onClick={() => router.back()}>
+            <IconArrowLeft />
+          </ActionIcon>
+          <Title order={1} >{title}</Title>
+          <Group position="apart" align="center" mb="xl">
+            <Badge variant="outline">Draft</Badge>
+            <Button color="orange">Edit</Button>
+          </Group>
+          <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
         </Stack>
       </BaseLayout>
     </>
