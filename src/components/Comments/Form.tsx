@@ -51,17 +51,20 @@ const Form = (props: Props) => {
     <form onSubmit={handlePost}>
       <Stack>
         <Textarea
-          mt="xl"
-          label="Drop some words"
+          variant="unstyled"
+          label="Add a comment"
           placeholder="Start typing here"
-          description="500 characters left"
-          minRows={8}
-          maxRows={20}
           maxLength={500}
           autosize
           {...form.getInputProps('content')}
         />
-        <Button type="submit" loading={isLoading}>Post</Button>
+        <Button
+          variant={form.values.content ? 'filled' : 'default'}
+          type="submit"
+          loading={isLoading}
+        >
+          Post
+        </Button>
       </Stack>
     </form>
   );

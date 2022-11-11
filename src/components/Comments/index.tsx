@@ -1,4 +1,4 @@
-import { Text } from '@mantine/core';
+import { Space } from '@mantine/core';
 
 import { trpc } from 'utils/trpc';
 import Comment from './Comment';
@@ -13,12 +13,7 @@ const Comments = (props: Props) => {
   const { data: comments, refetch } = trpc.comments.list.useQuery(ideaId);
 
   if (!comments || comments.length === 0) {
-    return (
-      <>
-        <Text>Be the first to comment.</Text>
-        <Form ideaId={ideaId} refetch={refetch} />
-      </>
-    );
+    return <Form ideaId={ideaId} refetch={refetch} />;
   }
 
   const commentElements = comments.map((comment) => <Comment key={comment.id} {...comment} />)
@@ -26,6 +21,7 @@ const Comments = (props: Props) => {
   return (
     <>
       {commentElements}
+      <Space h="xl" />
       <Form ideaId={ideaId} refetch={refetch} />
     </>
   );
