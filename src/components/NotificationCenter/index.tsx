@@ -7,7 +7,7 @@ import { useColorScheme } from '@mantine/hooks';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
-const NOVU_APP_ID = 'uZLoM_7nUfGh';
+import { clientEnv } from 'env/schema.mjs';
 
 const theme = {
   common: {
@@ -27,7 +27,7 @@ const NotificationCenter = () => {
   return (
     <NovuProvider
       subscriberId={data?.user?.id}
-      applicationIdentifier={NOVU_APP_ID}
+      applicationIdentifier={clientEnv.NEXT_PUBLIC_NOVU_APP_ID as string}
     >
       <PopoverNotificationCenter
         theme={theme}

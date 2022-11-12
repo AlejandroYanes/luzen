@@ -24,10 +24,10 @@ const useStyles = createStyles((theme) => ({
 interface Props {
   postedAt: Date;
   content: string;
-  author?: {
+  author: {
     name: string | null;
     image?: string | null;
-  };
+  } | null;
 }
 
 export default function Comment(props: Props) {

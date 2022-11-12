@@ -5,6 +5,7 @@ import { Stack, Text } from '@mantine/core';
 
 import { GoogleButton } from 'components/SocialButtons';
 import openSignInModal from './open-sign-in-modal';
+import { GithubButton } from '../SocialButtons/GitHibButton';
 
 export { openSignInModal };
 
@@ -22,6 +23,7 @@ const SignInModal = (props: ContextModalProps) => {
     <Stack>
       <Text mb="xl">Start sharing your ideas and helping others get real</Text>
       <GoogleButton onClick={() => signIn('google')} />
+      <GithubButton onClick={() => signIn('github')} />
     </Stack>
   );
 };
