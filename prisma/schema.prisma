@@ -20,7 +20,7 @@ model Idea {
     postedAt        DateTime        @default(now())
     votes           Int             @default(0)
     isDraft         Boolean         @default(true)
-    author          User?           @relation(fields: [authorId], references: [id])
+    author          User?           @relation(fields: [authorId], references: [id], onDelete: SetNull)
     authorId        String?
     comments        Comment[]
     usersWhoVoted   VotedIdeas[]
@@ -30,16 +30,16 @@ model Comment {
     id              String          @id @db.VarChar(255) @default(uuid())
     content         String          @db.VarChar(505)
     postedAt        DateTime        @default(now())
-    author          User            @relation(fields: [authorId], references: [id])
-    authorId        String
-    idea            Idea            @relation(fields: [ideaId], references: [id])
+    author          User?           @relation(fields: [authorId], references: [id], onDelete: SetNull)
+    authorId        String?
+    idea            Idea            @relation(fields: [ideaId], references: [id], onDelete: Cascade)
     ideaId          String
 }
 
 model VotedIdeas {
-  idea          Idea     @relation(fields: [ideaId], references: [id])
+  idea          Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
   ideaId        String
-  user          User     @relation(fields: [userId], references: [id])
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String
 
   @@id([ideaId, userId])

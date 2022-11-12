@@ -1,11 +1,12 @@
 import Head from 'next/head';
-import { useSession } from 'next-auth/react';
-import { Avatar, createStyles, Group, Stack, Text, Title, Button, Divider } from '@mantine/core';
+import { signOut, useSession } from 'next-auth/react';
+import { Avatar, Button, createStyles, Divider, Group, Stack, Text, Title } from '@mantine/core';
 import { IconAt } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
 import SignInAlert from 'components/SignInAlert';
 import { resolveInitials } from 'utils/strings';
+import { trpc } from 'utils/trpc';
 
 const useStyles = createStyles((theme) => ({
   icon: {
@@ -18,8 +19,13 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const SettingsPage = () => {
-  const { data } = useSession();
   const { classes } = useStyles();
+  const { data } = useSession();
+  const { mutate: deleteMyAccount } = trpc.users.deleteAccount.useMutation({
+    onSuccess: () => {
+      signOut({ callbackUrl: '/' });
+    },
+  });
 
   if (!data?.user) {
     return <SignInAlert asPage />;
@@ -62,7 +68,9 @@ const SettingsPage = () => {
           <Divider mt="xl" />
           <Group position="apart">
             <Text>Tired of hanging around?</Text>
-            <Button color="red">Delete Account</Button>
+            <Button color="red" onClick={() => deleteMyAccount()}>
+              Delete Account
+            </Button>
           </Group>
         </Stack>
       </BaseLayout>
