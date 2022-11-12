@@ -31,7 +31,14 @@ const Comments = (props: Props) => {
       <Form ideaId={ideaId} refetch={refetch} />
       <Space h="xl" />
       {commentElements}
-      <Button variant="subtle" mt="md" onClick={() => fetchNextPage()}>Load more</Button>
+      <Button
+        mt="md"
+        color="gray"
+        variant="subtle"
+        onClick={() => fetchNextPage()}
+      >
+        Load more
+      </Button>
     </>
   );
 };
