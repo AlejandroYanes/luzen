@@ -47,7 +47,7 @@ const listCommentsForMyIdeas = protectedProcedure
       take: ITEMS_PER_PAGE_LIMIT,
       skip: page === 1 ? 0 : ITEMS_PER_PAGE_LIMIT * (page - 1),
       where,
-      orderBy: { postedAt: 'asc' },
+      orderBy: [{ postedAt: 'asc' }],
       select: {
         id: true,
         content: true,

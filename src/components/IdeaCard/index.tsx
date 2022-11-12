@@ -46,8 +46,7 @@ const IdeaCard = (props: Props) => {
       <Text>
         {summary}
       </Text>
-      <Group position="apart" style={{ marginTop: 'auto' }} pt="sm">
-        <Group></Group>
+      <Group position="right" mt="lg" pt="sm">
         <Group>
           <Link href={`/ideas/${id}`}>
             <Button variant="default">Visit</Button>

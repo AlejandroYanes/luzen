@@ -1,4 +1,4 @@
-import { Space } from '@mantine/core';
+import { Space, Button } from '@mantine/core';
 
 import { trpc } from 'utils/trpc';
 import Comment from './Comment';
@@ -10,19 +10,28 @@ interface Props {
 
 const Comments = (props: Props) => {
   const { ideaId } = props;
-  const { data: comments, refetch } = trpc.comments.list.useQuery(ideaId);
+  const { data: infinite, refetch, fetchNextPage } = trpc.comments.listInfinite.useInfiniteQuery(
+    { ideaId },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+      refetchOnWindowFocus: false,
+    },
+  );
 
-  if (!comments || comments.length === 0) {
+  if (!infinite?.pages || infinite?.pages.length === 0) {
     return <Form ideaId={ideaId} refetch={refetch} />;
   }
 
-  const commentElements = comments.map((comment) => <Comment key={comment.id} {...comment} />)
+  const commentElements = infinite?.pages
+    .flatMap((page) => page.results)
+    .map((comment) => <Comment key={comment.id} {...comment} />);
 
   return (
     <>
-      {commentElements}
-      <Space h="xl" />
       <Form ideaId={ideaId} refetch={refetch} />
+      <Space h="xl" />
+      {commentElements}
+      <Button variant="subtle" mt="md" onClick={() => fetchNextPage()}>Load more</Button>
     </>
   );
 };
