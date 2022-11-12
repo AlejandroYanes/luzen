@@ -1,25 +1,22 @@
 import { z } from 'zod';
 import type { Prisma } from '@prisma/client';
 
-import { adminProcedure } from 'server/trpc/trpc';
+import { publicProcedure } from 'server/trpc/trpc';
 import { ITEMS_PER_PAGE_LIMIT } from 'constants/pagination';
 
-const listPaginated = adminProcedure
+const listInfinite = publicProcedure
   .input(z.object({
-    page: z.number().min(1),
+    initialPage: z.number().default(2),
     query: z.string().nullish(),
-    isDraft: z.boolean().nullish(),
+    cursor: z.number().nullish(),
   }))
   .query(async ({ ctx, input }) => {
-    const { query, page, isDraft } = input;
+    const { query, cursor, initialPage } = input;
+    const page = cursor ?? initialPage;
+    console.log('listInfinite', input);
     let where: Prisma.IdeaWhereInput = {};
-
     if (query) {
       where = { ...where, title: { contains: query } };
-    }
-
-    if (isDraft !== undefined && isDraft !== null) {
-      where = { ...where, isDraft };
     }
 
     const results = await ctx.prisma.idea.findMany({
@@ -51,7 +48,12 @@ const listPaginated = adminProcedure
       },
     });
     const count = await ctx.prisma.idea.count({ where });
-    return { results, count };
+
+    return {
+      results,
+      nextPage: (page * ITEMS_PER_PAGE_LIMIT) < count ? page + 1 : undefined,
+    };
   });
 
-export default listPaginated;
+export default listInfinite;
+

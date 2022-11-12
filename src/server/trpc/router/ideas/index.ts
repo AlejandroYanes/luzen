@@ -7,14 +7,16 @@ import listMyIdeas from './list-my-ideas';
 import fetchDraft from './fetch-draft';
 import listPaginated from './list-paginated';
 import toggleStatus from './toggle-status';
+import listInfinite from './list-infinite';
 
 export const ideasRouter = router({
   listAndSearch,
-  post,
-  toggleVote,
-  checkIfUserVoted,
   listMyIdeas,
-  fetchDraft,
   listPaginated,
+  listInfinite,
+  fetchDraft,
+  toggleVote,
   toggleStatus,
+  checkIfUserVoted,
+  post,
 });

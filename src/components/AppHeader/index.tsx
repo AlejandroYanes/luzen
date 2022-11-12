@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { Button, Code, createStyles, Group, Header, Text, Tooltip, } from '@mantine/core';
 import { openSpotlight } from '@mantine/spotlight';
-import { IconBucket, IconSearch } from '@tabler/icons';
+import { IconBulb, IconSearch } from '@tabler/icons';
 
 import RenderIf from 'components/RenderIf';
 import AvatarMenu from 'components/AvatarMenu';
@@ -61,7 +61,7 @@ const AppHeader = () => {
       <div className={classes.inner}>
         <Group>
           <Link href="/">
-            <IconBucket size={24} />
+            <IconBulb size={32} />
           </Link>
         </Group>
 
