@@ -53,8 +53,12 @@ const SettingsPage = () => {
               </Group>
             </div>
           </Group>
-          <Title order={2} mt="xl">Notifications</Title>
-          <Title order={2}>...</Title>
+          <Text>
+            {`
+            There's not really anything else to do here, 
+            to manage your notifications check the notification bell.
+            `}
+          </Text>
           <Divider mt="xl" />
           <Group position="apart">
             <Text>Tired of hanging around?</Text>
