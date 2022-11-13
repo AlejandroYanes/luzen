@@ -8,6 +8,9 @@ import { env } from 'env/server.mjs';
 import { prisma } from 'server/db/client';
 
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: '/signin'
+  },
   // Include user.id on session
   callbacks: {
     session({ session, user }) {
