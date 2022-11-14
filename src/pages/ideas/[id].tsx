@@ -12,7 +12,7 @@ import UserAvatar from 'components/UserAvatar';
 import { prisma } from 'server/db/client';
 import type { inferPrismaModelFromQuery } from 'utils/prisma';
 import { formatDate } from 'utils/dates';
-import { env } from '../../env/client.mjs';
+import { env } from 'env/client.mjs';
 
 interface Props {
   idea: string;
@@ -84,29 +84,25 @@ const IdeaDetails: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Group align="flex-start" sx={{ padding: '0 0 0 64px' }}>
-          <Stack sx={{ width: '700px', margin: '0 auto' }}>
-            <ActionIcon onClick={() => router.back()}>
-              <IconArrowLeft />
-            </ActionIcon>
-            <Title order={1}>{title}</Title>
-            <Group mb="xl" align="center" position="apart">
-              <Group>
-                <UserAvatar user={author} />
-                <Stack spacing={0}>
-                  <Text>{author?.name ?? 'Anonymous'}</Text>
-                  <Text size="sm" color="dimmed">{formatDate(postedAt, 'en')}</Text>
-                </Stack>
-              </Group>
-              <VoteButton ideaId={id} votes={votes} />
+        <Stack sx={{ width: '700px', margin: '0 auto' }}>
+          <ActionIcon onClick={() => router.back()}>
+            <IconArrowLeft />
+          </ActionIcon>
+          <Title order={1}>{title}</Title>
+          <Group mb="xl" align="center" position="apart">
+            <Group>
+              <UserAvatar user={author} />
+              <Stack spacing={0}>
+                <Text>{author?.name ?? 'Anonymous'}</Text>
+                <Text size="sm" color="dimmed">{formatDate(postedAt, 'en')}</Text>
+              </Stack>
             </Group>
-            <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
-          </Stack>
-          <Divider orientation="vertical" sx={{ minHeight: '85vh' }} />
-          <Stack sx={{ width: '25%' }}>
-            <Comments ideaId={id} />
-          </Stack>
-        </Group>
+            <VoteButton ideaId={id} votes={votes} />
+          </Group>
+          <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
+          <Divider mt="xl" mb="lg" />
+          <Comments ideaId={id} />
+        </Stack>
       </BaseLayout>
     </>
   );
