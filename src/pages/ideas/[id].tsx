@@ -12,6 +12,7 @@ import UserAvatar from 'components/UserAvatar';
 import { prisma } from 'server/db/client';
 import type { inferPrismaModelFromQuery } from 'utils/prisma';
 import { formatDate } from 'utils/dates';
+import { env } from '../../env/client.mjs';
 
 interface Props {
   idea: string;
@@ -65,7 +66,14 @@ const IdeaDetails: NextPage<Props> = (props) => {
     <>
       <Head>
         <title>Bucket List | {title}</title>
+        <meta name="title" content={title} />
         <meta name="description" content={summary} />
+
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={summary} />
+        <meta property="og:url" content={`${env.NEXT_PUBLIC_DOMAIN}/ideas?id=${id}`} />
+        <meta property="og:image" content={`${env.NEXT_PUBLIC_DOMAIN}/api/og/ideas?id=${id}`} />
+
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
