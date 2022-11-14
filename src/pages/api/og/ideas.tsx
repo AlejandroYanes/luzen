@@ -1,6 +1,7 @@
 import { ImageResponse } from '@vercel/og';
 import type { NextApiRequest } from 'next';
 
+import type { QueryIdea } from 'pages/api/ideas/[id]';
 import RenderIf from 'components/RenderIf';
 
 export const config = {
@@ -29,6 +30,7 @@ const fallbackConf = {
   height: 600,
 };
 
+const avatarSize = 48;
 const anonymousImg = (
   <div
     style={{
@@ -37,9 +39,11 @@ const anonymousImg = (
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'lightgray',
-      borderRadius: '4px',
-      width: '64px',
-      height: '64px',
+      borderRadius: '2px',
+      width: `${avatarSize}px`,
+      minWidth: `${avatarSize}px`,
+      height: `${avatarSize}px`,
+      minHeight: `${avatarSize}px`,
     }}
   >
     A/N
@@ -54,15 +58,14 @@ export default async function buildOGImageForIdea(req: NextApiRequest) {
   }
 
   const response = await fetch(`${origin}/api/ideas/${searchParams.get('id')}`);
-  const { idea } = await response.json();
+  const { idea } = (await response.json()) as { idea: QueryIdea };
 
   if (!idea) {
     return new ImageResponse(fallbackImg, fallbackConf);
   }
 
-  console.log('OG idea', idea);
-
-  const { title, summary } = idea;
+  const { title, tagLine, summary, votes, _count } = idea;
+  const description = tagLine ?? summary.split('. ').slice(0, 2).join('. ') + '.';
   const author = idea.author ?? { name: 'Anonymous', image: null };
 
   return new ImageResponse(
@@ -82,9 +85,9 @@ export default async function buildOGImageForIdea(req: NextApiRequest) {
         >
           <img
             style={{
-              borderRadius: '4px',
-              width: '64px',
-              height: '64px',
+              borderRadius: '2px',
+              width: `${avatarSize}px`,
+              height: `${avatarSize}px`,
             }}
             src={author.image!}
             alt={author.name!}
@@ -93,13 +96,34 @@ export default async function buildOGImageForIdea(req: NextApiRequest) {
         <div style={{ display: 'flex', flexDirection: 'column', padding: '0 64px 0 24px' }}>
           <h4 style={{ margin: '0' }}>{author.name}</h4>
           <h1 style={{ marginTop: '0px', fontSize: '48px' }}>{title}</h1>
-          <span>{summary}</span>
+          <span>{description}</span>
+          <div
+            style={{
+              marginTop: 'auto',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingTop: '24px',
+            }}
+          >
+            <span>
+              Votes:
+              {' '}
+              {votes}
+            </span>
+            <span>
+              Comments:
+              {' '}
+              {_count.comments}
+            </span>
+          </div>
         </div>
       </div>
     ),
     {
       width: 800,
-      height: 400,
+      height: 300,
     },
   );
 }

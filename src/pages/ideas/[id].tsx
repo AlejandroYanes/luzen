@@ -9,10 +9,10 @@ import BaseLayout from 'components/BaseLayout';
 import Comments from 'components/Comments';
 import VoteButton from 'components/VoteButton';
 import UserAvatar from 'components/UserAvatar';
+import HeaderMetas from 'components/HeaderMetas';
 import { prisma } from 'server/db/client';
 import type { inferPrismaModelFromQuery } from 'utils/prisma';
 import { formatDate } from 'utils/dates';
-import { env } from '../../env/client.mjs';
 
 interface Props {
   idea: string;
@@ -60,20 +60,13 @@ const IdeaDetails: NextPage<Props> = (props) => {
     );
   }
 
-  const { id, title, summary, description, postedAt, votes, author } = parsedIdea;
+  const { id, title, description, postedAt, votes, author } = parsedIdea;
 
   return (
     <>
       <Head>
         <title>Bucket List | {title}</title>
-        <meta name="title" content={title} />
-        <meta name="description" content={summary} />
-
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={summary} />
-        <meta property="og:url" content={`${env.NEXT_PUBLIC_DOMAIN}/ideas?id=${id}`} />
-        <meta property="og:image" content={`${env.NEXT_PUBLIC_DOMAIN}/api/og/ideas?id=${id}`} />
-
+        <HeaderMetas idea={parsedIdea} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
@@ -148,6 +141,7 @@ function queryIdeaById(prismaClient: PrismaClient, id: string) {
     select: {
       id: true,
       title: true,
+      tagLine: true,
       summary: true,
       description: true,
       postedAt: true,
