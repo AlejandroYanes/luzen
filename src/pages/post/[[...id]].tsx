@@ -42,10 +42,10 @@ const formRules = {
 const Post: NextPage = () => {
   const router = useRouter();
 
-  const idFromQuery = router.query.id as string;
+  const idFromQuery = router.query.id?.[0] as string;
   const {
     data: ideaFromDb,
-    isLoading: loadingFromDb,
+    isFetching: loadingFromDb,
   } = trpc.ideas.fetchDraft.useQuery(
     idFromQuery,
     {
@@ -54,6 +54,7 @@ const Post: NextPage = () => {
       refetchOnWindowFocus: false,
     },
   );
+  console.log(idFromQuery, loadingFromDb);
 
   const {
     mutate,

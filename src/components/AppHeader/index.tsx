@@ -60,7 +60,7 @@ const AppHeader = () => {
     <Header height={56} className={classes.header} mb={48} px={24}>
       <div className={classes.inner}>
         <Group>
-          <Link href="/">
+          <Link href="/ideas">
             <IconBulb size={32} />
           </Link>
         </Group>
