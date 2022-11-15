@@ -23,7 +23,7 @@ const MyIdeasPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack style={{ width: '900px', margin: '0 auto' }}>
+        <Stack style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }}>
           <AuthGuard>
             <Title>My ideas</Title>
             <IdeasTable

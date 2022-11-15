@@ -39,7 +39,7 @@ const Home: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack spacing="xl" style={{ maxWidth: '700px', margin: '48px auto 0' }}>
+        <Stack spacing="xl" style={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
           {initialCards}
           {infiniteCards}
           <Waypoint

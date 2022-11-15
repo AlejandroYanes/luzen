@@ -94,7 +94,7 @@ const Post: NextPage = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <BaseLayout>
-          <Stack spacing="xl" style={{ width: '600px', margin: '0 auto' }}>
+          <Stack spacing="xl" style={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
             <Link href="/">
               <ActionIcon>
                 <IconArrowLeft />
@@ -118,7 +118,7 @@ const Post: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack spacing="xl" style={{ width: '600px', margin: '0 auto' }}>
+        <Stack spacing="xl" style={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
           <AuthGuard loadingUI={<Loading />}>
             <RenderIf condition={!loadingFromDb} fallback={<Loading />}>
               <Link href="/">

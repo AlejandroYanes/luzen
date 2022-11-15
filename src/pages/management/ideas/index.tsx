@@ -32,7 +32,7 @@ const IdeasListPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack mx="auto" sx={{ width: '900px' }}>
+        <Stack mx="auto" sx={{ width: '100%', maxWidth: '900px' }}>
           <AuthGuard>
             <Title>Ideas</Title>
             <IdeasTable

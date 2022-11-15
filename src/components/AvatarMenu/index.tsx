@@ -7,6 +7,7 @@ import {
   IconUsers,
   IconBuildingLighthouse,
   IconBulb,
+  IconPencil,
 } from '@tabler/icons';
 
 import RenderIf from 'components/RenderIf';
@@ -47,6 +48,12 @@ const AvatarMenu = (props: Props) => {
           </Menu.Item>
           <Menu.Divider />
         </RenderIf>
+        <Menu.Item
+          onClick={() => router.push('/post')}
+          icon={<IconPencil size={14} />}
+        >
+          Post new Idea
+        </Menu.Item>
         <Menu.Item
           onClick={() => router.push('/me/ideas')}
           icon={<IconBulb size={14} />}
