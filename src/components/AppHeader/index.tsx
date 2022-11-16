@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { Button, createStyles, Group, Header, useMantineTheme, } from '@mantine/core';
+import { ActionIcon, Button, createStyles, Group, Header, useMantineTheme, } from '@mantine/core';
 import { IconBulb } from '@tabler/icons';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -39,7 +39,9 @@ const AppHeader = () => {
     <Header height={56} className={classes.header} px={24}>
       <Group>
         <Link href="/ideas">
-          <IconBulb size={32} />
+          <ActionIcon>
+            <IconBulb size={32} />
+          </ActionIcon>
         </Link>
       </Group>
 
