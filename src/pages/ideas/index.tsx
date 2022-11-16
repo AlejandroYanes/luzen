@@ -10,6 +10,7 @@ import { prisma } from 'server/db/client';
 import { trpc } from 'utils/trpc';
 import type { inferPrismaModelFromQuery } from 'utils/prisma';
 import { ITEMS_PER_PAGE_LIMIT } from 'constants/pagination';
+import { mobileViewMediaQuery } from 'hooks/ui/useMobileView';
 
 interface Props {
   initialIdeas: string;
@@ -39,7 +40,17 @@ const Home: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack spacing="xl" style={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
+        <Stack
+          spacing="xl"
+          sx={(theme) => ({
+            width: '100%',
+            maxWidth: '700px',
+            margin: '0 auto',
+            [`@media ${mobileViewMediaQuery(theme)}`]: {
+              gap: '64px',
+            },
+          })}
+        >
           {initialCards}
           {infiniteCards}
           <Waypoint

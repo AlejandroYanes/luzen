@@ -4,6 +4,7 @@ import { Avatar, Button, Card, Group, Stack, Text, Title } from '@mantine/core';
 import VoteButton from 'components/VoteButton';
 import { formatDate } from 'utils/dates';
 import { resolveInitials } from 'utils/strings';
+import { mobileViewMediaQuery } from 'hooks/ui/useMobileView';
 
 interface Props {
   idea: {
@@ -37,7 +38,7 @@ const IdeaCard = (props: Props) => {
       radius="md"
       sx={(theme) => ({
         backgroundColor: 'transparent',
-        [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+        [`@media ${mobileViewMediaQuery(theme)}`]: {
           padding: '0',
           borderRadius: 0,
         },

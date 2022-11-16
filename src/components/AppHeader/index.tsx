@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { ActionIcon, Button, createStyles, Group, Header, useMantineTheme, } from '@mantine/core';
+import { ActionIcon, Button, createStyles, Group, Header, } from '@mantine/core';
 import { IconBulb } from '@tabler/icons';
-import { useMediaQuery } from '@mantine/hooks';
 
+import useMobileView from 'hooks/ui/useMobileView';
 import RenderIf from 'components/RenderIf';
 import AvatarMenu from 'components/AvatarMenu';
 import { openSignInModal } from 'components/SignInModal';
@@ -29,8 +29,7 @@ const AppHeader = () => {
   const { classes } = useStyles();
   const { status, data } = useSession();
   const { pathname } = useRouter();
-  const theme = useMantineTheme();
-  const isMobileScreen = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
+  const isMobileScreen = useMobileView();
 
   return (
     <Header height={56} className={classes.header} px={24}>

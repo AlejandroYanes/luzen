@@ -25,12 +25,11 @@ const listMyIdeas = protectedProcedure
     const results = await ctx.prisma.idea.findMany({
       take: ITEMS_PER_PAGE_LIMIT,
       skip: page === 1 ? 0 : ITEMS_PER_PAGE_LIMIT * (page - 1),
-      orderBy: { votes: 'desc' },
+      orderBy: [{ votes: 'desc' }, { postedAt: 'asc' }],
       where,
       select: {
         id: true,
         title: true,
-        summary: true,
         votes: true,
         postedAt: true,
         isDraft: true,

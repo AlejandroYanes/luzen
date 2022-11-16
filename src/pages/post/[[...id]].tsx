@@ -54,7 +54,6 @@ const Post: NextPage = () => {
       refetchOnWindowFocus: false,
     },
   );
-  console.log(idFromQuery, loadingFromDb);
 
   const {
     mutate,

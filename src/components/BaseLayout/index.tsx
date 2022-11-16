@@ -3,6 +3,7 @@ import { createStyles } from '@mantine/core';
 
 import AppHeader from 'components/AppHeader';
 import SearchSpotlight from 'components/SearchSpotlight';
+import { mobileViewMediaQuery } from 'hooks/ui/useMobileView';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -15,7 +16,7 @@ const useStyles = createStyles((theme) => ({
     padding: '0 48px 24px',
 
     // Media query with value from theme
-    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+    [`@media ${mobileViewMediaQuery(theme)}`]: {
       padding: '0 16px 24px',
     },
   },

@@ -1,20 +1,10 @@
-import Link from 'next/link';
-import {
-  ActionIcon,
-  Badge,
-  Button,
-  Group,
-  Pagination,
-  Switch,
-  Table,
-  Text,
-  TextInput,
-} from '@mantine/core';
-import { IconEye } from '@tabler/icons';
+import { Group, Pagination, TextInput, } from '@mantine/core';
 
-import RenderIf from 'components/RenderIf';
 import { calculateTotal } from 'utils/pagiantion';
 import type { inferOppositeExcludingType } from 'utils/prop-types';
+import useMobileView from 'hooks/ui/useMobileView';
+import TableView from './TableView';
+import StackView from './StackView';
 
 interface CommonProps {
   page: number;
@@ -22,7 +12,6 @@ interface CommonProps {
   data: {
     id: string;
     title: string;
-    summary: string;
     postedAt: Date;
     votes: number;
     isDraft: boolean;
@@ -47,7 +36,7 @@ interface AdminProps {
   onToggleStatus: (ideaId: string) => void;
 }
 
-type Props = CommonProps & inferOppositeExcludingType<UserProps, AdminProps>;
+export type Props = CommonProps & inferOppositeExcludingType<UserProps, AdminProps>;
 
 const IdeasTable = (props: Props) => {
   const {
@@ -59,89 +48,8 @@ const IdeasTable = (props: Props) => {
     onPageChange,
     onQueryChange,
   } = props;
-
-  const rows = data.map((idea) => (
-    <tr key={idea.id}>
-      <td>
-        <Link href={idea.isDraft ? `/ideas/drafts/${idea.id}` : `/ideas/${idea.id}`}>
-          <ActionIcon>
-            <IconEye size={14} />
-          </ActionIcon>
-        </Link>
-      </td>
-      <td>
-        <div>
-          <Text weight={500}>
-            {idea.title}
-          </Text>
-          <RenderIf condition={!!isForAdmins}>
-            <Text size="xs" color="dimmed">
-              {idea.author?.name || 'Anonymous'}
-            </Text>
-          </RenderIf>
-        </div>
-      </td>
-      <td style={{ textAlign: 'center' }}>
-        {idea.votes}
-      </td>
-      <td style={{ textAlign: 'center' }}>
-        <RenderIf condition={idea._count.comments > 0} fallback={idea._count.comments}>
-          <Link
-            href={(
-              isForAdmins
-                ? `/management/ideas/${idea.id}/comments`
-                : `/me/ideas/${idea.id}/comments`
-            )}
-          >
-            <Button size="sm" variant="subtle">
-              {idea._count.comments}
-            </Button>
-          </Link>
-        </RenderIf>
-      </td>
-      <td>
-        <RenderIf
-          condition={!!isForAdmins}
-          fallback={
-            <Badge
-              color={idea.isDraft ? 'orange' : 'blue'}
-              variant="light"
-            >
-              {idea.isDraft ? 'Draft' : 'Public'}
-            </Badge>
-          }
-        >
-          <Switch
-            sx={{ display: 'flex' }}
-            checked={!idea.isDraft}
-            onChange={() => onToggleStatus!(idea.id)}
-            onLabel="Public"
-            offLabel="Draft"
-            size="lg"
-          />
-        </RenderIf>
-      </td>
-      <td>
-        <Group position="right">
-          <RenderIf
-            condition={!!isForAdmins}
-            fallback={
-              <Link href={`/post/${idea.id}`}>
-                <Button
-                  disabled={!idea.isDraft}
-                  variant="outline"
-                >
-                  Edit
-                </Button>
-              </Link>
-            }
-          >
-            <Button variant="outline" color="red">Block</Button>
-          </RenderIf>
-        </Group>
-      </td>
-    </tr>
-  ));
+  const isMobileScreen = useMobileView();
+  const View = isMobileScreen ? StackView : TableView;
 
   return (
     <>
@@ -150,22 +58,10 @@ const IdeasTable = (props: Props) => {
         mr="auto"
         defaultValue=""
         placeholder="Search comments"
-        sx={{ width: '280px' }}
+        sx={{ width: isMobileScreen ? '100%' :'280px' }}
         onChange={(e) => onQueryChange(e.target.value)}
       />
-      <Table verticalSpacing="sm">
-        <thead>
-          <tr>
-            <th style={{ width: '32px' }} />
-            <th>Title</th>
-            <th style={{ width: '70px', textAlign: 'center' }}>Votes</th>
-            <th style={{ width: '140px', textAlign: 'center' }}>Comments</th>
-            <th style={{ width: '140px' }}>Status</th>
-            <th style={{ width: '120px' }}></th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
+      <View data={data} isForAdmins={!!isForAdmins} onToggleStatus={onToggleStatus} />
       <Group position="right" py="lg">
         <Pagination
           page={page}
