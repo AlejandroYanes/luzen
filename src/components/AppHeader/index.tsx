@@ -22,9 +22,6 @@ const useStyles = createStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '48px',
-    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      marginBottom: '16px',
-    },
   },
 }));
 

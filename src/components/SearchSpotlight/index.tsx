@@ -39,11 +39,14 @@ const SearchSpotlight = ({ children }: Props) => {
   return (
     <InfiniteLoadProvider loadMore={() => fetchNextPage()}>
       <SpotlightProvider
-        styles={{
+        styles={(theme) => ({
           spotlight: {
             maxHeight: '600px',
+            [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+              maxWidth: '98vw',
+            },
           },
-        }}
+        })}
         shortcut="mod + K"
         transition="slide-down"
         transitionDuration={300}

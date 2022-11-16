@@ -32,7 +32,17 @@ const IdeaCard = (props: Props) => {
   } = props;
 
   return (
-    <Card p="lg" radius="md">
+    <Card
+      p="lg"
+      radius="md"
+      sx={(theme) => ({
+        backgroundColor: 'transparent',
+        [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
+          padding: '0',
+          borderRadius: 0,
+        },
+      })}
+    >
       <Title order={3}>{title}</Title>
       <Group mb="lg">
         <Avatar src={author?.image} alt={author?.name as string}>
