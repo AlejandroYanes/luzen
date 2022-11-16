@@ -46,7 +46,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <BaseLayout>
-          <Stack spacing="xl" style={{ maxWidth: '700px', margin: '0 auto' }}>
+          <Stack spacing="xl" style={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
             <Group>
               <ActionIcon onClick={() => router.back()}>
                 <IconArrowLeft />
@@ -84,7 +84,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack sx={{ width: '700px', margin: '0 auto' }}>
+        <Stack sx={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
           <ActionIcon onClick={() => router.back()}>
             <IconArrowLeft />
           </ActionIcon>
