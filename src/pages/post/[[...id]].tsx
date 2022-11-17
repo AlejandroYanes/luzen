@@ -1,19 +1,10 @@
 import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import {
-  ActionIcon,
-  Button,
-  Stack,
-  Textarea,
-  TextInput,
-  Title,
-  Alert,
-} from '@mantine/core';
+import { ActionIcon, Alert, Button, Stack, Textarea, TextInput, Title, } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { IconArrowLeft, IconAlertCircle } from '@tabler/icons';
+import { IconAlertCircle, IconArrowLeft } from '@tabler/icons';
 
 import { trpc } from 'utils/trpc';
 import BaseLayout from 'components/BaseLayout';
