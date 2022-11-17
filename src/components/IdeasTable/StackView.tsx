@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Accordion, createStyles, Group, Text, Button, Badge } from '@mantine/core';
+import { Accordion, createStyles, Group, Text, Button, Badge, ActionIcon } from '@mantine/core';
+import { IconEye } from '@tabler/icons';
 
 import type { Props as TopProps } from './index';
 import RenderIf from '../RenderIf';
@@ -37,18 +38,19 @@ export default function StackView(props: Props) {
   const ideas = data.map((idea) => (
     <Accordion.Item key={idea.id} className={classes.item} value={idea.id}>
       <Accordion.Control>
-        {idea.title}
-        <Badge
-          ml="xl"
-          variant="light"
-          color={idea.isDraft ? 'orange' : 'blue'}
-        >
-          {idea.isDraft ? 'Draft' : 'Public'}
-        </Badge>
+        <Group>
+          <Text>{idea.title}</Text>
+          <Badge
+            variant="light"
+            color={idea.isDraft ? 'orange' : 'blue'}
+          >
+            {idea.isDraft ? 'Draft' : 'Public'}
+          </Badge>
+        </Group>
       </Accordion.Control>
       <Accordion.Panel>
-        <Group position="apart">
-          <Group>
+        <Group position="apart" align="flex-end">
+          <Group spacing="xs">
             <Stat label="Votes" value={idea.votes} />
             <RenderIf
               condition={idea._count.comments > 0}
@@ -57,20 +59,31 @@ export default function StackView(props: Props) {
               <Link
                 href={`/me/ideas/${idea.id}/comments`}
               >
-                <Button size="sm" variant="subtle">
+                <Button size="sm" variant="subtle" style={{ height: '48px', padding: 0 }}>
                   <Stat label="Comments" value={idea._count.comments} />
                 </Button>
               </Link>
             </RenderIf>
           </Group>
-          <Link href={`/post/${idea.id}`}>
-            <Button
-              disabled={!idea.isDraft}
-              variant="outline"
-            >
-              Edit
-            </Button>
-          </Link>
+          <RenderIf
+            condition={idea.isDraft}
+            fallback={
+              <Link href={idea.isDraft ? `/ideas/drafts/${idea.id}` : `/ideas/${idea.id}`}>
+                <Button variant="outline">
+                Visit
+                </Button>
+              </Link>
+            }
+          >
+            <Link href={`/post/${idea.id}`}>
+              <Button
+                disabled={!idea.isDraft}
+                variant="outline"
+              >
+                Edit
+              </Button>
+            </Link>
+          </RenderIf>
         </Group>
       </Accordion.Panel>
     </Accordion.Item>

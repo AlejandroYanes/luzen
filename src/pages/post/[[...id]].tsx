@@ -94,11 +94,9 @@ const Post: NextPage = () => {
         </Head>
         <BaseLayout>
           <Stack spacing="xl" style={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
-            <Link href="/">
-              <ActionIcon>
-                <IconArrowLeft />
-              </ActionIcon>
-            </Link>
+            <ActionIcon onClick={() => router.back()}>
+              <IconArrowLeft />
+            </ActionIcon>
             <Title order={1} mb={48} align="center">Oops, we could not find this idea</Title>
             <span style={{ fontSize: '72px', textAlign: 'center' }}>😔</span>
           </Stack>
@@ -120,11 +118,9 @@ const Post: NextPage = () => {
         <Stack spacing="xl" style={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
           <AuthGuard loadingUI={<Loading />}>
             <RenderIf condition={!loadingFromDb} fallback={<Loading />}>
-              <Link href="/">
-                <ActionIcon>
-                  <IconArrowLeft />
-                </ActionIcon>
-              </Link>
+              <ActionIcon onClick={() => router.back()}>
+                <IconArrowLeft />
+              </ActionIcon>
               <Title order={1} mb="xl">Share your idea</Title>
               <RenderIf condition={!!errorMutating}>
                 <Alert

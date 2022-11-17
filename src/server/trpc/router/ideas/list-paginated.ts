@@ -27,7 +27,7 @@ const listPaginated = adminProcedure
       skip: page === 1 ? 0 : ITEMS_PER_PAGE_LIMIT * (page - 1),
       orderBy: [
         { votes: 'desc' },
-        { postedAt: 'desc' },
+        { postedAt: 'asc' },
       ],
       where,
       select: {

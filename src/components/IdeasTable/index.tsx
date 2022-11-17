@@ -57,7 +57,7 @@ const IdeasTable = (props: Props) => {
         my="lg"
         mr="auto"
         defaultValue=""
-        placeholder="Search comments"
+        placeholder="Search ideas"
         sx={{ width: isMobileScreen ? '100%' :'280px' }}
         onChange={(e) => onQueryChange(e.target.value)}
       />
