@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { Accordion, createStyles, Group, Text, Button, Badge, ActionIcon } from '@mantine/core';
-import { IconEye } from '@tabler/icons';
+import { Accordion, createStyles, Group, Text, Button, Badge } from '@mantine/core';
 
 import type { Props as TopProps } from './index';
 import RenderIf from '../RenderIf';

@@ -1,10 +1,11 @@
-import { Button, Group, Pagination, Table, Text, TextInput } from '@mantine/core';
+import { Group, Pagination, TextInput } from '@mantine/core';
 
-import UserAvatar from 'components/UserAvatar';
-import { formatDate } from 'utils/dates';
 import { calculateTotal } from 'utils/pagiantion';
+import useMobileView from 'hooks/ui/useMobileView';
+import StackView from './StackView';
+import TableView from './TableView';
 
-interface Props {
+export interface Props {
   page: number;
   count: number;
   data: {
@@ -22,37 +23,8 @@ interface Props {
 
 const CommentsTable = (props: Props) => {
   const { page, count, data, onQueryChange, onPageChange } = props;
-
-  const rows = data.map((comment) => (
-    <tr key={comment.id}>
-      <td style={{ verticalAlign: 'top' }}>
-        <Group>
-          <UserAvatar user={comment.author} />
-          <div>
-            <Text weight={500}>
-              {comment.author?.name || 'Anonymous'}
-            </Text>
-            <Text size="xs" color="dimmed">
-              {formatDate(comment.postedAt, 'en')}
-            </Text>
-          </div>
-        </Group>
-      </td>
-      <td>
-        {comment.content}
-      </td>
-      <td style={{ verticalAlign: 'top' }}>
-        <Button
-          style={{ float: 'right' }}
-          variant="outline"
-          color="red"
-          mt={2}
-        >
-          Block
-        </Button>
-      </td>
-    </tr>
-  ));
+  const isMobileScreen = useMobileView();
+  const View = isMobileScreen ? StackView : TableView;
 
   return (
     <>
@@ -61,19 +33,10 @@ const CommentsTable = (props: Props) => {
         mr="auto"
         defaultValue=""
         placeholder="Search comments"
-        sx={{ width: '280px' }}
+        sx={{ width: isMobileScreen ? '100%' : '280px' }}
         onChange={(e) => onQueryChange(e.target.value)}
       />
-      <Table verticalSpacing="sm">
-        <thead>
-          <tr>
-            <th style={{ width: '240px' }}>Author</th>
-            <th>Content</th>
-            <th style={{ width: '100px' }}></th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
+      <View data={data} />
       <Group position="right" py="lg">
         <Pagination
           page={page}
