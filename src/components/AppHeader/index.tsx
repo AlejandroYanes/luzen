@@ -43,6 +43,11 @@ const AppHeader = () => {
 
       <Group>
         <TipText isLoggedIn={status === 'authenticated'} isMobileScreen={isMobileScreen} />
+        <RenderIf condition={status === 'authenticated' && !isMobileScreen}>
+          <Link href="/post">
+            <Button>Post new Idea</Button>
+          </Link>
+        </RenderIf>
         <SearchButton isHomePage={pathname === '/'} isMobileScreen={isMobileScreen} />
         <RenderIf
           condition={status === 'authenticated'}
@@ -53,11 +58,6 @@ const AppHeader = () => {
           }
         >
           <Group spacing="xl">
-            <RenderIf condition={!isMobileScreen}>
-              <Link href="/post">
-                <Button>Post new Idea</Button>
-              </Link>
-            </RenderIf>
             <NotificationCenter />
             <AvatarMenu user={data?.user} />
           </Group>
