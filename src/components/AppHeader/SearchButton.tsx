@@ -15,7 +15,7 @@ export default function SearchButton(props: Props) {
   if (isMobileScreen) {
     return (
       <ActionIcon onClick={() => openSpotlight()}>
-        <IconSearch size={24} stroke={1.5} />
+        <IconSearch size={24} />
       </ActionIcon>
     );
   }

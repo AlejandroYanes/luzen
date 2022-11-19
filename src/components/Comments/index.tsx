@@ -28,8 +28,6 @@ const Comments = (props: Props) => {
 
   return (
     <>
-      <Form ideaId={ideaId} refetch={refetch} />
-      <Space h="xl" />
       {commentElements}
       <Button
         mt="md"
@@ -39,6 +37,8 @@ const Comments = (props: Props) => {
       >
         Load more
       </Button>
+      <Space h="xl" />
+      <Form ideaId={ideaId} refetch={refetch} />
     </>
   );
 };
