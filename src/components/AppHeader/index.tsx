@@ -41,28 +41,30 @@ const AppHeader = () => {
         </Link>
       </Group>
 
-      <Group>
-        <TipText isLoggedIn={status === 'authenticated'} isMobileScreen={isMobileScreen} />
-        <RenderIf condition={status === 'authenticated' && !isMobileScreen}>
-          <Link href="/post">
-            <Button>Post new Idea</Button>
-          </Link>
-        </RenderIf>
-        <SearchButton isHomePage={pathname === '/'} isMobileScreen={isMobileScreen} />
-        <RenderIf
-          condition={status === 'authenticated'}
-          fallback={
-            <Group>
-              <Button onClick={() => openSignInModal()}>Sign in</Button>
+      <RenderIf condition={status !== 'loading'}>
+        <Group>
+          <TipText isLoggedIn={status === 'authenticated'} isMobileScreen={isMobileScreen} />
+          <RenderIf condition={status === 'authenticated' && !isMobileScreen}>
+            <Link href="/post/">
+              <Button>Post new Idea</Button>
+            </Link>
+          </RenderIf>
+          <SearchButton isHomePage={pathname === '/'} isMobileScreen={isMobileScreen} />
+          <RenderIf
+            condition={status === 'authenticated'}
+            fallback={
+              <Group>
+                <Button onClick={() => openSignInModal()}>Sign in</Button>
+              </Group>
+            }
+          >
+            <Group spacing="xl">
+              <NotificationCenter />
+              <AvatarMenu user={data?.user} />
             </Group>
-          }
-        >
-          <Group spacing="xl">
-            <NotificationCenter />
-            <AvatarMenu user={data?.user} />
-          </Group>
-        </RenderIf>
-      </Group>
+          </RenderIf>
+        </Group>
+      </RenderIf>
     </Header>
   );
 };
