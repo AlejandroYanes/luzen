@@ -5,16 +5,14 @@ import { IconAt } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
 import SignInAlert from 'components/SignInAlert';
+import NotificationsSettings from 'components/NotificationsSettings';
 import { resolveInitials } from 'utils/strings';
 import { trpc } from 'utils/trpc';
+import { ROLES } from 'constants/roles';
 
 const useStyles = createStyles((theme) => ({
   icon: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-  },
-
-  name: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
   },
 }));
 
@@ -41,14 +39,14 @@ const SettingsPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
-        <Stack style={{ width: '900px', margin: '0 auto' }}>
+        <Stack style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }}>
           <Title mb="xl">Settings</Title>
           <Group noWrap>
             <Avatar src={user.image} size="lg" radius="md">
               {user?.name ? resolveInitials(user?.name as string) : null}
             </Avatar>
             <div>
-              <Text size="lg" weight={500} className={classes.name}>
+              <Text size="lg">
                 {user.name}
               </Text>
               <Group noWrap spacing={10} mt={3}>
@@ -59,12 +57,8 @@ const SettingsPage = () => {
               </Group>
             </div>
           </Group>
-          <Text>
-            {`
-            There's not really anything else to do here, 
-            to manage your notifications check the notification bell.
-            `}
-          </Text>
+          <Divider mt="xl" />
+          <NotificationsSettings showAdminSettings={user?.role === ROLES.ADMIN} />
           <Divider mt="xl" />
           <Group position="apart">
             <Text>Tired of hanging around?</Text>
