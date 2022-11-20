@@ -18,16 +18,18 @@ const useStyles = createStyles((theme) => ({
 
 const SettingsPage = () => {
   const { classes } = useStyles();
-  const { data } = useSession();
+  const { data, status } = useSession();
   const { mutate: deleteMyAccount } = trpc.users.deleteAccount.useMutation({
     onSuccess: () => {
       signOut({ callbackUrl: '/' });
     },
   });
 
-  if (!data?.user) {
+  if (status === 'unauthenticated') {
     return <SignInAlert asPage />;
   }
+
+  if (!data?.user) return null; // added to please TS, don't really like & might delete later
 
   const { user } = data;
 

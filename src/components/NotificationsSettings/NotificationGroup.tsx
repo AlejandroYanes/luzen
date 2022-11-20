@@ -8,7 +8,7 @@ interface Props {
   onInAppToggle: () => void;
 }
 
-export function NotificationGroup(props: Props) {
+export default function NotificationGroup(props: Props) {
   const { label, isEmailOn, isInAppOn, onEmailToggle, onInAppToggle } = props;
   return (
     <>
