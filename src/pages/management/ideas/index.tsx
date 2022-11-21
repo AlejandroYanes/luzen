@@ -28,8 +28,6 @@ const IdeasListPage: NextPage = () => {
     <>
       <Head>
         <title>Bucket List | Managing ideas</title>
-        <meta name="description" content="all our users" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '100%', maxWidth: '900px' }}>

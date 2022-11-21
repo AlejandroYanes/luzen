@@ -31,8 +31,6 @@ const UsersPage: NextPage = () => {
     <>
       <Head>
         <title>Bucket List | Managing users</title>
-        <meta name="description" content="all our users" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '900px' }}>

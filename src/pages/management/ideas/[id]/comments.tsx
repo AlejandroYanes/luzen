@@ -26,8 +26,6 @@ const CommentsListPage: NextPage = () => {
     <>
       <Head>
         <title>Bucket List | Managing comments</title>
-        <meta name="description" content="all the comments for" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '900px' }}>

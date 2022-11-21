@@ -81,7 +81,6 @@ const IdeaDetails: NextPage<Props> = (props) => {
         <meta name="twitter:description" content={shortSummary} />
         <meta name="twitter:image" content={`${env.NEXT_PUBLIC_DOMAIN}/api/og/ideas?id=${id}`} />
         <meta name="twitter:alt" content={title} />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
         <Stack sx={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>

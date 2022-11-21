@@ -3,7 +3,17 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { ActionIcon, Badge, Button, Group, Skeleton, Stack, Text, Title } from '@mantine/core';
+import {
+  ActionIcon,
+  Badge,
+  Button,
+  Divider,
+  Group,
+  Skeleton,
+  Stack,
+  Text,
+  Title
+} from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
@@ -62,8 +72,6 @@ const IdeaDetails: NextPage = () => {
     <>
       <Head>
         <title>Bucket List | {title}</title>
-        <meta name="description" content={summary} />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <BaseLayout>
         <Stack spacing="xl" mx="auto" style={{ width: '100%', maxWidth: '700px' }}>
@@ -79,6 +87,10 @@ const IdeaDetails: NextPage = () => {
               </Link>
             </RenderIf>
           </Group>
+          <Text color="dimmed">Summary</Text>
+          <Text style={{ whiteSpace: 'break-spaces' }}>{summary}</Text>
+          <Divider my="xl" />
+          <Text color="dimmed">Description</Text>
           <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
         </Stack>
       </BaseLayout>
