@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -63,7 +64,9 @@ const AppHeader = () => {
             }
           >
             <Group spacing="xl">
-              <NotificationCenter />
+              <Suspense>
+                <NotificationCenter />
+              </Suspense>
               <AvatarMenu user={data?.user} />
             </Group>
           </RenderIf>

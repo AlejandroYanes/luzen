@@ -1,9 +1,22 @@
-import type { ReactNode } from 'react';
+import type { PropsWithChildren, ReactNode } from 'react';
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import { createStyles } from '@mantine/core';
 
 import AppHeader from 'components/AppHeader';
-import SearchSpotlight from 'components/SearchSpotlight';
 import { mobileViewMediaQuery } from 'hooks/ui/useMobileView';
+
+const SearchSpotlight = dynamic(() => import('components/SearchSpotlight'), {
+  ssr: false,
+});
+
+const DynamicSearchSpotlight = ({ children }: PropsWithChildren) => (
+  <Suspense fallback={children}>
+    <SearchSpotlight>
+      {children}
+    </SearchSpotlight>
+  </Suspense>
+);
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -15,7 +28,6 @@ const useStyles = createStyles((theme) => ({
     flexDirection: 'column',
     padding: '0 48px 24px',
 
-    // Media query with value from theme
     [`@media ${mobileViewMediaQuery(theme)}`]: {
       padding: '0 16px 24px',
     },
@@ -23,7 +35,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface Props {
-	children: ReactNode;
+  children: ReactNode;
 }
 
 const BaseLayout = (props: Props) => {
@@ -31,14 +43,14 @@ const BaseLayout = (props: Props) => {
   const { classes } = useStyles();
 
   return (
-    <SearchSpotlight>
+    <DynamicSearchSpotlight>
       <section className={classes.wrapper}>
         <AppHeader />
         <main className={classes.main}>
           {children}
         </main>
       </section>
-    </SearchSpotlight>
+    </DynamicSearchSpotlight>
   );
 };
 
