@@ -76,11 +76,8 @@ export default function HeroTitle() {
         </Text>{' '}
         for an app, a library..?
         <br />
-        <br />
-        If it can be coded,
-        {' '}
         <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
-          share
+          Share
         </Text>{' '}
         it.
       </h1>
