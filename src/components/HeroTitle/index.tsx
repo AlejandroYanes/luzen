@@ -74,10 +74,13 @@ export default function HeroTitle() {
         <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
           idea
         </Text>{' '}
-        for an app?
+        for an app, a library..?
         <br />
+        <br />
+        If it can be coded,
+        {' '}
         <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
-          Share
+          share
         </Text>{' '}
         it.
       </h1>
