@@ -1,18 +1,25 @@
+import { Suspense } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import type { PrismaClient } from '@prisma/client';
 import { ActionIcon, Divider, Group, Skeleton, Stack, Text, Title } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
-import Comments from 'components/Comments';
-import VoteButton from 'components/VoteButton';
 import UserAvatar from 'components/UserAvatar';
 import { prisma } from 'server/db/client';
 import type { inferPrismaModelFromQuery } from 'utils/prisma';
 import { formatDate } from 'utils/dates';
 import { env } from 'env/client.mjs';
+
+const VoteButton = dynamic(() => import('components/VoteButton'), {
+  ssr: false,
+});
+const Comments = dynamic(() => import('components/Comments'), {
+  ssr: false,
+});
 
 interface Props {
   idea: string;
@@ -96,11 +103,15 @@ const IdeaDetails: NextPage<Props> = (props) => {
                 <Text size="sm" color="dimmed">{formatDate(postedAt, 'en')}</Text>
               </Stack>
             </Group>
-            <VoteButton ideaId={id} votes={votes} />
+            <Suspense>
+              <VoteButton ideaId={id} votes={votes} />
+            </Suspense>
           </Group>
           <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
           <Divider mt="xl" mb="lg" />
-          <Comments ideaId={id} />
+          <Suspense>
+            <Comments ideaId={id} />
+          </Suspense>
         </Stack>
       </BaseLayout>
     </>

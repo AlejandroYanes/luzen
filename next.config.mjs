@@ -5,6 +5,11 @@
  */
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
 
+import analyzer from '@next/bundle-analyzer';
+const withBundleAnalyzer = analyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
@@ -14,4 +19,4 @@ const config = {
     defaultLocale: "en",
   },
 };
-export default config;
+export default withBundleAnalyzer(config);

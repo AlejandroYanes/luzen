@@ -1,10 +1,15 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { Avatar, Button, Card, Group, Stack, Text, Title } from '@mantine/core';
 
-import VoteButton from 'components/VoteButton';
 import { formatDate } from 'utils/dates';
 import { resolveInitials } from 'utils/strings';
 import { mobileViewMediaQuery } from 'hooks/ui/useMobileView';
+
+const VoteButton = dynamic(() => import('components/VoteButton'), {
+  ssr: false,
+});
 
 interface Props {
   idea: {
@@ -62,7 +67,9 @@ const IdeaCard = (props: Props) => {
           <Link href={`/ideas/${id}`}>
             <Button variant="default">Visit</Button>
           </Link>
-          <VoteButton ideaId={id} votes={votes} />
+          <Suspense>
+            <VoteButton ideaId={id} votes={votes} />
+          </Suspense>
         </Group>
       </Group>
     </Card>

@@ -8,6 +8,7 @@
     "lint": "next lint --ext=ts,tsx",
     "lint:fix": "next lint --ext=ts,tsx --fix",
     "start": "next start",
+    "analyze": "ANALYZE=true npm run build",
     "postinstall": "prisma generate",
     "prisma:studio": "npx prisma studio",
     "prisma:generate": "npx prisma generate",
@@ -53,6 +54,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
+    "@next/bundle-analyzer": "13.0.4",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
