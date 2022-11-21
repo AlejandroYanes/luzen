@@ -10,7 +10,7 @@ import { trpc } from 'utils/trpc';
 import BaseLayout from 'components/BaseLayout';
 import RenderIf from 'components/RenderIf';
 import AuthGuard from 'components/AuthGuard';
-import Loading from './Loading';
+import Loading from 'components/EditorSkeletons';
 
 interface IdeaFormValues {
   title: string;

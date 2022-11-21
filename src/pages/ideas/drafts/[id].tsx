@@ -8,11 +8,12 @@ import { IconArrowLeft } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
 import SignInAlert from 'components/SignInAlert';
+import RenderIf from 'components/RenderIf';
 import { trpc } from 'utils/trpc';
 
 const IdeaDetails: NextPage = () => {
   const router = useRouter();
-  const { status } = useSession();
+  const { status, data: session } = useSession();
   const { data: idea, isLoading } = trpc.ideas.fetchDraft.useQuery(router.query.id as string);
 
   if (isLoading || status === 'loading') {
@@ -54,7 +55,8 @@ const IdeaDetails: NextPage = () => {
     );
   }
 
-  const { title, summary, description } = idea;
+  const { user } = session!;
+  const { title, summary, description, authorId } = idea;
 
   return (
     <>
@@ -71,9 +73,11 @@ const IdeaDetails: NextPage = () => {
           <Title order={1} >{title}</Title>
           <Group position="apart" align="center" mb="xl">
             <Badge variant="outline">Draft</Badge>
-            <Link href={`/post/${idea.id}`}>
-              <Button color="orange">Edit</Button>
-            </Link>
+            <RenderIf condition={user!.id === authorId}>
+              <Link href={`/post/${idea.id}`}>
+                <Button color="orange">Edit</Button>
+              </Link>
+            </RenderIf>
           </Group>
           <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
         </Stack>
