@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { ActionIcon, Alert, Button, Stack, Textarea, TextInput, Title, } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { ActionIcon, Alert, Button, Stack, Textarea, TextInput, Title, Text } from '@mantine/core';
 import { IconAlertCircle, IconArrowLeft } from '@tabler/icons';
 
 import { trpc } from 'utils/trpc';
@@ -14,12 +14,14 @@ import Loading from 'components/EditorSkeletons';
 
 interface IdeaFormValues {
   title: string;
+  tagLine: string;
   summary: string;
   description: string;
 }
 
-const initialValues = {
+const initialValues: IdeaFormValues = {
   title: '',
+  tagLine: '',
   summary: '',
   description: '',
 };
@@ -122,6 +124,23 @@ const Post: NextPage = () => {
               <form onSubmit={handleFormSubmit}>
                 <Stack spacing="xl">
                   <TextInput withAsterisk label="Title" {...form.getInputProps('title')} />
+                  <Textarea
+                    label="Tagline"
+                    description={
+                      <>
+                        <Text size="xs">
+                          {`${140 - form.values.tagLine.length} characters left`}
+                        </Text>
+                        <Text size="xs">
+                          this will be used as the summary when sharing the link
+                        </Text>
+                      </>
+                    }
+                    minRows={2}
+                    maxRows={2}
+                    maxLength={140}
+                    {...form.getInputProps('tagLine')}
+                  />
                   <Textarea
                     withAsterisk
                     label="Summary"

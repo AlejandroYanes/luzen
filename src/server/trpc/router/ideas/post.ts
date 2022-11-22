@@ -11,6 +11,7 @@ const post = protectedProcedure
     summary: z.string(),
     description: z.string(),
     id: z.string().nullish(),
+    tagLine: z.string().nullish(),
   }))
   .mutation(async ({ ctx, input }) => {
     const { user } = ctx.session;
