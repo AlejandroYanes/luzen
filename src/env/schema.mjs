@@ -45,5 +45,5 @@ export const clientSchema = z.object({
 export const clientEnv = {
   // NEXT_PUBLIC_BAR: process.env.NEXT_PUBLIC_BAR,
   NEXT_PUBLIC_NOVU_APP_ID: process.env.NEXT_PUBLIC_NOVU_APP_ID,
-  NEXT_PUBLIC_DOMAIN: process.env.NEXT_PUBLIC_DOMAIN,
+  NEXT_PUBLIC_DOMAIN: process.env.NEXT_PUBLIC_DOMAIN ?? process.env.NEXT_PUBLIC_VERCEL_URL,
 };
