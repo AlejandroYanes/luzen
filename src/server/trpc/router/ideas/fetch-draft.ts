@@ -28,6 +28,7 @@ const fetchDraft = protectedProcedure
       select: {
         id: true,
         title: true,
+        tagLine: true,
         summary: true,
         description: true,
         authorId: true,

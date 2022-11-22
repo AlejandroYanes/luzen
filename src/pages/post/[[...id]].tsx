@@ -69,6 +69,7 @@ const Post: NextPage = () => {
     if (idFromQuery && !loadingFromDb && ideaFromDb) {
       form.setValues({
         title: ideaFromDb.title,
+        tagLine: ideaFromDb.tagLine as string,
         summary: ideaFromDb.summary,
         description: ideaFromDb.description,
       });
@@ -157,7 +158,7 @@ const Post: NextPage = () => {
                     minRows={20}
                     {...form.getInputProps('description')}
                   />
-                  <Button type="submit" mt="xl" loading={isLoading}>Publish</Button>
+                  <Button type="submit" mt="xl" loading={isLoading}>Save</Button>
                 </Stack>
               </form>
             </RenderIf>

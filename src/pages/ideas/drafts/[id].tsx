@@ -66,7 +66,7 @@ const IdeaDetails: NextPage = () => {
   }
 
   const { user } = session!;
-  const { title, summary, description, authorId } = idea;
+  const { title, tagLine, summary, description, authorId } = idea;
 
   return (
     <>
@@ -87,9 +87,15 @@ const IdeaDetails: NextPage = () => {
               </Link>
             </RenderIf>
           </Group>
-          <Text color="dimmed">Summary</Text>
-          <Text style={{ whiteSpace: 'break-spaces' }}>{summary}</Text>
-          <Divider my="xl" />
+          <Stack spacing={0}>
+            <RenderIf condition={!!tagLine}>
+              <Text color="dimmed">Tagline</Text>
+              <Text mb="sm">{tagLine}</Text>
+            </RenderIf>
+            <Text color="dimmed">Summary</Text>
+            <Text style={{ whiteSpace: 'break-spaces' }}>{summary}</Text>
+            <Divider my="xl" />
+          </Stack>
           <Text color="dimmed">Description</Text>
           <Text style={{ whiteSpace: 'break-spaces' }}>{description}</Text>
         </Stack>
