@@ -77,8 +77,12 @@ export default function TableView(props: Props) {
       <td>
         <Group position="right">
           <RenderIf
-            condition={isForAdmins}
+            condition={!isForAdmins}
             fallback={
+              <Button variant="outline" color="red">Block</Button>
+            }
+          >
+            <RenderIf condition={idea.isDraft}>
               <Link href={`/post/${idea.id}`}>
                 <Button
                   disabled={!idea.isDraft}
@@ -87,9 +91,7 @@ export default function TableView(props: Props) {
                   Edit
                 </Button>
               </Link>
-            }
-          >
-            <Button variant="outline" color="red">Block</Button>
+            </RenderIf>
           </RenderIf>
         </Group>
       </td>

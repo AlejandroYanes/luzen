@@ -21,7 +21,7 @@ export async function notifyAdminOfNewIdea(params: Params) {
     },
     payload: {
       ideaId: idea.id,
-      adminLink: `${env.NEXTAUTH_URL}/management/ideas/${idea.id}`
+      adminLink: `${env.NEXT_PUBLIC_DOMAIN}/management/ideas/${idea.id}`
     }
   });
 }

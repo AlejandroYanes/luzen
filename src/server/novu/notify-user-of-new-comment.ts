@@ -24,7 +24,7 @@ export async function notifyUserOfNewComment(params: Params) {
       ideaId: idea.id,
       ideaName: idea.title,
       userName: author.name,
-      link: `${env.NEXTAUTH_URL}/ideas/${idea.id}`,
+      link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${idea.id}`,
     }
   });
 }

@@ -24,7 +24,7 @@ export async function notifyUserOfPublishedIdea(params: Params) {
       name: author.name,
       ideaId: idea.id,
       ideaName: idea.title,
-      link: `${env.NEXTAUTH_URL}/ideas/${idea.id}`,
+      link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${idea.id}`,
     }
   });
 }

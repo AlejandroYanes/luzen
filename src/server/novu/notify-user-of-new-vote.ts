@@ -25,7 +25,7 @@ export async function notifyUserOfNewVote(params: Params) {
       ideaId: idea.id,
       ideaName: idea.title,
       voteCount: idea.voteCount,
-      link: `${env.NEXTAUTH_URL}/ideas/${idea.id}`,
+      link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${idea.id}`,
     }
   });
 }
