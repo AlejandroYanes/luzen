@@ -65,7 +65,7 @@ export default async function buildOGImageForIdea(req: NextApiRequest) {
   }
 
   const { title, tagLine, summary, votes, _count } = idea;
-  const description = tagLine ?? summary.split('. ').slice(0, 2).join('. ') + '.';
+  const description = tagLine ?? summary;
   const author = idea.author ?? { name: 'Anonymous', image: null };
 
   return new ImageResponse(

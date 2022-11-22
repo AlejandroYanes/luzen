@@ -16,20 +16,17 @@ interface IdeaFormValues {
   title: string;
   tagLine: string;
   summary: string;
-  description: string;
 }
 
 const initialValues: IdeaFormValues = {
   title: '',
   tagLine: '',
   summary: '',
-  description: '',
 };
 
 const formRules = {
   title: (value: string) => !value ? 'Please type something here' : null,
   summary: (value: string) => !value ? 'Please type something here' : null,
-  description: (value: string) => !value ? 'Please type something here' : null,
 };
 
 const Post: NextPage = () => {
@@ -71,7 +68,6 @@ const Post: NextPage = () => {
         title: ideaFromDb.title,
         tagLine: ideaFromDb.tagLine as string,
         summary: ideaFromDb.summary,
-        description: ideaFromDb.description,
       });
     }
   }, [loadingFromDb]);
@@ -101,7 +97,7 @@ const Post: NextPage = () => {
     <>
       <Head>
         <title>
-          Bucket List | ${ideaFromDb?.id ? 'Editing' : 'Share a new idea with the world'}
+          Bucket List | {ideaFromDb?.id ? 'Editing' : 'Share a new idea with the world'}
         </title>
       </Head>
       <BaseLayout>
@@ -150,13 +146,6 @@ const Post: NextPage = () => {
                     maxRows={8}
                     maxLength={690}
                     {...form.getInputProps('summary')}
-                  />
-                  <Textarea
-                    autosize
-                    withAsterisk
-                    label="Description"
-                    minRows={20}
-                    {...form.getInputProps('description')}
                   />
                   <Button type="submit" mt="xl" loading={isLoading}>Save</Button>
                 </Stack>
