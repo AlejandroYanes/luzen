@@ -17,7 +17,6 @@ model Idea {
     title           String          @db.VarChar(50)
     tagLine         String?         @db.VarChar(145)
     summary         String          @db.VarChar(695)
-    description     String          @db.Text
     postedAt        DateTime        @default(now())
     votes           Int             @default(0)
     isDraft         Boolean         @default(true)

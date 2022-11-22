@@ -45,6 +45,9 @@ const Home: NextPage<Props> = (props) => {
     </Fragment>
   )) || [];
 
+  const hasBaseItems = !!initialCards.length;
+  const hasInfiniteItems = !!infinite?.pages?.at(0)?.results.length;
+
   return (
     <>
       <Head>
@@ -65,7 +68,7 @@ const Home: NextPage<Props> = (props) => {
           })}
         >
           <RenderIf
-            condition={initialCards.length > 0 || infiniteCards.length > 0}
+            condition={hasBaseItems || hasInfiniteItems}
             fallback={noContent}
           >
             {initialCards}

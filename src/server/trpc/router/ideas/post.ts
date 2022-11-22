@@ -9,7 +9,6 @@ const post = protectedProcedure
   .input(z.object({
     title: z.string(),
     summary: z.string(),
-    description: z.string(),
     id: z.string().nullish(),
     tagLine: z.string().nullish(),
   }))

@@ -30,7 +30,6 @@ const fetchDraft = protectedProcedure
         title: true,
         tagLine: true,
         summary: true,
-        description: true,
         authorId: true,
       },
     });
