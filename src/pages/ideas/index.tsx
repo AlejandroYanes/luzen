@@ -43,7 +43,7 @@ const Home: NextPage<Props> = (props) => {
     <Fragment key={index}>
       {page.results.map((idea) => <IdeaCard key={idea.id} idea={idea} />)}
     </Fragment>
-  ));
+  )) || [];
 
   return (
     <>
@@ -64,7 +64,10 @@ const Home: NextPage<Props> = (props) => {
             },
           })}
         >
-          <RenderIf condition={initialCards.length > 0} fallback={noContent}>
+          <RenderIf
+            condition={initialCards.length > 0 || infiniteCards.length > 0}
+            fallback={noContent}
+          >
             {initialCards}
             {infiniteCards}
             <Waypoint
@@ -91,8 +94,8 @@ export async function getStaticProps() {
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
-    // - At most once every day
-    revalidate: 60 * 60 * 24, // In seconds
+    // - At most once every 10s
+    revalidate: 10, // In seconds
   }
 }
 
