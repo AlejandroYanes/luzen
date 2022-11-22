@@ -1,20 +1,33 @@
 import { Fragment } from 'react';
 import { type NextPage } from 'next';
 import Head from 'next/head';
-import { Stack } from '@mantine/core';
+import Link from 'next/link';
+import { Stack, Title, Button, Group } from '@mantine/core';
 import { Waypoint } from 'react-waypoint';
 
-import BaseLayout from 'components/BaseLayout';
-import IdeaCard from 'components/IdeaCard';
+import { ITEMS_PER_PAGE_LIMIT } from 'constants/pagination';
 import { prisma } from 'server/db/client';
 import { trpc } from 'utils/trpc';
 import type { inferPrismaModelFromQuery } from 'utils/prisma';
-import { ITEMS_PER_PAGE_LIMIT } from 'constants/pagination';
 import { mobileViewMediaQuery } from 'hooks/ui/useMobileView';
+import BaseLayout from 'components/BaseLayout';
+import IdeaCard from 'components/IdeaCard';
+import RenderIf from 'components/RenderIf';
 
 interface Props {
   initialIdeas: string;
 }
+
+const noContent = (
+  <>
+    <Title mb="md">We have no ideas yet, want to be the first?</Title>
+    <Group position="center">
+      <Link href="/post/">
+        <Button>Post your idea</Button>
+      </Link>
+    </Group>
+  </>
+);
 
 const Home: NextPage<Props> = (props) => {
   const { initialIdeas } = props;
@@ -51,14 +64,16 @@ const Home: NextPage<Props> = (props) => {
             },
           })}
         >
-          {initialCards}
-          {infiniteCards}
-          <Waypoint
-            key="cursor"
-            bottomOffset="-680px"
-            scrollableAncestor={typeof window !== 'undefined' ? window : undefined}
-            onEnter={() => fetchNextPage()}
-          />
+          <RenderIf condition={initialCards.length > 0} fallback={noContent}>
+            {initialCards}
+            {infiniteCards}
+            <Waypoint
+              key="cursor"
+              bottomOffset="-680px"
+              scrollableAncestor={typeof window !== 'undefined' ? window : undefined}
+              onEnter={() => fetchNextPage()}
+            />
+          </RenderIf>
         </Stack>
       </BaseLayout>
     </>

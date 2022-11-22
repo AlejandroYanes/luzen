@@ -53,7 +53,7 @@ const Post: NextPage = () => {
     isLoading,
     error: errorMutating,
   } = trpc.ideas.post.useMutation({
-    onSuccess: (ideaId) => router.push(`/ideas/drafts/${ideaId}`),
+    onSuccess: (ideaId) => router.push(`/ideas/${ideaId}`),
   });
 
   const form = useForm<IdeaFormValues>({
