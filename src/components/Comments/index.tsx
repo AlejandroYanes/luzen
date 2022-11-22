@@ -1,6 +1,7 @@
 import { Space, Button } from '@mantine/core';
 
 import { trpc } from 'utils/trpc';
+import RenderIf from 'components/RenderIf';
 import Comment from './Comment';
 import Form from './Form';
 
@@ -10,7 +11,12 @@ interface Props {
 
 const Comments = (props: Props) => {
   const { ideaId } = props;
-  const { data: infinite, refetch, fetchNextPage } = trpc.comments.listInfinite.useInfiniteQuery(
+  const {
+    data: infinite,
+    hasNextPage,
+    refetch,
+    fetchNextPage,
+  } = trpc.comments.listInfinite.useInfiniteQuery(
     { ideaId },
     {
       getNextPageParam: (lastPage) => lastPage.nextPage,
@@ -28,16 +34,19 @@ const Comments = (props: Props) => {
 
   return (
     <>
-      {commentElements}
-      <Button
-        mt="md"
-        color="gray"
-        variant="subtle"
-        onClick={() => fetchNextPage()}
-      >
-        Load more
-      </Button>
-      <Space h="xl" />
+      <RenderIf condition={commentElements.length > 0}>
+        {commentElements}
+        <Button
+          mt="md"
+          color="gray"
+          variant="subtle"
+          disabled={hasNextPage}
+          onClick={() => fetchNextPage()}
+        >
+          Load more
+        </Button>
+        <Space h="xl" />
+      </RenderIf>
       <Form ideaId={ideaId} refetch={refetch} />
     </>
   );
