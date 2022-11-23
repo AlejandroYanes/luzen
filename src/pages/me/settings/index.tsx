@@ -25,6 +25,9 @@ const SettingsPage = () => {
     },
   });
 
+  const { mutate: sendEmail } = trpc.users.sendEmail.useMutation();
+  const { mutate: sendSlack } = trpc.users.sendSlack.useMutation();
+
   if (status === 'unauthenticated') {
     return <SignInAlert asPage />;
   }
@@ -58,6 +61,15 @@ const SettingsPage = () => {
                 </Text>
               </Group>
             </div>
+          </Group>
+          <Divider mt="xl" />
+          <Group position="apart">
+            <Text>Email test</Text>
+            <Button onClick={() => sendEmail()}>Send email</Button>
+          </Group>
+          <Group position="apart">
+            <Text>Slack test</Text>
+            <Button onClick={() => sendSlack()}>Send Slack</Button>
           </Group>
           <Divider mt="xl" />
           <NotificationsSettings showAdminSettings={user?.role === ROLES.ADMIN} />
