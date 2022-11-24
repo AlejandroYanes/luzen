@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { protectedProcedure } from 'server/trpc/trpc';
-import { notifyUserOfNewComment } from 'server/novu';
 
 const postComment = protectedProcedure
   .input(z.object({ idea: z.string(), content: z.string() }))
@@ -44,17 +43,6 @@ const postComment = protectedProcedure
 
     if (idea.author) {
       const { author } = idea;
-      notifyUserOfNewComment({
-        author: {
-          id: author.id,
-          name: author.name || '',
-          email: author.email!,
-        },
-        idea: {
-          id: idea.id,
-          title: idea.title,
-        },
-      });
     }
 
     return comment.id;

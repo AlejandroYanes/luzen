@@ -1,9 +1,12 @@
 import { protectedProcedure } from 'server/trpc/trpc';
-import { sendNotification } from 'server/slack';
+import { notifyOfNewIdea } from 'server/slack';
 
 const sendSlack = protectedProcedure
   .mutation(() => {
-    return sendNotification('hello World from BucketList');
+    return notifyOfNewIdea({
+      author: 'Alejandro Yanes',
+      id: '12345',
+    });
   });
 
 export default sendSlack;

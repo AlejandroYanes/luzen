@@ -2,7 +2,6 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { adminProcedure } from 'server/trpc/trpc';
-import { notifyUserOfPublishedIdea } from 'server/novu';
 
 const toggleStatus = adminProcedure
   .input(z.string())
@@ -36,17 +35,6 @@ const toggleStatus = adminProcedure
 
     if (idea.isDraft && idea.author?.email) {
       const { id, title, author } = idea;
-      notifyUserOfPublishedIdea({
-        author: {
-          id: author.id,
-          name: author.name || '',
-          email: author.email!,
-        },
-        idea: {
-          id: id,
-          title,
-        },
-      });
     }
   });
 

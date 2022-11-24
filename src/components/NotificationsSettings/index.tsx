@@ -14,61 +14,53 @@ interface Props {
 export default function NotificationsSettings(props: Props) {
   const { showAdminSettings } = props;
 
-  const { data = [], isLoading, refetch } = trpc.novu.fetchPreferences.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    keepPreviousData: true,
-  });
-  const { mutate } = trpc.novu.togglePreferenceStatus.useMutation({
-    onSuccess: () => refetch(),
-  });
-
-  if (isLoading) {
-    return (
-      <Stack spacing="sm">
-        <Title order={3}>Notifications</Title>
-        <GroupSkeleton />
-        <GroupSkeleton />
-        <GroupSkeleton />
-        <RenderIf condition={showAdminSettings}>
-          <Divider label="For Admins" labelPosition="center" mt="md" />
-          <GroupSkeleton />
-        </RenderIf>
-      </Stack>
-    );
-  }
-
-  const renderGroup = (group: NotificationTemplate) => (
-    <NotificationGroup
-      key={group.template._id}
-      label={group.template.name}
-      isEmailOn={group.preference.channels.email}
-      onEmailToggle={() => mutate({
-        template: group.template._id,
-        channel: ChannelTypeEnum.EMAIL,
-        enabled: !group.preference.channels.email,
-      })}
-      isInAppOn={group.preference.channels.in_app}
-      onInAppToggle={() => mutate({
-        template: group.template._id,
-        channel: ChannelTypeEnum.IN_APP,
-        enabled: !group.preference.channels.in_app,
-      })}
-    />
-  );
-
-  const elements = data.filter((group) => !group.template.critical).map(renderGroup);
-
-  const criticalElements = showAdminSettings
-    ? data.filter((group) => group.template.critical).map(renderGroup)
-    : null;
+  // if (isLoading) {
+  //   return (
+  //     <Stack spacing="sm">
+  //       <Title order={3}>Notifications</Title>
+  //       <GroupSkeleton />
+  //       <GroupSkeleton />
+  //       <GroupSkeleton />
+  //       <RenderIf condition={showAdminSettings}>
+  //         <Divider label="For Admins" labelPosition="center" mt="md" />
+  //         <GroupSkeleton />
+  //       </RenderIf>
+  //     </Stack>
+  //   );
+  // }
+  //
+  // const renderGroup = (group: NotificationTemplate) => (
+  //   <NotificationGroup
+  //     key={group.template._id}
+  //     label={group.template.name}
+  //     isEmailOn={group.preference.channels.email}
+  //     onEmailToggle={() => mutate({
+  //       template: group.template._id,
+  //       channel: ChannelTypeEnum.EMAIL,
+  //       enabled: !group.preference.channels.email,
+  //     })}
+  //     isInAppOn={group.preference.channels.in_app}
+  //     onInAppToggle={() => mutate({
+  //       template: group.template._id,
+  //       channel: ChannelTypeEnum.IN_APP,
+  //       enabled: !group.preference.channels.in_app,
+  //     })}
+  //   />
+  // );
+  //
+  // const elements = data.filter((group) => !group.template.critical).map(renderGroup);
+  //
+  // const criticalElements = showAdminSettings
+  //   ? data.filter((group) => group.template.critical).map(renderGroup)
+  //   : null;
 
   return (
     <Stack spacing="sm">
       <Title order={3}>Notifications</Title>
-      {elements}
+      {/*{elements}*/}
       <RenderIf condition={showAdminSettings}>
         <Divider label="For Admins" labelPosition="center" mt="md" />
-        {criticalElements}
+        {/*{criticalElements}*/}
       </RenderIf>
     </Stack>
   );
