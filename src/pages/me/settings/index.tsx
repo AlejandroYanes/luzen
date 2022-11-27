@@ -1,13 +1,20 @@
 import Head from 'next/head';
 import { signOut, useSession } from 'next-auth/react';
 import { Avatar, Button, createStyles, Divider, Group, Stack, Text, Title } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 import { IconAt } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
 import SignInAlert from 'components/SignInAlert';
 import NotificationsSettings from 'components/NotificationsSettings';
+import RenderIf from 'components/RenderIf';
 import { resolveInitials } from 'utils/strings';
 import { trpc } from 'utils/trpc';
+import {
+  askPermission,
+  showPushPermissionModal,
+  subscribeToPushNotifications
+} from 'utils/web-push';
 import { ROLES } from 'constants/roles';
 
 const useStyles = createStyles((theme) => ({
@@ -28,6 +35,17 @@ const SettingsPage = () => {
   const { mutate: sendEmail } = trpc.users.sendEmail.useMutation();
   const { mutate: sendSlack } = trpc.users.sendSlack.useMutation();
   const { mutate: sendPush } = trpc.users.sendPush.useMutation();
+  const { mutate: storeWebPushSub } = trpc.users.storeWebPushSub.useMutation({
+    onSuccess: () => {
+      showNotification({
+        title: 'Done',
+        message: `
+            You're now set to receive notifications.\n
+            You can disable notifications at any time on the Settings page.
+          `,
+      });
+    },
+  });
 
   if (status === 'unauthenticated') {
     return <SignInAlert asPage />;
@@ -36,6 +54,17 @@ const SettingsPage = () => {
   if (!data?.user) return null; // added to please TS, don't really like & might delete later
 
   const { user } = data;
+
+  const handlePushSubscription = () => {
+    showPushPermissionModal(async () => {
+      const permission = await askPermission();
+      if (permission === 'granted') {
+        const subscription = await subscribeToPushNotifications();
+        console.log(JSON.stringify(subscription));
+        storeWebPushSub({ data: JSON.stringify(subscription) });
+      }
+    });
+  };
 
   return (
     <>
@@ -76,6 +105,14 @@ const SettingsPage = () => {
             <Text>Web push test</Text>
             <Button onClick={() => sendPush()}>Send web push</Button>
           </Group>
+          <RenderIf condition={!user?.webPushStatus}>
+            <Group position="apart">
+              <Text>Web push permissions</Text>
+              <Button onClick={handlePushSubscription}>
+                Ask for push notifications
+              </Button>
+            </Group>
+          </RenderIf>
           <Divider mt="xl" />
           <NotificationsSettings showAdminSettings={user?.role === ROLES.ADMIN} />
           <Divider mt="xl" />

@@ -5,7 +5,8 @@ import deleteAccount from './delete-account';
 import sendEmail from './send-email';
 import sendSlack from './send-slack';
 import sendPush from './send-push';
-import updateWebPushConf from './update-web-push-conf';
+import storeWebPushSub from './store-web-push-sub';
+import updateWepPushStatus from './update-web-push-status';
 
 export const usersRouter = router({
   listUsers,
@@ -14,5 +15,6 @@ export const usersRouter = router({
   sendEmail,
   sendSlack,
   sendPush,
-  updateWebPushConf,
+  storeWebPushSub,
+  updateWepPushStatus,
 });

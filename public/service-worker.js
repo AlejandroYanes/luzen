@@ -24,7 +24,6 @@ self.addEventListener('push', function(event) {
   const promiseChain = isClientFocused().then((focusedClient) => {
     if (focusedClient) {
       focusedClient.postMessage(parsedBody);
-      return;
     }
 
     return self.registration.showNotification(parsedBody.title, {
