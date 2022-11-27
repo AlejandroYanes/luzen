@@ -18,6 +18,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = user.id;
         session.user.role = (user as any).role; // todo: find if I can extend the user model
         session.user.webPushStatus = (user as any).webPushStatus;
+        session.user.emailStatus = (user as any).emailStatus;
       }
       return session;
     },

@@ -10,6 +10,7 @@ declare module 'next-auth' {
       id: string;
       role: string;
       webPushStatus: string;
+      emailStatus: boolean;
     } & DefaultSession['user'];
   }
 }

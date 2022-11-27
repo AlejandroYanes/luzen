@@ -4,6 +4,7 @@ import updateRole from './update-role';
 import deleteAccount from './delete-account';
 import storeWebPushSub from './store-web-push-sub';
 import updateWebPushStatus from './update-web-push-status';
+import toggleEmailStatus from './toggle-email-status';
 
 export const usersRouter = router({
   listUsers,
@@ -11,4 +12,5 @@ export const usersRouter = router({
   deleteAccount,
   storeWebPushSub,
   updateWebPushStatus,
+  toggleEmailStatus,
 });

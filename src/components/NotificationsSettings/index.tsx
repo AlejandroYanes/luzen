@@ -11,12 +11,19 @@ export default function NotificationsSettings() {
   const { status, data } = useSession();
 
   const [pushStatus, setPushStatus] = useState<string | undefined>(data?.user?.webPushStatus);
+  const [emailStatus, setEmailStatus] = useState<boolean>(!!data?.user?.emailStatus);
 
   const { setupPushNotifications } = useWebPushSub(() => setPushStatus(WEB_PUSH_STATUS.GRANTED));
 
   const { mutate: updateWebPushStatus } = trpc.users.updateWebPushStatus.useMutation({
     onSuccess: (nextStatus) => {
       setPushStatus(nextStatus);
+    },
+  });
+
+  const { mutate: toggleEmailStatus } = trpc.users.toggleEmailStatus.useMutation({
+    onSuccess: () => {
+      setEmailStatus(!emailStatus);
     },
   });
 
@@ -58,17 +65,17 @@ export default function NotificationsSettings() {
           onChange={handlePushToggle}
         />
       </Group>
-      {/*<Group align="center" position="apart" pl="md">*/}
-      {/*  <Text>Email</Text>*/}
-      {/*  <Switch*/}
-      {/*    onLabel="ON"*/}
-      {/*    offLabel="OFF"*/}
-      {/*    size="md"*/}
-      {/*    sx={{ display: 'flex' }}*/}
-      {/*    checked={isEmailOn}*/}
-      {/*    onChange={onEmailToggle}*/}
-      {/*  />*/}
-      {/*</Group>*/}
+      <Group align="center" position="apart" pl="md">
+        <Text>Email</Text>
+        <Switch
+          onLabel="ON"
+          offLabel="OFF"
+          size="md"
+          sx={{ display: 'flex' }}
+          checked={emailStatus}
+          onChange={() => toggleEmailStatus()}
+        />
+      </Group>
     </Stack>
   );
 }
