@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { protectedProcedure } from 'server/trpc/trpc';
 
-const updateWepPushStatus = protectedProcedure
+const updateWebPushStatus = protectedProcedure
   .input(z.object({
     status: z.string(),
   }))
@@ -18,6 +18,7 @@ const updateWepPushStatus = protectedProcedure
         webPushStatus: status,
       },
     });
+    return status;
   });
 
-export default updateWepPushStatus;
+export default updateWebPushStatus;

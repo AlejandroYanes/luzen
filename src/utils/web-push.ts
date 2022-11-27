@@ -1,29 +1,4 @@
-import { Text } from '@mantine/core';
-import { openConfirmModal } from '@mantine/modals';
-
 import { env } from 'env/client.mjs';
-
-export function showPushPermissionModal(onConfirm: () => void) {
-  openConfirmModal({
-    title: 'Notifications',
-    labels: { confirm: 'Yes, I want notifications', cancel: "No, I don't want" },
-    children: (
-      <>
-        <Text>
-          Would you like to receive notifications related to your idea,
-          like new votes, new comments...?
-        </Text>
-        <Text size="sm" mt="sm">
-          Note: <br />
-          We use browser notifications to deliver on time updates. But for
-          them to work you need to allow notifications on your browser.
-          If you accept this we will raise the {"browser's"} prompt for you to give us permission.
-        </Text>
-      </>
-    ),
-    onConfirm,
-  });
-}
 
 let registration: ServiceWorkerRegistration;
 

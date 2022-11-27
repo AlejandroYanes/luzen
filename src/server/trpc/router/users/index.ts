@@ -6,7 +6,7 @@ import sendEmail from './send-email';
 import sendSlack from './send-slack';
 import sendPush from './send-push';
 import storeWebPushSub from './store-web-push-sub';
-import updateWepPushStatus from './update-web-push-status';
+import updateWebPushStatus from './update-web-push-status';
 
 export const usersRouter = router({
   listUsers,
@@ -16,5 +16,5 @@ export const usersRouter = router({
   sendSlack,
   sendPush,
   storeWebPushSub,
-  updateWepPushStatus,
+  updateWebPushStatus,
 });
