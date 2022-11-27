@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { protectedProcedure } from 'server/trpc/trpc';
+import { sendEmail } from 'server/send-grid';
+import { env } from 'env/server.mjs';
 
 const toggleVote = protectedProcedure
   .input(z.string())
@@ -68,7 +70,14 @@ const toggleVote = protectedProcedure
     });
 
     if (idea.author) {
-      const { author } = idea;
+      const { id, author } = idea;
+      sendEmail({
+        to: author.email!,
+        templateId: 'NEW_VOTE',
+        dynamicTemplateData: {
+          link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${id}`,
+        },
+      });
     }
   });
 

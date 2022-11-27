@@ -2,6 +2,8 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { adminProcedure } from 'server/trpc/trpc';
+import { sendEmail } from 'server/send-grid';
+import { env } from 'env/server.mjs';
 
 const toggleStatus = adminProcedure
   .input(z.string())
@@ -34,7 +36,14 @@ const toggleStatus = adminProcedure
     });
 
     if (idea.isDraft && idea.author?.email) {
-      const { id, title, author } = idea;
+      const { id, author } = idea;
+      sendEmail({
+        to: author.email!,
+        templateId: 'IDEA_PUBLISHED',
+        dynamicTemplateData: {
+          link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${id}`,
+        },
+      });
     }
   });
 
