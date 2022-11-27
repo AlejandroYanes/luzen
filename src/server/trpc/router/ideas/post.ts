@@ -2,8 +2,7 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { protectedProcedure } from 'server/trpc/trpc';
-import { notifyAdminOfNewIdea } from 'server/novu';
-import { ROLES } from 'constants/roles';
+import { notifyOfNewIdea } from 'server/slack';
 
 const post = protectedProcedure
   .input(z.object({
@@ -49,23 +48,9 @@ const post = protectedProcedure
       },
     });
 
-    const adminUsers = await ctx.prisma.user.findMany({
-      where: {
-        role: ROLES.ADMIN,
-      },
-    });
-
-    adminUsers.forEach((admin) => {
-      notifyAdminOfNewIdea({
-        idea: {
-          id: idea.id,
-          title: idea.title,
-        },
-        admin: {
-          id: admin.id,
-          email: admin.email || '',
-        },
-      });
+    notifyOfNewIdea({
+      author: user.name!,
+      id: idea.id,
     });
 
     return idea.id;

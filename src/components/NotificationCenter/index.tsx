@@ -1,19 +1,26 @@
-import { NovuProvider, } from '@novu/notification-center';
-import { useSession } from 'next-auth/react';
+import { useEffect, useRef } from 'react';
 
-import { clientEnv } from 'env/schema.mjs';
+import { registerSW, subscribeToSWMessages } from 'utils/web-push';
 import CustomNotificationCenter from './CustomNotificationCenter';
 
 const NotificationCenter = () => {
-  const { data } = useSession();
+  const registrationStarted = useRef<boolean>(false);
+
+  useEffect(() => {
+    if (!registrationStarted.current) {
+      registrationStarted.current = true;
+      registerSW();
+    }
+  }, []);
+
+  useEffect(() => {
+    return subscribeToSWMessages((data) => {
+      console.log('SW notification', data);
+    });
+  }, []);
 
   return (
-    <NovuProvider
-      subscriberId={data?.user?.id}
-      applicationIdentifier={clientEnv.NEXT_PUBLIC_NOVU_APP_ID as string}
-    >
-      <CustomNotificationCenter />
-    </NovuProvider>
+    <CustomNotificationCenter />
   );
 };
 

@@ -1,6 +1,15 @@
 import Head from 'next/head';
 import { signOut, useSession } from 'next-auth/react';
-import { Avatar, Button, createStyles, Divider, Group, Stack, Text, Title } from '@mantine/core';
+import {
+  Avatar,
+  Button,
+  createStyles,
+  Divider,
+  Group,
+  Stack,
+  Text,
+  Title
+} from '@mantine/core';
 import { IconAt } from '@tabler/icons';
 
 import BaseLayout from 'components/BaseLayout';
@@ -8,7 +17,6 @@ import SignInAlert from 'components/SignInAlert';
 import NotificationsSettings from 'components/NotificationsSettings';
 import { resolveInitials } from 'utils/strings';
 import { trpc } from 'utils/trpc';
-import { ROLES } from 'constants/roles';
 
 const useStyles = createStyles((theme) => ({
   icon: {
@@ -19,9 +27,10 @@ const useStyles = createStyles((theme) => ({
 const SettingsPage = () => {
   const { classes } = useStyles();
   const { data, status } = useSession();
+
   const { mutate: deleteMyAccount } = trpc.users.deleteAccount.useMutation({
-    onSuccess: () => {
-      signOut({ callbackUrl: '/' });
+    onSuccess: async () => {
+      await signOut({ callbackUrl: '/' });
     },
   });
 
@@ -60,7 +69,7 @@ const SettingsPage = () => {
             </div>
           </Group>
           <Divider mt="xl" />
-          <NotificationsSettings showAdminSettings={user?.role === ROLES.ADMIN} />
+          <NotificationsSettings />
           <Divider mt="xl" />
           <Group position="apart">
             <Text>Tired of hanging around?</Text>

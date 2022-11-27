@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { useForm } from '@mantine/form';
 import { ActionIcon, Alert, Button, Stack, Textarea, TextInput, Title, Text } from '@mantine/core';
 import { IconAlertCircle, IconArrowLeft } from '@tabler/icons';
@@ -11,6 +12,8 @@ import BaseLayout from 'components/BaseLayout';
 import RenderIf from 'components/RenderIf';
 import AuthGuard from 'components/AuthGuard';
 import Loading from 'components/EditorSkeletons';
+import SignInAlert from 'components/SignInAlert';
+import useWebPushSub from 'hooks/ui/useWebPushSub';
 
 interface IdeaFormValues {
   title: string;
@@ -30,7 +33,16 @@ const formRules = {
 };
 
 const Post: NextPage = () => {
+  const { data, status } = useSession();
   const router = useRouter();
+
+  const { setupPushNotifications } = useWebPushSub();
+
+  const checkWebPush = () => {
+    if (status === 'authenticated' && !data?.user?.webPushStatus) {
+      setupPushNotifications();
+    }
+  };
 
   const idFromQuery = router.query.id?.[0] as string;
   const {
@@ -50,7 +62,10 @@ const Post: NextPage = () => {
     isLoading,
     error: errorMutating,
   } = trpc.ideas.post.useMutation({
-    onSuccess: (ideaId) => router.push(`/ideas/${ideaId}`),
+    onSuccess: async (ideaId) => {
+      await router.push(`/ideas/${ideaId}`);
+      checkWebPush();
+    },
   });
 
   const form = useForm<IdeaFormValues>({
@@ -71,6 +86,10 @@ const Post: NextPage = () => {
       });
     }
   }, [loadingFromDb]);
+
+  if (status === 'unauthenticated') {
+    return <SignInAlert asPage />;
+  }
 
   if (idFromQuery && !loadingFromDb && !ideaFromDb) {
     return (

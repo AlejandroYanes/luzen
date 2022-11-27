@@ -9,6 +9,8 @@ declare module 'next-auth' {
     user?: {
       id: string;
       role: string;
+      webPushStatus: string;
+      emailStatus: boolean;
     } & DefaultSession['user'];
   }
 }

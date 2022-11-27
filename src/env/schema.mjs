@@ -8,7 +8,10 @@ import { z } from 'zod';
 export const serverSchema = z.object({
   DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(['development', 'test', 'production']),
-  NOVU_API_KEY: z.string(),
+  SENDGRID_API_KEY: z.string(),
+  SENDGRID_SENDER: z.string(),
+  SLACK_WEBHOOK: z.string(),
+  PUSH_PRIVATE_KEY: z.string(),
   NEXTAUTH_SECRET: z.string(),
   NEXTAUTH_URL: z.preprocess(
     // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
@@ -32,8 +35,8 @@ export const serverSchema = z.object({
  */
 export const clientSchema = z.object({
   // NEXT_PUBLIC_BAR: z.string(),
-  NEXT_PUBLIC_NOVU_APP_ID: z.string(),
   NEXT_PUBLIC_DOMAIN: z.string(),
+  NEXT_PUBLIC_PUSH_KEY: z.string(),
 });
 
 /**
@@ -44,6 +47,6 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   // NEXT_PUBLIC_BAR: process.env.NEXT_PUBLIC_BAR,
-  NEXT_PUBLIC_NOVU_APP_ID: process.env.NEXT_PUBLIC_NOVU_APP_ID,
   NEXT_PUBLIC_DOMAIN: process.env.NEXT_PUBLIC_DOMAIN ?? process.env.NEXT_PUBLIC_VERCEL_URL,
+  NEXT_PUBLIC_PUSH_KEY: process.env.NEXT_PUBLIC_PUSH_KEY,
 };

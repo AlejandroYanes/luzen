@@ -20,7 +20,7 @@ const VoteButton = (props: Props) => {
     enabled: status === 'authenticated',
   });
 
-  const { mutate } = trpc.ideas.toggleVote.useMutation({
+  const { mutate: vote } = trpc.ideas.toggleVote.useMutation({
     onSuccess: () => {
       refetch();
       const modifier = userVotedFor ? -1 : 1;
@@ -33,7 +33,7 @@ const VoteButton = (props: Props) => {
       openSignInModal();
       return;
     }
-    mutate(ideaId);
+    vote(ideaId);
   };
 
   return (

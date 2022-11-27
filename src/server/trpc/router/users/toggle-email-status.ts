@@ -1,13 +1,17 @@
 import { protectedProcedure } from 'server/trpc/trpc';
 
-const deleteAccount = protectedProcedure
+const toggleEmailStatus = protectedProcedure
   .mutation(async ({ ctx }) => {
     const { session: { user } } = ctx;
-    return ctx.prisma.user.delete({
+
+    await ctx.prisma.user.update({
       where: {
         id: user.id,
+      },
+      data: {
+        emailStatus: !user.emailStatus,
       },
     });
   });
 
-export default deleteAccount;
+export default toggleEmailStatus;
