@@ -20,13 +20,14 @@ const SettingsPage = () => {
   const { classes } = useStyles();
   const { data, status } = useSession();
   const { mutate: deleteMyAccount } = trpc.users.deleteAccount.useMutation({
-    onSuccess: () => {
-      signOut({ callbackUrl: '/' });
+    onSuccess: async () => {
+      await signOut({ callbackUrl: '/' });
     },
   });
 
   const { mutate: sendEmail } = trpc.users.sendEmail.useMutation();
   const { mutate: sendSlack } = trpc.users.sendSlack.useMutation();
+  const { mutate: sendPush } = trpc.users.sendPush.useMutation();
 
   if (status === 'unauthenticated') {
     return <SignInAlert asPage />;
@@ -70,6 +71,10 @@ const SettingsPage = () => {
           <Group position="apart">
             <Text>Slack test</Text>
             <Button onClick={() => sendSlack()}>Send Slack</Button>
+          </Group>
+          <Group position="apart">
+            <Text>Web push test</Text>
+            <Button onClick={() => sendPush()}>Send web push</Button>
           </Group>
           <Divider mt="xl" />
           <NotificationsSettings showAdminSettings={user?.role === ROLES.ADMIN} />

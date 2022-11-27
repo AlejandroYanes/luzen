@@ -39,14 +39,8 @@ const isAdmin = t.middleware(({ ctx, next }) => {
 
 export const router = t.router;
 
-/**
- * Unprotected procedure
- **/
 export const publicProcedure = t.procedure;
 
-/**
- * Protected procedure
- **/
 export const protectedProcedure = t.procedure.use(isAuthed);
 
 export const adminProcedure = t.procedure.use(isAdmin);

@@ -84,6 +84,8 @@ model User {
   ideasVotedFor     VotedIdeas[]
   comment           Comment[]
   role              String     @default("USER")
+  webPushStatus     String?
+  wePushSubs        WebPushSub[]
 }
 
 model VerificationToken {
@@ -91,4 +93,11 @@ model VerificationToken {
   token      String   @unique
   expires    DateTime
   @@unique([identifier, token])
+}
+
+model WebPushSub {
+    id      String  @id @default(cuid())
+    data    String  @db.Text
+    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId  String
 }
