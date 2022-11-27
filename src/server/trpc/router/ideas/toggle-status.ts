@@ -3,7 +3,9 @@ import { TRPCError } from '@trpc/server';
 
 import { adminProcedure } from 'server/trpc/trpc';
 import { sendEmail } from 'server/send-grid';
+import { sendPushNotification } from 'server/web-push';
 import { env } from 'env/server.mjs';
+import { PUSH_UPDATE_TYPES, WEB_PUSH_STATUS } from 'constants/web-push';
 
 const toggleStatus = adminProcedure
   .input(z.string())
@@ -21,6 +23,9 @@ const toggleStatus = adminProcedure
             id: true,
             name: true,
             email: true,
+            emailStatus: true,
+            webPushStatus: true,
+            wePushSubs: true,
           },
         },
       },
@@ -37,13 +42,27 @@ const toggleStatus = adminProcedure
 
     if (idea.isDraft && idea.author?.email) {
       const { id, author } = idea;
-      sendEmail({
-        to: author.email!,
-        templateId: 'IDEA_PUBLISHED',
-        dynamicTemplateData: {
-          link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${id}`,
-        },
-      });
+      if (author.emailStatus) {
+        sendEmail({
+          to: author.email!,
+          templateId: 'IDEA_PUBLISHED',
+          dynamicTemplateData: {
+            link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${id}`,
+          },
+        });
+      }
+
+      if (author.webPushStatus === WEB_PUSH_STATUS.GRANTED) {
+        const subscriptions = author.wePushSubs;
+        subscriptions.forEach(sub => {
+          sendPushNotification(sub.data, JSON.stringify({
+            id: PUSH_UPDATE_TYPES.IDEA_PUBLISHED,
+            title: 'Your idea just got published!',
+            message: idea.title,
+            link: `/ideas/${id}`,
+          }));
+        });
+      }
     }
   });
 

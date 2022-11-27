@@ -4,6 +4,8 @@ import { TRPCError } from '@trpc/server';
 import { protectedProcedure } from 'server/trpc/trpc';
 import { sendEmail } from 'server/send-grid';
 import { env } from 'env/server.mjs';
+import { PUSH_UPDATE_TYPES, WEB_PUSH_STATUS } from '../../../../constants/web-push';
+import { sendPushNotification } from '../../../web-push';
 
 const postComment = protectedProcedure
   .input(z.object({ idea: z.string(), content: z.string() }))
@@ -20,6 +22,9 @@ const postComment = protectedProcedure
             id: true,
             name: true,
             email: true,
+            emailStatus: true,
+            webPushStatus: true,
+            wePushSubs: true,
           },
         },
       },
@@ -45,13 +50,28 @@ const postComment = protectedProcedure
 
     if (idea.author) {
       const { id, author } = idea;
-      sendEmail({
-        to: author.email!,
-        templateId: 'NEW_COMMENT',
-        dynamicTemplateData: {
-          link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${id}`,
-        },
-      });
+
+      if (author.emailStatus) {
+        sendEmail({
+          to: author.email!,
+          templateId: 'NEW_COMMENT',
+          dynamicTemplateData: {
+            link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${id}`,
+          },
+        });
+      }
+
+      if (author.webPushStatus === WEB_PUSH_STATUS.GRANTED) {
+        const subscriptions = author.wePushSubs;
+        subscriptions.forEach(sub => {
+          sendPushNotification(sub.data, JSON.stringify({
+            id: PUSH_UPDATE_TYPES.NEW_COMMENT,
+            title: 'Your idea just got a new comment!',
+            message: idea.title,
+            link: `/ideas/${id}`,
+          }));
+        });
+      }
     }
 
     return comment.id;
