@@ -1,11 +1,11 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
+import { env } from 'env/server.mjs';
+import { PUSH_UPDATE_TYPES, WEB_PUSH_STATUS } from 'constants/web-push';
 import { protectedProcedure } from 'server/trpc/trpc';
 import { sendEmail } from 'server/send-grid';
-import { env } from 'env/server.mjs';
-import { PUSH_UPDATE_TYPES, WEB_PUSH_STATUS } from '../../../../constants/web-push';
-import { sendPushNotification } from '../../../web-push';
+import { sendPushNotification } from 'server/web-push';
 
 const postComment = protectedProcedure
   .input(z.object({ idea: z.string(), content: z.string() }))

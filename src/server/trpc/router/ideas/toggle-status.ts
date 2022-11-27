@@ -1,11 +1,11 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
+import { env } from 'env/server.mjs';
+import { PUSH_UPDATE_TYPES, WEB_PUSH_STATUS } from 'constants/web-push';
 import { adminProcedure } from 'server/trpc/trpc';
 import { sendEmail } from 'server/send-grid';
 import { sendPushNotification } from 'server/web-push';
-import { env } from 'env/server.mjs';
-import { PUSH_UPDATE_TYPES, WEB_PUSH_STATUS } from 'constants/web-push';
 
 const toggleStatus = adminProcedure
   .input(z.string())
