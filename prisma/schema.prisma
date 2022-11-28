@@ -24,6 +24,7 @@ model Idea {
     authorId        String?
     comments        Comment[]
     usersWhoVoted   VotedIdeas[]
+    notifications   Notification[]
 }
 
 model Comment {
@@ -34,6 +35,7 @@ model Comment {
     authorId        String?
     idea            Idea            @relation(fields: [ideaId], references: [id], onDelete: Cascade)
     ideaId          String
+    notifications   Notification[]
 }
 
 model VotedIdeas {
@@ -43,6 +45,28 @@ model VotedIdeas {
   userId        String
 
   @@id([ideaId, userId])
+}
+
+model WebPushSub {
+    id      String  @id @default(cuid())
+    data    String  @db.Text
+    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId  String
+}
+
+model Notification {
+    id          String      @id @default(cuid())
+    type        Int
+    creator     User?        @relation("CreatedNotifications", fields: [creatorId], references: [id])
+    creatorId   String?
+    receiver    User        @relation("ReceivedNotifications", fields: [receiverId], references: [id])
+    receiverId  String
+    idea        Idea?       @relation(fields: [ideaId], references: [id])
+    ideaId      String?
+    comment     Comment?    @relation(fields: [commentId], references: [id])
+    commentId   String?
+    seen        Boolean     @default(false)
+    sentOn      DateTime    @default(now())
 }
 
 // Necessary for Next auth
@@ -73,20 +97,22 @@ model Session {
 }
 
 model User {
-  id                String          @id @default(cuid())
-  name              String?
-  email             String?         @unique
-  emailVerified     DateTime?
-  image             String?
-  accounts          Account[]
-  sessions          Session[]
-  ideas             Idea[]
-  ideasVotedFor     VotedIdeas[]
-  comment           Comment[]
-  role              String          @default("USER")
-  emailStatus       Boolean         @default(true)
-  webPushStatus     String?
-  wePushSubs        WebPushSub[]
+  id                        String          @id @default(cuid())
+  name                      String?
+  email                     String?         @unique
+  emailVerified             DateTime?
+  image                     String?
+  accounts                  Account[]
+  sessions                  Session[]
+  ideas                     Idea[]
+  ideasVotedFor             VotedIdeas[]
+  comment                   Comment[]
+  role                      String          @default("USER")
+  emailStatus               Boolean         @default(true)
+  webPushStatus             String?
+  wePushSubs                WebPushSub[]
+  createdNotifications      Notification[] @relation("CreatedNotifications")
+  receivedNotifications     Notification[] @relation("ReceivedNotifications")
 }
 
 model VerificationToken {
@@ -94,11 +120,4 @@ model VerificationToken {
   token      String   @unique
   expires    DateTime
   @@unique([identifier, token])
-}
-
-model WebPushSub {
-    id      String  @id @default(cuid())
-    data    String  @db.Text
-    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    userId  String
 }
