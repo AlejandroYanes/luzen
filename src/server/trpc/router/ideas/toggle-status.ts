@@ -2,10 +2,8 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { env } from 'env/server.mjs';
-import { PUSH_UPDATE_TYPES, WEB_PUSH_STATUS } from 'constants/web-push';
 import { adminProcedure } from 'server/trpc/trpc';
 import { sendEmail } from 'server/send-grid';
-import { sendPushNotification } from 'server/web-push';
 
 const toggleStatus = adminProcedure
   .input(z.string())
@@ -49,18 +47,6 @@ const toggleStatus = adminProcedure
           dynamicTemplateData: {
             link: `${env.NEXT_PUBLIC_DOMAIN}/ideas/${id}`,
           },
-        });
-      }
-
-      if (author.webPushStatus === WEB_PUSH_STATUS.GRANTED) {
-        const subscriptions = author.wePushSubs;
-        subscriptions.forEach(sub => {
-          sendPushNotification(sub.data, JSON.stringify({
-            id: PUSH_UPDATE_TYPES.IDEA_PUBLISHED,
-            title: 'Your idea just got published!',
-            message: idea.title,
-            link: `/ideas/${id}`,
-          }));
         });
       }
     }
