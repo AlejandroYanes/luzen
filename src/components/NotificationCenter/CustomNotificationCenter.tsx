@@ -1,9 +1,20 @@
 /* eslint-disable react/jsx-closing-bracket-location */
-import { useState } from 'react';
-import { ActionIcon, Button, Drawer, Indicator, Popover, Stack, Title, } from '@mantine/core';
+import { Fragment, useState } from 'react';
+import Link from 'next/link';
+import {
+  ActionIcon,
+  Button,
+  Drawer,
+  Indicator,
+  Notification,
+  Popover,
+  Stack,
+  Title,
+} from '@mantine/core';
 import { IconBell } from '@tabler/icons';
 
 import { clientEnv } from 'env/schema.mjs';
+import { trpc } from 'utils/trpc';
 import useMobileView from 'hooks/ui/useMobileView';
 
 const linkMap: Record<string, (ideaId: string) => string> = {
@@ -17,30 +28,46 @@ export default function CustomNotificationCenter() {
   const isMobileView = useMobileView();
   const [isOpen, setIsOpen] = useState(false);
 
-  // const newNotificationsCount = [].reduce(
+  const {
+    data: infinite,
+    isFetching,
+    hasNextPage,
+    fetchNextPage,
+  } = trpc.notifications.listInfinite.useInfiniteQuery({}, {
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    refetchOnWindowFocus: false,
+  });
+
+  const { mutate: markAsSeen } = trpc.notifications.markAsSeen.useMutation();
+
+  // const newNotificationsCount = infinite.pages.reduce(
   //   (acc, notification) => notification.seen ? acc : acc + 1,
   //   0,
   // );
-  //
-  // const elements = notifications.map((notification) => {
-  //   const linkGenerator = linkMap[notification.templateIdentifier as string];
-  //   const link = linkGenerator!(notification?.payload?.ideaId as string);
-  //   return (
-  //     <Link key={notification._id} href={link}>
-  //       <Notification
-  //         color={notification.seen ? 'gray' : 'blue'}
-  //         title={notification.content as string}
-  //         styles={{
-  //           root: {
-  //             boxShadow: 'none',
-  //           },
-  //         }}
-  //         mb="xs"
-  //         disallowClose
-  //       />
-  //     </Link>
-  //   )
-  // });
+
+  const elements = infinite?.pages.map((page, index) => (
+    <Fragment key={index}>
+      {page.results.map((notification) => {
+        const linkGenerator = linkMap[notification.templateIdentifier as string];
+        const link = linkGenerator!(notification?.payload?.ideaId as string);
+        return (
+          <Link key={notification.id} href={link}>
+            <Notification
+              color={notification.seen ? 'gray' : 'blue'}
+              title={notification.content as string}
+              styles={{
+                root: {
+                  boxShadow: 'none',
+                },
+              }}
+              mb="xs"
+              disallowClose
+            />
+          </Link>
+        )
+      })}
+    </Fragment>
+  )) || [];
 
   if (isMobileView) {
     return (
@@ -55,17 +82,18 @@ export default function CustomNotificationCenter() {
           opened={isOpen}
           onClose={() => {
             setIsOpen(false);
+            markAsSeen();
           }}
           title={<Title p={8} order={3}>Notifications</Title>}
         >
           <Stack spacing={0} px={8} sx={{ height: '100%' }}>
-            {/*{elements}*/}
+            {elements}
             <Button
               mt="auto"
               mx="auto"
-              // loading={fetching}
-              // disabled={!hasNextPage}
-              // onClick={() => fetchNextPage}
+              loading={isFetching}
+              disabled={!hasNextPage}
+              onClick={() => fetchNextPage()}
             >
               Load more
             </Button>
@@ -76,7 +104,7 @@ export default function CustomNotificationCenter() {
   }
 
   return (
-    <Popover position="bottom" withArrow shadow="md">
+    <Popover position="bottom" withArrow shadow="md" onClose={markAsSeen}>
       <Popover.Target>
         <Indicator disabled>
           <ActionIcon>
@@ -85,12 +113,12 @@ export default function CustomNotificationCenter() {
         </Indicator>
       </Popover.Target>
       <Popover.Dropdown sx={{ minWidth: '200px' }}>
-        {/*{elements}*/}
+        {elements}
         <Stack mt="xl" align="center">
           <Button
-            // loading={fetching}
-            // disabled={!hasNextPage}
-            // onClick={() => fetchNextPage}
+            loading={isFetching}
+            disabled={!hasNextPage}
+            onClick={() => fetchNextPage()}
           >
             Load more
           </Button>
