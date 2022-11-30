@@ -33,16 +33,8 @@ const formRules = {
 };
 
 const Post: NextPage = () => {
-  const { data, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
-
-  const { setupPushNotifications } = useWebPushSub();
-
-  const checkWebPush = () => {
-    if (status === 'authenticated' && !data?.user?.webPushStatus) {
-      setupPushNotifications();
-    }
-  };
 
   const idFromQuery = router.query.id?.[0] as string;
   const {
@@ -63,8 +55,7 @@ const Post: NextPage = () => {
     error: errorMutating,
   } = trpc.ideas.post.useMutation({
     onSuccess: async (ideaId) => {
-      await router.push(`/ideas/${ideaId}`);
-      checkWebPush();
+      await router.push(`/ideas/drafts/${ideaId}`);
     },
   });
 

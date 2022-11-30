@@ -8,7 +8,7 @@ type Notification = {
   id: string;
   type: number;
   sentOn: Date;
-  idea: { title: string } | null;
+  idea: { title: string };
   creator: { name: string | null } | null;
 };
 
@@ -21,10 +21,32 @@ export default function resolveMessage(
         title: 'Your idea got a new comment!',
         message: (
           <>
-            <Text>{`There's a new comment for: ${notification.idea?.title}`}</Text>
-            <Text size="sm">{formatDate(notification.sentOn, 'en')}</Text>
+            <Text>{notification.idea.title}</Text>
+            <Text color="dimmed" size="xs">{formatDate(notification.sentOn, 'en')}</Text>
           </>
         ),
       };
+    case NOTIFICATION_TYPES.NEW_VOTE:
+      return {
+        title: 'Your idea got a new vote!',
+        message: (
+          <>
+            <Text>{notification.idea?.title}</Text>
+            <Text color="dimmed" size="xs">{formatDate(notification.sentOn, 'en')}</Text>
+          </>
+        ),
+      };
+    case NOTIFICATION_TYPES.IDEA_PUBLISHED:
+      return {
+        title: 'Your idea just got published!',
+        message: (
+          <>
+            <Text>{notification.idea?.title}</Text>
+            <Text color="dimmed" size="xs">{formatDate(notification.sentOn, 'en')}</Text>
+          </>
+        ),
+      };
+    default:
+      return { title: '', message: '' };
   }
 }

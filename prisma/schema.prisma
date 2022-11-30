@@ -61,8 +61,8 @@ model Notification {
     creatorId   String?
     receiver    User        @relation("ReceivedNotifications", fields: [receiverId], references: [id])
     receiverId  String
-    idea        Idea?       @relation(fields: [ideaId], references: [id])
-    ideaId      String?
+    idea        Idea       @relation(fields: [ideaId], references: [id])
+    ideaId      String
     comment     Comment?    @relation(fields: [commentId], references: [id])
     commentId   String?
     seen        Boolean     @default(false)

@@ -22,6 +22,7 @@ const listInfinite = protectedProcedure
       select: {
         id: true,
         type: true,
+        seen: true,
         sentOn: true,
         creator: {
           select: {
@@ -30,6 +31,7 @@ const listInfinite = protectedProcedure
         },
         idea: {
           select: {
+            id: true,
             title: true,
           },
         },
