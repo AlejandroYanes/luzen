@@ -39,7 +39,7 @@ const post = protectedProcedure
     const idea = await ctx.prisma.idea.create({
       data: {
         ...values,
-        isDraft: false,
+        isDraft: true,
         author: {
           connect: {
             id: ctx.session.user.id,
