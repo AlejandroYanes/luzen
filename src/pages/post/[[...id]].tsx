@@ -13,7 +13,6 @@ import RenderIf from 'components/RenderIf';
 import AuthGuard from 'components/AuthGuard';
 import Loading from 'components/EditorSkeletons';
 import SignInAlert from 'components/SignInAlert';
-import useWebPushSub from 'hooks/ui/useWebPushSub';
 
 interface IdeaFormValues {
   title: string;
