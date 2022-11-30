@@ -1,5 +1,10 @@
 {
   "name": "bucket-list-t3-stack",
+  "repository": "https://github.com/AlejandroYanes/bucket-list-t3-stack",
+  "author": {
+    "name": "Alejandr Yanes",
+    "email": "support@luzen.app"
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
