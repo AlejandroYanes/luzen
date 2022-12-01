@@ -33,6 +33,9 @@ const IdeaDetails: NextPage<Props> = (props) => {
   if (router.isFallback) {
     return (
       <>
+        <Head>
+          <title>Luzen | Loading...</title>
+        </Head>
         <BaseLayout>
           <Stack sx={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
             <Skeleton width={480} height={44} mt={44} />

@@ -40,7 +40,7 @@ const Comments = (props: Props) => {
           mt="md"
           color="gray"
           variant="subtle"
-          disabled={hasNextPage}
+          disabled={!hasNextPage}
           onClick={() => fetchNextPage()}
         >
           Load more
