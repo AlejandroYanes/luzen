@@ -86,7 +86,7 @@ const Post: NextPage = () => {
       <>
         <Head>
           <title>
-            Bucket List | No idea to be found
+            Luzen | No idea to be found
           </title>
         </Head>
         <BaseLayout>
@@ -106,7 +106,7 @@ const Post: NextPage = () => {
     <>
       <Head>
         <title>
-          Bucket List | {ideaFromDb?.id ? 'Editing' : 'Share a new idea with the world'}
+          Luzen | {ideaFromDb?.id ? 'Editing' : 'Share a new idea with the world'}
         </title>
       </Head>
       <BaseLayout>

@@ -25,7 +25,7 @@ const CommentsListPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bucket List | Managing comments</title>
+        <title>Luzen | Managing comments</title>
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '900px' }}>

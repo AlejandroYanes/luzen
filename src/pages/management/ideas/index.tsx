@@ -27,7 +27,7 @@ const IdeasListPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bucket List | Managing ideas</title>
+        <title>Luzen | Managing ideas</title>
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '100%', maxWidth: '900px' }}>

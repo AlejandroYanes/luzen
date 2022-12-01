@@ -20,7 +20,7 @@ export default function SigninPage() {
   return (
     <>
       <Head>
-        <title>Bucket List | Share your idea</title>
+        <title>Luzen | Share your idea</title>
       </Head>
       <BaseLayout>
         <Stack spacing="xl" style={{ maxWidth: '700px', margin: '48px auto 0' }}>

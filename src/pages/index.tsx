@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bucket List | Share your ideas</title>
+        <title>Luzen | Share your ideas</title>
         <meta name="description" content="A place to share your ideas" />
       </Head>
       <BaseLayout>

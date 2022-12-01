@@ -16,7 +16,7 @@ export default function SignInAlert(props: Props) {
     return (
       <>
         <Head>
-          <title>Bucket List | Oops...</title>
+          <title>Luzen | Oops...</title>
           <meta name="description" content="Un-authenticated" />
           <link rel="icon" href="/favicon.ico" />
         </Head>

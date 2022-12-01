@@ -30,7 +30,7 @@ const UsersPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bucket List | Managing users</title>
+        <title>Luzen | Managing users</title>
       </Head>
       <BaseLayout>
         <Stack mx="auto" sx={{ width: '900px' }}>

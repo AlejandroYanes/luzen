@@ -51,8 +51,8 @@ const Home: NextPage<Props> = (props) => {
   return (
     <>
       <Head>
-        <title>Bucket List | Ideas</title>
-        <meta name="title" content="Bucket List | Ideas" />
+        <title>Luzen | Ideas</title>
+        <meta name="title" content="Luzen | Ideas" />
         <meta name="description" content="Our collections of ideas" />
       </Head>
       <BaseLayout>

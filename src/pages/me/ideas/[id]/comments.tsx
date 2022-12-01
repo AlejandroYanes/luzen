@@ -25,7 +25,7 @@ const CommentsListPage: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Bucket List | Comments for my idea</title>
+        <title>Luzen | Comments for my idea</title>
         <meta name="description" content="all the comments for" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

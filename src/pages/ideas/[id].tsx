@@ -48,7 +48,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
     return (
       <>
         <Head>
-          <title>Bucket List | we could not find this idea</title>
+          <title>Luzen | we could not find this idea</title>
         </Head>
         <BaseLayout>
           <Stack spacing="xl" style={{ width: '100%', maxWidth: '700px', margin: '0 auto' }}>
@@ -71,7 +71,7 @@ const IdeaDetails: NextPage<Props> = (props) => {
   return (
     <>
       <Head>
-        <title>Bucket List | {title}</title>
+        <title>Luzen | {title}</title>
 
         <meta name="title" content={title} />
         <meta name="description" content={shortSummary} />

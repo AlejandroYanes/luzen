@@ -45,7 +45,7 @@ const SettingsPage = () => {
   return (
     <>
       <Head>
-        <title>Bucket List | My Settings</title>
+        <title>Luzen | My Settings</title>
         <meta name="description" content="My ideas" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
